@@ -1,0 +1,252 @@
+.container {
+  min-height: 100vh;
+  background-color: #f8f8f8;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.tabs {
+  background-color: #fff;
+  white-space: nowrap;
+  padding: 20rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.tab-item {
+  display: inline-block;
+  padding: 12rpx 30rpx;
+  margin-right: 15rpx;
+  font-size: 28rpx;
+  color: #666;
+  background-color: #f8f8f8;
+  border-radius: 50rpx;
+  transition: all 0.3s;
+}
+
+.tab-item.active {
+  background-color: #FF7F50;
+  color: #fff;
+}
+
+.content {
+  flex: 1;
+  padding: 20rpx;
+}
+
+.booking-item {
+  background-color: #fff;
+  border-radius: 12rpx;
+  margin-bottom: 20rpx;
+  padding: 25rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
+}
+
+.booking-header {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 20rpx;
+  padding-bottom: 15rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.course-cover {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 8rpx;
+  margin-right: 20rpx;
+  flex-shrink: 0;
+}
+
+.booking-header-info {
+  flex: 1;
+  overflow: hidden;
+}
+
+.course-title-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+
+.course-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-right: 15rpx;
+}
+
+.course-type-tag {
+  font-size: 22rpx;
+  padding: 4rpx 16rpx;
+  border-radius: 20rpx;
+  flex-shrink: 0;
+}
+
+.tag-group {
+  background-color: #e3f2fd;
+  color: #1976d2;
+}
+
+.tag-private {
+  background-color: #fce4ec;
+  color: #e91e63;
+}
+
+.booking-status {
+  padding: 8rpx 20rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+  flex-shrink: 0;
+}
+
+.booking-status.pending {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.booking-status.approved {
+  background-color: #e8f5e9;
+  color: #4caf50;
+}
+
+.booking-status.rejected {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.booking-status.completed {
+  background-color: #e3f2fd;
+  color: #1976d2;
+}
+
+.booking-status.cancelled {
+  background-color: #e0e0e0;
+  color: #666;
+}
+
+.booking-info {
+  margin-bottom: 15rpx;
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12rpx;
+  font-size: 26rpx;
+}
+
+.info-label {
+  color: #999;
+  width: 100rpx;
+  flex-shrink: 0;
+}
+
+.info-value {
+  color: #333;
+  flex: 1;
+}
+
+.paid-text {
+  color: #4caf50;
+  font-weight: bold;
+}
+
+.price-value {
+  color: #FF7F50;
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+.rejection-reason {
+  background-color: #fff3cd;
+  padding: 15rpx;
+  border-radius: 8rpx;
+  margin-bottom: 15rpx;
+}
+
+.reason-label {
+  font-size: 24rpx;
+  color: #856404;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.reason-text {
+  font-size: 24rpx;
+  color: #856404;
+  line-height: 1.6;
+}
+
+.booking-actions {
+  display: flex;
+  gap: 15rpx;
+  justify-content: flex-end;
+}
+
+.cancel-btn,
+.detail-btn {
+  padding: 12rpx 30rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+  border: none;
+}
+
+.cancel-btn {
+  background-color: #ff5722;
+  color: #fff;
+}
+
+.detail-btn {
+  background-color: #f0f0f0;
+  color: #666;
+}
+
+.empty {
+  text-align: center;
+  padding: 100rpx 0;
+}
+
+.empty-icon {
+  font-size: 100rpx;
+  display: block;
+  margin-bottom: 20rpx;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #999;
+  display: block;
+  margin-bottom: 40rpx;
+}
+
+.book-btn {
+  background-color: #FF7F50;
+  color: #fff;
+  padding: 20rpx 60rpx;
+  border-radius: 50rpx;
+  font-size: 28rpx;
+  border: none;
+  display: inline-block;
+}
+
+.loading {
+  text-align: center;
+  padding: 60rpx 0;
+  color: #999;
+  font-size: 28rpx;
+}
+
+.pay-btn {
+  padding: 12rpx 30rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+  border: none;
+  background-color: #ff5722;
+  color: #fff;
+}

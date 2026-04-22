@@ -1,0 +1,350 @@
+.container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  flex: 1;
+  background-color: #f5f5f5;
+  padding-bottom: 150rpx;
+}
+
+/* 封面轮播样式 */
+.cover-swiper {
+  width: 100%;
+  height: 400rpx;
+}
+
+.cover-image {
+  width: 100%;
+  height: 100%;
+}
+
+.activity-info {
+  background-color: #fff;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+}
+
+.title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 15rpx;
+}
+
+.category {
+  display: inline-block;
+  background-color: #e3f2fd;
+  color: #1976d2;
+  padding: 8rpx 16rpx;
+  border-radius: 12rpx;
+  font-size: 24rpx;
+  margin-bottom: 20rpx;
+}
+
+.info-row {
+  display: flex;
+  margin-bottom: 15rpx;
+  font-size: 28rpx;
+}
+
+.info-row.cancel-deadline {
+  background-color: #fff3cd;
+  padding: 15rpx;
+  border-radius: 8rpx;
+  margin-top: 10rpx;
+}
+
+.label {
+  color: #666;
+  width: 160rpx;
+  flex-shrink: 0;
+}
+
+.deadline-text {
+  color: #ff5722;
+  font-weight: bold;
+  flex: 1;
+}
+
+.location {
+  color: #1296db;
+  flex: 1;
+}
+
+.fee-section, .detail-section, .requirements-section, .notices-section, .photos-section {
+  background-color: #fff;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+
+/* 修复：照片区域标题和按钮 */
+.section-header-right {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.section-header-right .section-title {
+  margin-bottom: 0;
+  flex: 1;
+}
+
+.upload-btn-right {
+  background-color: #1296db;
+  color: white;
+  font-size: 24rpx;
+  padding: 10rpx 20rpx;
+  border-radius: 20rpx;
+  border: none;
+  flex-shrink: 0;
+  margin-left: 15rpx;
+}
+
+.total-fee-top {
+  background: linear-gradient(135deg, #ff9800 0%, #ff5722 100%);
+  padding: 25rpx;
+  border-radius: 12rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+  box-shadow: 0 4rpx 12rpx rgba(255, 152, 0, 0.3);
+}
+
+.total-label {
+  font-size: 30rpx;
+  color: white;
+  font-weight: bold;
+}
+
+.total-amount {
+  font-size: 44rpx;
+  color: white;
+  font-weight: bold;
+}
+
+.fee-details-list {
+  background-color: #f8f9fa;
+  padding: 20rpx;
+  border-radius: 8rpx;
+  margin-bottom: 15rpx;
+}
+
+.fee-detail-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 12rpx 0;
+  border-bottom: 1rpx dashed #e0e0e0;
+}
+
+.fee-detail-item:last-child {
+  border-bottom: none;
+}
+
+.fee-name {
+  font-size: 26rpx;
+  color: #666;
+}
+
+.fee-value {
+  font-size: 28rpx;
+  color: #ff5722;
+  font-weight: bold;
+}
+
+.subtitle {
+  font-size: 28rpx;
+  color: #666;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 10rpx;
+}
+
+.fee-item {
+  font-size: 26rpx;
+  color: #333;
+  margin-bottom: 8rpx;
+  padding-left: 20rpx;
+}
+
+.fee-notes {
+  background-color: #fff3cd;
+  padding: 15rpx;
+  border-radius: 8rpx;
+  margin-top: 15rpx;
+}
+
+.fee-notes-text {
+  font-size: 24rpx;
+  color: #856404;
+  line-height: 1.6;
+}
+
+.description {
+  font-size: 28rpx;
+  color: #666;
+  line-height: 1.6;
+}
+
+.photos-preview {
+  position: relative;
+}
+
+.main-photo {
+  width: 100%;
+  height: 400rpx;
+  border-radius: 8rpx;
+}
+
+.photo-count {
+  position: absolute;
+  bottom: 15rpx;
+  right: 15rpx;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  font-size: 24rpx;
+  padding: 8rpx 15rpx;
+  border-radius: 20rpx;
+}
+
+.no-photos {
+  text-align: center;
+  color: #999;
+  font-size: 28rpx;
+  padding: 60rpx 0;
+}
+
+.upload-progress-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.upload-progress {
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 40rpx;
+  border-radius: 12rpx;
+  min-width: 400rpx;
+}
+
+.progress-bg {
+  width: 100%;
+  height: 8rpx;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 4rpx;
+  overflow: hidden;
+  margin-bottom: 20rpx;
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: #1296db;
+  transition: width 0.3s ease;
+}
+
+.progress-0 { width: 0%; }
+.progress-1 { width: 1%; }
+.progress-5 { width: 5%; }
+.progress-10 { width: 10%; }
+.progress-20 { width: 20%; }
+.progress-30 { width: 30%; }
+.progress-40 { width: 40%; }
+.progress-50 { width: 50%; }
+.progress-60 { width: 60%; }
+.progress-70 { width: 70%; }
+.progress-80 { width: 80%; }
+.progress-90 { width: 90%; }
+.progress-100 { width: 100%; }
+
+.progress-text {
+  color: white;
+  font-size: 26rpx;
+  text-align: center;
+  display: block;
+}
+
+.bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #fff;
+  padding: 15rpx 20rpx;
+  padding-bottom: calc(15rpx + env(safe-area-inset-bottom));
+  border-top: 1rpx solid #e0e0e0;
+  box-shadow: 0 -2rpx 8rpx rgba(0,0,0,0.1);
+  z-index: 100;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 20rpx;
+}
+
+.action-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  font-size: 20rpx;
+  color: #666;
+  line-height: 1.2;
+}
+
+.action-btn .icon {
+  font-size: 36rpx;
+  margin-bottom: 5rpx;
+}
+
+.action-btn .btn-text {
+  font-size: 22rpx;
+}
+
+.register-area {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+}
+
+.price {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #ff5722;
+}
+
+.register-btn {
+  background-color: #1296db;
+  color: white;
+  font-size: 28rpx;
+  padding: 18rpx 50rpx;
+  border-radius: 50rpx;
+  border: none;
+}
+
+.register-btn.disabled {
+  background-color: #ccc;
+  color: #999;
+}

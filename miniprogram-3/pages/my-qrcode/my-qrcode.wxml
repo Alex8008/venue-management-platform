@@ -1,0 +1,26 @@
+<view class="container">
+  <view class="qr-card">
+    <image class="avatar" src="{{avatarUrl || '/images/default-avatar.png'}}" mode="aspectFill" />
+    <text class="username">{{userName || '用户'}}</text>
+
+
+    <view class="qr-wrapper">
+      <image wx:if="{{qrImageUrl}}" class="qr-image" src="{{qrImageUrl}}" mode="aspectFit" show-menu-by-longpress="{{true}}" />
+      <view wx:else class="qr-loading">
+        <text>生成中...</text>
+      </view>
+    </view>
+
+
+    <view class="qr-tip">请让教练或管理员扫描此二维码</view>
+
+
+    <view class="countdown" wx:if="{{countdown > 0}}">
+      <text>{{countdown}}秒后自动刷新</text>
+    </view>
+    <view class="countdown expired" wx:elif="{{countdown <= 0 && qrImageUrl}}">
+      <text>已过期</text>
+      <button class="refresh-btn" bindtap="loadQrcode">点击刷新</button>
+    </view>
+  </view>
+</view>

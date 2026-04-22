@@ -1,0 +1,275 @@
+<view class="container">
+  <scroll-view scroll-y="true" class="content">
+    
+    <view class="section">
+      <view class="section-title">基本信息</view>
+      
+      <view class="form-item">
+        <text class="label">活动标题 *</text>
+        <input class="input" 
+               placeholder="请输入活动标题"
+               value="{{activity.title}}"
+               data-field="title"
+               bindinput="onInputChange" />
+      </view>
+
+      <view class="form-item">
+        <text class="label">活动分类 *</text>
+        <picker range="{{categoryOptions}}" 
+                value="{{categoryOptions.indexOf(activity.category)}}"
+                bindchange="onCategoryChange">
+          <view class="picker">{{activity.category}}</view>
+        </picker>
+      </view>
+
+      <view class="form-item">
+        <text class="label">活动封面（最多5张）</text>
+        <view class="image-upload-list">
+          <view wx:for="{{activity.cover_images}}" wx:key="index" class="image-item">
+            <image src="{{item}}" class="cover-preview" mode="aspectFill" />
+            <view class="delete-icon" data-index="{{index}}" bindtap="onDeleteImage">×</view>
+          </view>
+          <view wx:if="{{activity.cover_images.length < 5}}" class="add-image-btn" bindtap="onChooseImage">
+            <text class="add-icon">+</text>
+            <text class="add-text">添加图片</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="form-item">
+        <text class="label">活动描述</text>
+        <textarea class="textarea" 
+                  placeholder="请输入活动详细描述"
+                  value="{{activity.description}}"
+                  data-field="description"
+                  bindinput="onInputChange"
+                  maxlength="500" />
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="section-title">时间地点</view>
+      
+      <view class="form-item">
+        <text class="label">报名开始时间 *</text>
+        <picker mode="date" 
+                value="{{activity.registration_start_date}}"
+                data-field="registration_start"
+                bindchange="onDateChange">
+          <view class="picker">{{activity.registration_start_date || '选择日期'}} {{activity.registration_start_time || '00:00'}}</view>
+        </picker>
+        <picker mode="time" 
+                value="{{activity.registration_start_time}}"
+                data-field="registration_start"
+                bindchange="onTimeChange"
+                class="time-picker">
+          <view class="picker-small">选择时间</view>
+        </picker>
+      </view>
+
+      <view class="form-item">
+        <text class="label">报名截止时间 *</text>
+        <picker mode="date" 
+                value="{{activity.registration_end_date}}"
+                data-field="registration_end"
+                bindchange="onDateChange">
+          <view class="picker">{{activity.registration_end_date || '选择日期'}} {{activity.registration_end_time || '00:00'}}</view>
+        </picker>
+        <picker mode="time" 
+                value="{{activity.registration_end_time}}"
+                data-field="registration_end"
+                bindchange="onTimeChange"
+                class="time-picker">
+          <view class="picker-small">选择时间</view>
+        </picker>
+      </view>
+
+      <view class="form-item">
+        <text class="label">活动开始时间 *</text>
+        <picker mode="date" 
+                value="{{activity.activity_start_date}}"
+                data-field="activity_start"
+                bindchange="onDateChange">
+          <view class="picker">{{activity.activity_start_date || '选择日期'}} {{activity.activity_start_time || '00:00'}}</view>
+        </picker>
+        <picker mode="time" 
+                value="{{activity.activity_start_time}}"
+                data-field="activity_start"
+                bindchange="onTimeChange"
+                class="time-picker">
+          <view class="picker-small">选择时间</view>
+        </picker>
+      </view>
+
+      <view class="form-item">
+        <text class="label">活动结束时间 *</text>
+        <picker mode="date" 
+                value="{{activity.activity_end_date}}"
+                data-field="activity_end"
+                bindchange="onDateChange">
+          <view class="picker">{{activity.activity_end_date || '选择日期'}} {{activity.activity_end_time || '00:00'}}</view>
+        </picker>
+        <picker mode="time" 
+                value="{{activity.activity_end_time}}"
+                data-field="activity_end"
+                bindchange="onTimeChange"
+                class="time-picker">
+          <view class="picker-small">选择时间</view>
+        </picker>
+      </view>
+
+      <view class="form-item">
+        <text class="label">活动取消限制时间</text>
+        <picker mode="date" 
+                value="{{activity.cancel_deadline_date}}"
+                data-field="cancel_deadline"
+                bindchange="onDateChange">
+          <view class="picker">{{activity.cancel_deadline_date || '选择日期'}} {{activity.cancel_deadline_time || '00:00'}}</view>
+        </picker>
+        <picker mode="time" 
+                value="{{activity.cancel_deadline_time}}"
+                data-field="cancel_deadline"
+                bindchange="onTimeChange"
+                class="time-picker">
+          <view class="picker-small">选择时间</view>
+        </picker>
+        <text class="field-tip">设置后，过了该时间用户将无法申请退款</text>
+      </view>
+
+      <view class="form-item">
+        <text class="label">活动地点 *</text>
+        <view class="location-input-group">
+          <input class="input location-input" 
+                 placeholder="请输入活动地点"
+                 value="{{activity.location}}"
+                 data-field="location"
+                 bindinput="onInputChange" />
+          <button class="map-btn" bindtap="onChooseLocation">
+            📍 地图选点
+          </button>
+        </view>
+        <view wx:if="{{activity.latitude && activity.longitude}}" class="location-info">
+          <text class="location-tip">已选位置：{{activity.location}}</text>
+          <text class="location-coords">经纬度：{{activity.latitude}}, {{activity.longitude}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="section-title">费用设置</view>
+      
+      <view class="form-item">
+        <text class="label">基础费用(元) *</text>
+        <input class="input" 
+               type="digit"
+               placeholder="请输入基础费用"
+               value="{{activity.base_fee}}"
+               data-field="base_fee"
+               bindinput="onInputChange" />
+      </view>
+
+      <view class="form-item">
+        <text class="label">保险费用(元)</text>
+        <input class="input" 
+               type="digit"
+               placeholder="不填则无此项费用"
+               value="{{activity.insurance_fee}}"
+               data-field="insurance_fee"
+               bindinput="onInputChange" />
+      </view>
+
+      <view class="form-item">
+        <text class="label">交通费(元)</text>
+        <input class="input" 
+               type="digit"
+               placeholder="不填则无此项费用"
+               value="{{activity.transport_fee}}"
+               data-field="transport_fee"
+               bindinput="onInputChange" />
+      </view>
+
+      <view class="form-item">
+        <text class="label">餐食费(元)</text>
+        <input class="input" 
+               type="digit"
+               placeholder="不填则无此项费用"
+               value="{{activity.meal_fee}}"
+               data-field="meal_fee"
+               bindinput="onInputChange" />
+      </view>
+
+      <view class="total-fee-display">
+        <text class="total-label">总费用：</text>
+        <text class="total-amount">￥{{totalFee}}</text>
+      </view>
+
+      <view class="form-item">
+        <text class="label">费用说明</text>
+        <textarea class="textarea" 
+                  placeholder="请输入费用说明"
+                  value="{{activity.fee_details}}"
+                  data-field="fee_details"
+                  bindinput="onInputChange" />
+      </view>
+
+      <view class="form-item">
+        <text class="label">人数限制 *</text>
+        <input class="input" 
+               type="number"
+               placeholder="请输入最大人数"
+               value="{{activity.max_participants}}"
+               data-field="max_participants"
+               bindinput="onInputChange" />
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="section-title">其他信息</view>
+      
+      <view class="form-item">
+        <text class="label">报名条件</text>
+        <textarea class="textarea" 
+                  placeholder="请输入报名条件"
+                  value="{{activity.registration_requirements}}"
+                  data-field="registration_requirements"
+                  bindinput="onInputChange" />
+      </view>
+
+      <view class="form-item">
+        <text class="label">注意事项</text>
+        <textarea class="textarea" 
+                  placeholder="请输入注意事项"
+                  value="{{activity.notices}}"
+                  data-field="notices"
+                  bindinput="onInputChange" />
+      </view>
+
+      <view class="form-item">
+        <checkbox-group bindchange="onCarouselChange">
+          <label class="checkbox-label">
+            <checkbox value="carousel" checked="{{activity.is_carousel}}" />
+            <text>设为轮播活动</text>
+          </label>
+        </checkbox-group>
+      </view>
+    </view>
+
+  </scroll-view>
+
+  <view class="bottom-bar">
+    <view class="no-review-section">
+      <view class="no-review-item" bindtap="onToggleNoReview">
+        <view class="custom-checkbox {{activity.no_review_needed ? 'checked' : ''}}">
+          <text wx:if="{{activity.no_review_needed}}">✓</text>
+        </view>
+        <text class="no-review-label">不需要审核（报名后直接付款即成功）</text>
+      </view>
+    </view>
+    <button class="save-btn" bindtap="onSave">
+      保存活动
+    </button>
+    <button wx:if="{{isEdit}}" class="save-as-new-btn" bindtap="onSaveAsNew">
+      保存为新活动
+    </button>
+  </view>
+</view>

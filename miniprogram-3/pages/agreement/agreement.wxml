@@ -1,0 +1,107 @@
+<view class="container">
+  <view class="title">用户服务协议</view>
+  <view class="update-time">更新日期：2026年3月28日</view>
+  <view class="content">
+    <view class="section">
+      <view class="section-title">一、总则</view>
+      <view class="section-content">
+        欢迎您使用"凌峰探险"微信小程序（以下简称"本平台"）。本平台由【内蒙古垂直极限体育有限公司】（以下简称"我们"）运营。请您在使用本平台前仔细阅读本协议，使用本平台即表示您同意本协议的全部内容。
+      </view>
+    </view>
+
+
+    <view class="section">
+      <view class="section-title">二、服务内容</view>
+      <view class="section-content">
+        本平台为用户提供以下服务：
+        1. 攀岩课程及户外活动的信息发布与在线预约；
+        2. 会员卡/月卡的在线购买与管理；
+        3. 攀岩装备及相关商品的在线购买；
+        4. 教练预约及私教课程服务；
+        5. 活动照片分享与社区互动。
+      </view>
+    </view>
+
+
+    <view class="section">
+      <view class="section-title">三、用户注册与账号</view>
+      <view class="section-content">
+        1. 用户需通过微信授权方式注册并登录本平台。
+        2. 用户应提供真实、准确的个人信息，如因信息不实造成的后果由用户自行承担。
+        3. 用户应妥善保管账号信息，因账号被盗用造成的损失由用户自行承担。
+        4. 我们有权在发现用户违反法律法规或本协议时，暂停或终止其账号使用。
+      </view>
+    </view>
+
+
+    <view class="section">
+      <view class="section-title">四、用户行为规范</view>
+      <view class="section-content">
+        用户在使用本平台时不得：
+        1. 发布违法、违规、虚假或侵犯他人权益的信息；
+        2. 利用本平台从事任何违法活动；
+        3. 干扰本平台的正常运行或侵入本平台系统；
+        4. 未经授权使用他人账号或冒充他人身份。
+      </view>
+    </view>
+
+
+    <view class="section">
+      <view class="section-title">五、活动与课程</view>
+      <view class="section-content">
+        1. 用户报名参加活动或课程前，应仔细阅读活动详情，确认自身身体条件适合参与。
+        2. 攀岩等户外运动存在一定风险，用户应自行评估并承担参与风险。
+        3. 我们有权因天气、安全等因素调整或取消活动，届时将及时通知已报名用户。
+        4. 活动退款规则以具体活动页面说明为准。
+      </view>
+    </view>
+
+
+    <view class="section">
+      <view class="section-title">六、商品购买与售后</view>
+      <view class="section-content">
+        1. 用户通过本平台购买商品，应按照页面提示完成下单和支付流程。
+        2. 商品信息以实际页面展示为准，如有疑问请在购买前咨询客服。
+        3. 售后服务按照国家相关法律法规和本平台公示的售后政策执行。
+      </view>
+    </view>
+
+
+    <view class="section">
+      <view class="section-title">七、知识产权</view>
+      <view class="section-content">
+        本平台的所有内容（包括但不限于文字、图片、音频、视频、软件、程序、版面设计）的知识产权归我们所有，未经书面许可，任何人不得擅自使用。
+      </view>
+    </view>
+
+
+    <view class="section">
+      <view class="section-title">八、免责声明</view>
+      <view class="section-content">
+        1. 因不可抗力（自然灾害、政策变化等）导致服务中断，我们不承担责任。
+        2. 用户因自身原因（如未如实填写信息、迟到缺席等）造成的损失，我们不承担责任。
+        3. 本平台不对第三方链接或内容的真实性和安全性负责。
+      </view>
+    </view>
+
+
+    <view class="section">
+      <view class="section-title">九、协议修改</view>
+      <view class="section-content">
+        我们有权根据需要修改本协议内容，修改后的协议将在本平台公布。用户继续使用本平台即视为同意修改后的协议。
+      </view>
+    </view>
+
+
+    <view class="section">
+      <view class="section-title">十、联系方式</view>
+      <view class="section-content">
+        如您对本协议有任何疑问，请通过以下方式联系我们：
+        公司名称：【内蒙古垂直极限体育有限公司】
+        联系电话：【15849393939】
+        电子邮箱：【lxf@nmgpdsq.cn】
+        地址：【内蒙古自治区呼和浩特市玉泉区石羊桥南路玉骏坊商业中心27号楼201】
+      </view>
+    </view>
+  </view>
+</view>

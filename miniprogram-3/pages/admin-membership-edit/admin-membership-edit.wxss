@@ -1,0 +1,234 @@
+.container {
+  min-height: 100vh;
+  background-color: #f8f8f8;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 150rpx;
+}
+
+.content {
+  flex: 1;
+  padding: 30rpx;
+  box-sizing: border-box;  /* 添加这行 */
+}
+
+.form-section {
+  background-color: #fff;
+  border-radius: 12rpx;
+  padding: 25rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+  box-sizing: border-box;  /* 添加这行 */
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 25rpx;
+  border-left: 4rpx solid #ff9800;
+  padding-left: 15rpx;
+}
+
+.form-item {
+  margin-bottom: 25rpx;
+}
+
+.form-label {
+  display: block;
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 12rpx;
+}
+
+.form-input {
+  width: 100%;
+  height: 80rpx;
+  padding: 0 20rpx;
+  border: 1rpx solid #e0e0e0;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  box-sizing: border-box;
+  background-color: #fafafa;
+  text-align: center;
+  color: #999;
+}
+
+.picker-value {
+  line-height: 80rpx;
+}
+
+.form-textarea {
+  width: 100%;
+  height: 180rpx;
+  padding: 20rpx;
+  border: 1rpx solid #e0e0e0;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  box-sizing: border-box;
+  background-color: #fafafa;
+}
+
+.type-selector {
+  display: flex;
+  gap: 20rpx;
+}
+
+.type-option {
+  flex: 1;
+  text-align: center;
+  padding: 20rpx;
+  border: 2rpx solid #e0e0e0;
+  border-radius: 12rpx;
+  font-size: 28rpx;
+  color: #666;
+  background-color: #fafafa;
+}
+
+.type-option.active {
+  border-color: #ff9800;
+  color: #ff9800;
+  background-color: #fff3e0;
+  font-weight: bold;
+}
+
+.image-uploader {
+  width: 200rpx;
+  height: 200rpx;
+  border: 2rpx dashed #ccc;
+  border-radius: 12rpx;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.preview-image {
+  width: 100%;
+  height: 100%;
+}
+
+.upload-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #999;
+}
+
+.upload-icon {
+  font-size: 60rpx;
+  line-height: 1;
+}
+
+.upload-text {
+  font-size: 24rpx;
+  margin-top: 10rpx;
+}
+
+.teacher-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15rpx;
+}
+
+.teacher-item {
+  display: flex;
+  align-items: center;
+  padding: 15rpx 20rpx;
+  background-color: #fafafa;
+  border-radius: 8rpx;
+}
+
+.teacher-item checkbox {
+  margin-right: 15rpx;
+}
+
+.teacher-name {
+  font-size: 28rpx;
+  color: #333;
+}
+
+.empty-teachers {
+  padding: 30rpx;
+  text-align: center;
+  color: #999;
+  font-size: 26rpx;
+}
+
+.form-hint {
+  display: block;
+  font-size: 24rpx;
+  color: #999;
+  margin-bottom: 15rpx;
+}
+
+.duration-section {
+  background-color: #fafafa;
+  border-radius: 8rpx;
+  padding: 20rpx;
+}
+
+.duration-option {
+  margin-bottom: 10rpx;
+}
+
+.duration-option-label {
+  display: block;
+  font-size: 26rpx;
+  color: #666;
+  margin-bottom: 10rpx;
+}
+
+.duration-divider {
+  text-align: center;
+  padding: 15rpx 0;
+}
+
+.duration-divider-text {
+  font-size: 26rpx;
+  color: #999;
+}
+
+.select-card-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15rpx;
+}
+
+.select-card-item {
+  padding: 15rpx 25rpx;
+  background-color: #fafafa;
+  border: 2rpx solid #e0e0e0;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  color: #333;
+}
+
+.select-card-item.selected {
+  background-color: #e6f3ff;
+  border-color: #1296db;
+  color: #1296db;
+}
+
+.bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  padding: 20rpx;
+  padding-bottom: calc(20rpx + env(safe-area-inset-bottom));
+  box-shadow: 0 -2rpx 10rpx rgba(0, 0, 0, 0.1);
+  z-index: 100;
+}
+
+.save-btn {
+  width: 100%;
+  background-color: #ff9800;
+  color: #fff;
+  font-size: 32rpx;
+  padding: 25rpx;
+  border-radius: 12rpx;
+  border: none;
+}
+

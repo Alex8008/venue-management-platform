@@ -1,0 +1,90 @@
+<view class="container">
+  <view class="header">
+    <image class="teacher-avatar" src="{{teacherInfo.avatar_url || '/images/default-avatar.png'}}" mode="aspectFill" />
+    <view class="teacher-info">
+      <text class="teacher-name">{{teacherInfo.real_name || '教练'}}</text>
+      <text class="teacher-role">教练后台</text>
+    </view>
+  </view>
+
+  <view class="content">
+    <!-- 统计卡片 -->
+    <view class="stats-section">
+      <view class="stat-card">
+        <text class="stat-number">{{pendingBookingsCount}}</text>
+        <text class="stat-label">待审核预约</text>
+      </view>
+      <view class="stat-card">
+        <text class="stat-number">{{todayCoursesCount}}</text>
+        <text class="stat-label">今日课程</text>
+      </view>
+      <view class="stat-card">
+        <text class="stat-number">{{deliveryOrdersCount}}</text>
+        <text class="stat-label">配送单</text>
+      </view>
+    </view>
+
+    <!-- 功能菜单 -->
+    <view class="menu-section">
+      <view class="menu-item" bindtap="onActivityManagement">
+        <view class="menu-icon">🏔️</view>
+        <view class="menu-info">
+          <text class="menu-title">活动管理</text>
+          <text class="menu-desc">管理户外活动（创建/编辑/删除）</text>
+        </view>
+        <text class="menu-arrow">›</text>
+      </view>
+
+      <view class="menu-item" bindtap="onCourseManagement">
+        <view class="menu-icon">📚</view>
+        <view class="menu-info">
+          <text class="menu-title">课程管理</text>
+          <text class="menu-desc">管理我的团课和私教课程</text>
+        </view>
+        <text class="menu-arrow">›</text>
+      </view>
+
+      <view class="menu-item" bindtap="onBookingReview">
+        <view class="menu-icon">✅</view>
+        <view class="menu-info">
+          <text class="menu-title">预约审核</text>
+          <text class="menu-desc">审核学员课程预约</text>
+        </view>
+        <view class="menu-badge" wx:if="{{pendingBookingsCount > 0}}">{{pendingBookingsCount}}</view>
+        <text class="menu-arrow">›</text>
+      </view>
+
+      <view class="menu-item" bindtap="onDeliveryOrders">
+        <view class="menu-icon">🍽️</view>
+        <view class="menu-info">
+          <text class="menu-title">配送单</text>
+          <text class="menu-desc">查看餐饮配送通知</text>
+        </view>
+        <view class="menu-badge" wx:if="{{deliveryOrdersCount > 0}}">{{deliveryOrdersCount}}</view>
+        <text class="menu-arrow">›</text>
+      </view>
+
+      <view class="menu-item" bindtap="onScanConsume">
+        <view class="menu-icon">📷</view>
+        <view class="menu-info">
+          <text class="menu-title">扫码核销</text>
+          <text class="menu-desc">扫描用户二维码核销会员卡</text>
+        </view>
+        <text class="menu-arrow">›</text>
+      </view>
+
+      <view class="menu-item" bindtap="onProfileEdit">
+        <view class="menu-icon">👤</view>
+        <view class="menu-info">
+          <text class="menu-title">个人信息</text>
+          <text class="menu-desc">编辑教练资料和简介</text>
+        </view>
+        <text class="menu-arrow">›</text>
+      </view>
+    </view>
+
+    <!-- 快速操作 -->
+    <view class="quick-actions">
+    </view>
+  </view>
+</view>

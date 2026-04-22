@@ -1,0 +1,108 @@
+<view class="container">
+  <!-- 状态筛选标签 -->
+  <scroll-view class="tabs" scroll-x="true">
+    <view wx:for="{{tabs}}" wx:key="status"
+          class="tab-item {{currentStatus === item.status ? 'active' : ''}}"
+          bindtap="onTabClick"
+          data-status="{{item.status}}">
+      {{item.label}}
+    </view>
+  </scroll-view>
+
+  <scroll-view class="content" scroll-y="true">
+    <!-- 预约列表 -->
+    <view class="booking-item"
+          wx:for="{{bookings}}"
+          wx:key="id">
+      <view class="booking-header">
+        <image wx:if="{{item.course_image}}" class="course-cover" src="{{item.course_image}}" mode="aspectFill"></image>
+        <view class="booking-header-info">
+          <view class="course-title-row">
+            <text class="course-title">{{item.course_title}}</text>
+            <text class="course-type-tag {{item.course_type === 'group' ? 'tag-group' : 'tag-private'}}">{{item.course_type === 'group' ? '团课' : '私教'}}</text>
+          </view>
+          <view class="booking-status {{item.status}}">
+            <text wx:if="{{item.status === 'pending'}}">待审核</text>
+            <text wx:elif="{{item.status === 'approved'}}">已通过</text>
+            <text wx:elif="{{item.status === 'rejected'}}">未通过</text>
+            <text wx:elif="{{item.status === 'completed'}}">已完成</text>
+            <text wx:elif="{{item.status === 'cancelled'}}">已取消</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="booking-info">
+        <view wx:if="{{item.teacher_name}}" class="info-row">
+          <text class="info-label">教练：</text>
+          <text class="info-value">{{item.teacher_name}}</text>
+        </view>
+        <view class="info-row">
+          <text class="info-label">时间：</text>
+          <text class="info-value">{{item.schedule_date || item.booking_date}} {{item.start_time}}{{item.end_time ? '-' + item.end_time : ''}}</text>
+        </view>
+        <view class="info-row">
+          <text class="info-label">金额：</text>
+          <text class="price-value">¥{{item.payment_amount}}</text>
+        </view>
+        <view wx:if="{{item.payment_status}}" class="info-row">
+          <text class="info-label">支付：</text>
+          <text class="info-value {{item.payment_status === 'paid' ? 'paid-text' : ''}}">{{item.payment_status === 'paid' ? '已支付' : item.payment_status === 'refunded' ? '已退款' : '待支付'}}</text>
+        </view>
+        <view wx:if="{{item.use_membership}}" class="info-row">
+          <text class="info-label">方式：</text>
+          <text class="info-value">会员卡</text>
+        </view>
+      </view>
+
+      <view wx:if="{{item.reject_reason}}" class="rejection-reason">
+        <text class="reason-label">拒绝原因：</text>
+        <text class="reason-text">{{item.reject_reason}}</text>
+      </view>
+
+      <view class="booking-actions">
+        <!-- ★ 未支付可取消（不管审核状态） -->
+        <button wx:if="{{item.payment_status !== 'paid' && item.status !== 'cancelled' && item.status !== 'rejected' && item.status !== 'completed'}}"
+                class="cancel-btn"
+                catchtap="onCancelBooking"
+                data-id="{{item.id}}">
+          取消预约
+        </button>
+
+
+        <!-- 审核通过+未支付+非会员卡 可支付 -->
+        <button wx:if="{{item.status === 'approved' && item.payment_status === 'unpaid' && !item.use_membership}}"
+                class="pay-btn"
+                catchtap="onPayBooking"
+                data-id="{{item.id}}"
+                data-amount="{{item.payment_amount}}">
+          去支付
+        </button>
+
+
+        <!-- ★ 退款中显示 -->
+        <button wx:if="{{item.refund_status === 'pending'}}"
+                class="cancel-btn" style="background-color:#ff9800;" disabled>
+          退款中
+        </button>
+
+
+        <button class="detail-btn" catchtap="onViewDetail" data-id="{{item.id}}">
+          查看课程
+        </button>
+      </view>
+
+    </view>
+
+    <!-- 空状态 -->
+    <view wx:if="{{bookings.length === 0 && !loading}}" class="empty">
+      <text class="empty-icon">📅</text>
+      <text class="empty-text">暂无课程预约</text>
+      <button class="book-btn" bindtap="onBookCourse">预约课程</button>
+    </view>
+
+    <!-- 加载状态 -->
+    <view wx:if="{{loading}}" class="loading">
+      <text>加载中...</text>
+    </view>
+  </scroll-view>
+</view>

@@ -1,0 +1,92 @@
+.container {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #ff9800 0%, #f5f5f5 40%);
+  display: flex;
+  justify-content: center;
+  padding-top: 60rpx;
+}
+
+
+.qr-card {
+  width: 600rpx;
+  background-color: #fff;
+  border-radius: 24rpx;
+  padding: 50rpx 40rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 8rpx 30rpx rgba(0,0,0,0.12);
+  height: fit-content;
+}
+
+
+.avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 60rpx;
+  border: 4rpx solid #ff9800;
+  margin-bottom: 20rpx;
+}
+
+
+.username {
+  font-size: 34rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 40rpx;
+}
+
+
+.qr-wrapper {
+  width: 440rpx;
+  height: 440rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2rpx solid #f0f0f0;
+  border-radius: 12rpx;
+  margin-bottom: 30rpx;
+}
+
+
+.qr-image {
+  width: 420rpx;
+  height: 420rpx;
+}
+
+
+.qr-loading {
+  color: #999;
+  font-size: 28rpx;
+}
+
+
+.qr-tip {
+  font-size: 26rpx;
+  color: #999;
+  margin-bottom: 20rpx;
+}
+
+
+.countdown {
+  font-size: 24rpx;
+  color: #ff9800;
+  display: flex;
+  align-items: center;
+  gap: 15rpx;
+}
+
+
+.countdown.expired {
+  color: #f44336;
+}
+
+
+.refresh-btn {
+  font-size: 24rpx;
+  padding: 10rpx 30rpx;
+  background-color: #ff9800;
+  color: #fff;
+  border-radius: 30rpx;
+  border: none;
+}

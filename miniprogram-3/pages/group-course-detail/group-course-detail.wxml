@@ -1,0 +1,70 @@
+<view class="container">
+  <!-- 课程封面 -->
+  <image class="course-cover" src="{{course.cover_image || '/images/default-course.png'}}" mode="aspectFill"></image>
+
+  <!-- 课程基本信息 -->
+  <view class="course-info-section">
+    <view class="course-title">{{course.title}}</view>
+    <view class="course-meta">
+      <view class="meta-item">
+        <text class="meta-label">时间：</text>
+        <text class="meta-value">{{course.course_start}} - {{course.course_end}}</text>
+      </view>
+      <view class="meta-item">
+        <text class="meta-label">地点：</text>
+        <text class="meta-value">{{course.location}}</text>
+      </view>
+      <view class="meta-item">
+        <text class="meta-label">人数：</text>
+        <text class="meta-value">{{course.current_participants}}/{{course.max_participants}}</text>
+      </view>
+      <view class="meta-item">
+        <text class="meta-label">价格：</text>
+        <text class="price-value">¥{{course.price}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 教练信息 -->
+  <view class="teacher-section" bindtap="viewTeacherDetail">
+    <view class="section-title">授课教练</view>
+    <view class="teacher-card">
+      <image class="teacher-avatar" src="{{teacher.avatar_url || '/images/default-avatar.png'}}" mode="aspectFill"></image>
+      <view class="teacher-info">
+        <view class="teacher-name">{{teacher.name}}</view>
+        <view class="teacher-intro">{{teacher.teacher_intro || '优秀教练'}}</view>
+      </view>
+      <view class="view-detail-btn">查看详情 ></view>
+    </view>
+  </view>
+
+  <!-- 课程介绍 -->
+  <view class="section">
+    <view class="section-title">课程介绍</view>
+    <view class="section-content">{{course.description || '暂无介绍'}}</view>
+  </view>
+
+  <!-- 底部报名按钮 -->
+  <view class="bottom-bar">
+    <view class="action-buttons">
+      <button class="action-btn" bindtap="onGoHome">
+        <text class="icon">🏠</text>
+        <text class="btn-text">首页</text>
+      </button>
+      <button class="action-btn" open-type="share">
+        <text class="icon">📤</text>
+        <text class="btn-text">分享</text>
+      </button>
+      <button class="action-btn" bindtap="onConsult">
+        <text class="icon">💬</text>
+        <text class="btn-text">咨询</text>
+      </button>
+    </view>
+    <view class="enroll-area">
+      <view class="price-show">¥{{course.price}}</view>
+      <button class="enroll-btn {{enrollButtonDisabled ? 'enroll-btn-disabled' : ''}}" bindtap="enrollCourse">
+        {{enrollButtonText}}
+      </button>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "扫码核销",
+  "navigationBarBackgroundColor": "#4caf50",
+  "navigationBarTextStyle": "white",
+  "enablePullDownRefresh": true
+}

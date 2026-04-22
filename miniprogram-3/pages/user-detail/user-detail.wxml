@@ -1,0 +1,237 @@
+<view class="container">
+  <scroll-view scroll-y="true" class="content">
+
+
+    <view class="section">
+      <view class="section-title">基本信息</view>
+      <view class="info-item">
+        <text class="label">姓名</text>
+        <text class="value">{{userProfile.real_name || '未设置'}}</text>
+      </view>
+      <view class="info-item">
+        <text class="label">性别</text>
+        <text class="value">{{userProfile.gender || '未知'}}</text>
+      </view>
+      <view class="info-item">
+        <text class="label">年龄</text>
+        <text class="value">{{userProfile.age || '未知'}}岁</text>
+      </view>
+      <view class="info-item">
+        <text class="label">手机号</text>
+        <text class="value">{{userProfile.phone || '未设置'}}</text>
+      </view>
+      <view class="info-item">
+        <text class="label">身份证号</text>
+        <text class="value">{{userProfile.id_card || '未设置'}}</text>
+      </view>
+    </view>
+
+
+    <view class="section">
+      <view class="section-title">用户类型</view>
+      <view class="role-section">
+        <view class="role-display">
+          <text class="role-label">当前类型：</text>
+          <view class="role-badge {{userProfile.user_type === 'admin' ? 'admin' : userProfile.user_type === 'teacher' ? 'teacher' : 'normal'}}">
+            {{userProfile.user_type === 'admin' ? '管理员' : userProfile.user_type === 'teacher' ? '教练' : '普通用户'}}
+          </view>
+        </view>
+        <view class="role-actions-three">
+          <button class="role-btn-small {{userProfile.user_type === 'user' ? 'disabled' : ''}}" data-type="user" bindtap="onChangeUserType">普通用户</button>
+          <button class="role-btn-small teacher-btn {{userProfile.user_type === 'teacher' ? 'disabled' : ''}}" data-type="teacher" bindtap="onChangeUserType">教练</button>
+          <button class="role-btn-small admin-btn-color {{userProfile.user_type === 'admin' ? 'disabled' : ''}}" data-type="admin" bindtap="onChangeUserType">管理员</button>
+        </view>
+      </view>
+      <view wx:if="{{userProfile.user_type === 'teacher'}}" class="teacher-info">
+        <text class="info-hint">💡 该用户已设置为教练，拥有课程活动管理和预约审核权限</text>
+      </view>
+      <view wx:if="{{userProfile.user_type === 'admin'}}" class="teacher-info">
+        <text class="info-hint">🛠️ 该用户已设置为管理员，拥有全部管理权限</text>
+      </view>
+    </view>
+
+
+    <view class="section">
+      <view class="section-title">保险状态</view>
+      <view wx:if="{{userProfile.has_annual_insurance && userProfile.insurance_valid}}" class="insurance-info valid">
+        <text class="insurance-status">✅ 已参保（年险）</text>
+        <text class="insurance-period">保障期间：{{userProfile.annual_insurance_start_cn}} ~ {{userProfile.annual_insurance_end_cn}}</text>
+      </view>
+      <view wx:elif="{{userProfile.has_temporary_insurance && userProfile.has_ongoing_activity}}" class="insurance-info temporary">
+        <text class="insurance-status">✅ 活动期间保险</text>
+        <text class="insurance-period">活动：{{userProfile.ongoing_activity_title}}</text>
+      </view>
+      <view wx:elif="{{userProfile.has_annual_insurance && !userProfile.insurance_valid}}" class="insurance-info expired">
+        <text class="insurance-status">⚠️ 保险已过期</text>
+      </view>
+      <view wx:else class="insurance-info invalid">
+        <text class="insurance-status">⚠️ 未参保</text>
+      </view>
+    </view>
+
+
+    <view class="section">
+      <view class="section-title">紧急联系信息</view>
+      <view class="info-item">
+        <text class="label">紧急联系人</text>
+        <text class="value">{{userProfile.emergency_contact_name || '未设置'}}</text>
+      </view>
+      <view class="info-item">
+        <text class="label">联系电话</text>
+        <text class="value">{{userProfile.emergency_contact_phone || '未设置'}}</text>
+      </view>
+      <view class="info-item">
+        <text class="label">血型</text>
+        <text class="value">{{userProfile.blood_type || '未设置'}}</text>
+      </view>
+    </view>
+
+
+    <view class="section">
+      <view class="section-title">健康信息</view>
+      <view class="info-item">
+        <text class="label">过敏史</text>
+        <text class="value">{{userProfile.allergy_history || '无'}}</text>
+      </view>
+      <view class="info-item">
+        <text class="label">禁忌症</text>
+        <text class="value">{{userProfile.contraindications || '无'}}</text>
+      </view>
+    </view>
+
+
+    <!-- 教练课程 -->
+    <view wx:if="{{userProfile.user_type === 'teacher' && teacherCourses.length > 0}}" class="section">
+      <view class="section-title">教授课程 ({{teacherCourses.length}})</view>
+      <scroll-view scroll-y="true" class="history-scroll">
+        <view wx:for="{{teacherCourses}}" wx:key="id" class="history-item"
+              data-id="{{item.id}}" data-type="{{item.course_type}}" bindtap="onTeacherCourseClick">
+          <view class="history-item-header">
+            <text class="history-item-title link-text">{{item.title || item.course_name}}</text>
+            <text class="history-item-tag {{item.course_type === 'group' ? 'tag-group' : 'tag-private'}}">{{item.course_type === 'group' ? '团课' : '私教'}}</text>
+          </view>
+          <view class="history-item-meta">
+            <text>{{item.price ? '¥' + item.price : ''}}</text>
+            <text class="history-item-status {{item.status}}">{{item.status === 'active' ? '开课中' : '已停课'}}</text>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+
+
+    <!-- 活动历史 -->
+    <view class="section">
+      <view class="section-title">活动历史 ({{historyActivities.length}})</view>
+      <scroll-view wx:if="{{historyActivities.length > 0}}" scroll-y="true" class="history-scroll">
+        <view wx:for="{{historyActivities}}" wx:key="id" class="history-item"
+              data-id="{{item.activity_id}}" bindtap="onActivityClick">
+          <view class="history-item-header">
+            <text class="history-item-title link-text">{{item.title}}</text>
+            <text class="history-item-tag {{item.status === 'approved' ? 'tag-success' : item.status === 'pending' ? 'tag-pending' : 'tag-default'}}">{{item.status === 'approved' ? '已通过' : item.status === 'pending' ? '待审核' : item.status === 'rejected' ? '已拒绝' : item.status === 'cancelled' ? '已取消' : item.status === 'completed' ? '已完成' : item.status}}</text>
+          </view>
+          <view class="history-item-meta">
+            <text wx:if="{{item.activity_start}}">{{item.activity_start}}</text>
+            <text wx:if="{{item.total_amount}}">¥{{item.total_amount}}</text>
+          </view>
+        </view>
+      </scroll-view>
+      <view wx:if="{{historyActivities.length === 0}}" class="empty-hint"><text>暂无活动记录</text></view>
+    </view>
+
+
+    <!-- 课程历史 -->
+    <view class="section">
+      <view class="section-title">课程历史 ({{historyCourses.length}})</view>
+      <scroll-view wx:if="{{historyCourses.length > 0}}" scroll-y="true" class="history-scroll">
+        <view wx:for="{{historyCourses}}" wx:key="id" class="history-item"
+              data-id="{{item.course_id}}" data-type="{{item.course_type}}" bindtap="onCourseClick">
+          <view class="history-item-header">
+            <text class="history-item-title link-text">{{item.title}}</text>
+            <text class="history-item-tag {{item.course_type === 'group' ? 'tag-group' : 'tag-private'}}">{{item.course_type === 'group' ? '团课' : '私教'}}</text>
+          </view>
+          <view class="history-item-meta">
+            <text wx:if="{{item.schedule_date}}">{{item.schedule_date}} {{item.start_time}}</text>
+            <text wx:elif="{{item.booking_date}}">{{item.booking_date}}</text>
+            <text wx:if="{{item.teacher_name}}">教练：{{item.teacher_name}}</text>
+            <text wx:if="{{item.payment_amount}}">¥{{item.payment_amount}}</text>
+          </view>
+        </view>
+      </scroll-view>
+      <view wx:if="{{historyCourses.length === 0}}" class="empty-hint"><text>暂无课程记录</text></view>
+    </view>
+
+
+    <!-- 订单历史 -->
+    <view class="section">
+      <view class="section-title">订单历史 ({{historyOrders.length}})</view>
+      <scroll-view wx:if="{{historyOrders.length > 0}}" scroll-y="true" class="history-scroll">
+        <view wx:for="{{historyOrders}}" wx:key="id" class="history-item"
+              data-id="{{item.id}}" bindtap="onOrderClick">
+          <view class="history-item-header">
+            <text class="history-item-title link-text">{{item.product_name}}</text>
+            <text class="history-item-tag {{item.status === 'paid' ? 'tag-success' : item.status === 'pending' ? 'tag-pending' : 'tag-default'}}">{{item.status === 'paid' ? '已支付' : item.status === 'pending' ? '待支付' : item.status === 'cancelled' ? '已取消' : item.status === 'refunded' ? '已退款' : item.status}}</text>
+          </view>
+          <view class="history-item-meta">
+            <text>¥{{item.total_amount}}</text>
+            <text wx:if="{{item.created_at}}">{{item.created_at}}</text>
+          </view>
+        </view>
+      </scroll-view>
+      <view wx:if="{{historyOrders.length === 0}}" class="empty-hint"><text>暂无订单记录</text></view>
+    </view>
+
+
+    <!-- 会员卡 -->
+    <view class="section">
+      <view class="section-title">会员卡 ({{userProfile.membership_cards_detail.length || 0}})</view>
+      <scroll-view wx:if="{{userProfile.membership_cards_detail && userProfile.membership_cards_detail.length > 0}}" scroll-y="true" class="history-scroll">
+        <view wx:for="{{userProfile.membership_cards_detail}}" wx:key="id" class="membership-card-block">
+          <view class="mc-header">
+            <text class="mc-name link-text" data-card-id="{{item.card_id}}" bindtap="onMembershipCardClick">{{item.card_name || '会员卡'}}</text>
+            <text class="mc-type-tag">{{item.card_type === 'times' ? '次卡' : '期限卡'}}</text>
+          </view>
+
+
+          <!-- 次卡 -->
+          <view wx:if="{{item.card_type === 'times'}}" class="mc-times">
+            剩余 <text class="mc-times-num">{{item.remaining_times}}</text> / {{item.total_times}} 次
+          </view>
+
+
+          <!-- 期限卡 -->
+          <view wx:if="{{item.card_type === 'period'}}" class="mc-period-info">
+            <view class="mc-period-status {{item.period_status === '已激活生效中' ? 'status-active-green' : item.period_status === '未激活' ? 'status-inactive' : 'status-expired'}}">
+              {{item.period_status}}
+            </view>
+            <view wx:if="{{item.period_status === '已激活生效中'}}" class="mc-period-days">
+              剩余 <text class="mc-times-num">{{item.remaining_days}}</text> / {{item.total_days}} 天
+            </view>
+            <view wx:elif="{{item.period_status === '未激活'}}" class="mc-period-days">
+              激活后有效 {{item.total_days}} 天
+            </view>
+          </view>
+
+
+          <view class="mc-status">
+            卡状态：{{item.status === 'active' ? '生效中' : item.status === 'expired' ? '已过期' : '已用完'}}
+          </view>
+
+
+          <!-- 核销历史 -->
+          <view wx:if="{{item.consume_logs && item.consume_logs.length > 0}}" class="mc-logs">
+            <view class="mc-logs-title">核销记录：</view>
+            <view wx:for="{{item.consume_logs}}" wx:for-item="log" wx:key="id" class="mc-log-item">
+              <text class="mc-log-time">{{log.created_at}}</text>
+              <text class="mc-log-op">{{log.operator_name}} ({{log.consume_type === 'scan' ? '扫码' : '手动'}})</text>
+              <text class="mc-log-change">{{log.remaining_before}} → {{log.remaining_after}}</text>
+            </view>
+          </view>
+          <view wx:else class="empty-hint"><text>暂无核销记录</text></view>
+        </view>
+      </scroll-view>
+      <view wx:else class="empty-hint"><text>暂无会员卡</text></view>
+    </view>
+
+
+  </scroll-view>
+</view>

@@ -1,0 +1,163 @@
+<view class="container">
+  <view class="header">
+    <text class="title">场馆内容管理</text>
+  </view>
+
+  <scroll-view class="content" scroll-y="true" enhanced="{{true}}">
+    <!-- 内容列表 -->
+    <view class="content-item"
+          wx:for="{{contents}}"
+          wx:key="id">
+      <image class="content-image"
+             src="{{item.image_url || '/images/default-venue.png'}}"
+             mode="aspectFill" />
+      <view class="content-info">
+        <view class="content-title">{{item.title}}</view>
+        <view class="content-type">{{item.content_type === 'carousel' ? '轮播图' : item.content_type === 'banner' ? '横幅图片' : item.content_type === 'text' ? '文字内容' : item.content_type === 'activity' ? '活动推荐' : item.content_type}}</view>
+        <view class="content-order">排序：{{item.sort_order}}</view>
+        <view wx:if="{{item.link_type}}" class="content-link">{{item.link_type === 'activity' ? '活动' : item.link_type === 'course' ? '课程' : '商品'}}：{{item.link_title || '#' + item.link_id}}</view>
+        <view class="content-status {{item.is_active ? 'active' : 'inactive'}}">
+          {{item.is_active ? '启用中' : '已停用'}}
+        </view>
+      </view>
+      <view class="content-actions">
+        <button class="edit-btn" bindtap="onEdit" data-id="{{item.id}}">编辑</button>
+        <button class="toggle-btn"
+                bindtap="onToggle"
+                data-id="{{item.id}}"
+                data-active="{{item.is_active}}">
+          {{item.is_active ? '停用' : '启用'}}
+        </button>
+        <button class="delete-btn" bindtap="onDelete" data-id="{{item.id}}">删除</button>
+      </view>
+    </view>
+
+    <!-- 空状态 -->
+    <view wx:if="{{contents.length === 0 && !loading}}" class="empty">
+      <text class="empty-text">暂无内容</text>
+    </view>
+
+    <!-- 加载状态 -->
+    <view wx:if="{{loading}}" class="loading">
+      <text>加载中...</text>
+    </view>
+  </scroll-view>
+
+  <!-- 底部新建按钮 -->
+  <view class="bottom-bar">
+    <button class="create-btn" bindtap="onAdd">+ 新建内容</button>
+  </view>
+
+  <!-- 编辑弹窗 -->
+  <view class="modal-overlay" wx:if="{{showModal}}" bindtap="onCloseModal">
+    <view class="modal-content" catchtap="stopPropagation">
+      <view class="modal-header">
+        <text class="modal-title">{{editId ? '编辑内容' : '新建内容'}}</text>
+        <text class="modal-close" bindtap="onCloseModal">x</text>
+      </view>
+
+      <scroll-view class="modal-body" scroll-y="true">
+        <view class="form-item">
+          <text class="form-label">内容类型 *</text>
+          <picker mode="selector"
+                  range="{{typeOptions}}"
+                  range-key="label"
+                  value="{{typeIndex}}"
+                  bindchange="onTypeChange">
+            <view class="picker-display">{{typeOptions[typeIndex].label}}</view>
+          </picker>
+        </view>
+
+        <view class="form-item">
+          <text class="form-label">标题 *</text>
+          <input class="form-input"
+                 placeholder="请输入标题"
+                 value="{{formData.title}}"
+                 bindinput="onTitleInput" />
+        </view>
+
+        <view class="form-item">
+          <text class="form-label">图片</text>
+          <image wx:if="{{formData.image_url}}"
+                 class="image-preview"
+                 src="{{formData.image_url}}"
+                 mode="aspectFill" />
+          <button class="upload-btn" bindtap="onChooseImage">
+            {{formData.image_url ? '更换图片' : '上传图片'}}
+          </button>
+        </view>
+
+        <!-- 文字内容（仅text类型显示） -->
+        <view class="form-item" wx:if="{{formData.content_type === 'text' || formData.content_type === 'activity'}}">
+          <text class="form-label">内容描述</text>
+          <textarea class="form-textarea"
+                    placeholder="请输入内容描述"
+                    value="{{formData.content}}"
+                    bindinput="onContentInput"
+                    auto-height="{{true}}" />
+        </view>
+
+        <!-- 发布类型 -->
+        <view class="form-item">
+          <text class="form-label">发布类型</text>
+          <picker mode="selector"
+                  range="{{linkTypeOptions}}"
+                  range-key="label"
+                  value="{{linkTypeIndex}}"
+                  bindchange="onLinkTypeChange">
+            <view class="picker-display">{{linkTypeOptions[linkTypeIndex].label}}</view>
+          </picker>
+        </view>
+
+        <!-- 选择关联内容 -->
+        <view class="form-item" wx:if="{{formData.link_type}}">
+          <text class="form-label">选择{{formData.link_type === 'activity' ? '活动' : formData.link_type === 'course' ? '课程' : '商品'}} *</text>
+          <view wx:if="{{selectedLinkItem}}" class="selected-link-info">
+            <text class="selected-link-text">{{selectedLinkItem.title}}</text>
+            <text class="selected-link-clear" bindtap="onClearLinkItem">清除</text>
+          </view>
+          <input class="link-search-input"
+                 placeholder="搜索{{formData.link_type === 'activity' ? '活动' : formData.link_type === 'course' ? '课程' : '商品'}}名称"
+                 value="{{linkSearchValue}}"
+                 bindinput="onLinkSearch" />
+          <scroll-view scroll-y class="link-items-list" wx:if="{{filteredLinkItems.length > 0}}">
+            <view wx:for="{{filteredLinkItems}}" wx:key="id"
+                  class="link-item {{formData.link_id == item.id ? 'selected' : ''}}"
+                  data-id="{{item.id}}" data-title="{{item.title}}"
+                  bindtap="onSelectLinkItem">
+              <text class="link-item-title">{{item.title}}</text>
+              <text class="link-item-time">{{item.created_at}}</text>
+            </view>
+          </scroll-view>
+          <view wx:elif="{{linkItems.length === 0}}" class="link-empty">
+            <text>暂无可选内容</text>
+          </view>
+        </view>
+
+        <view class="form-item">
+          <text class="form-label">排序 *</text>
+          <input class="form-input"
+                 type="number"
+                 placeholder="请输入排序（数字越小越靠前）"
+                 value="{{formData.sort_order}}"
+                 bindinput="onOrderInput" />
+        </view>
+
+        <view class="form-item">
+          <text class="form-label">状态</text>
+          <view class="status-switch">
+            <text class="status-text">启用</text>
+            <switch checked="{{formData.is_active}}"
+                    bindchange="onStatusChange"
+                    color="#ff9800" />
+          </view>
+        </view>
+      </scroll-view>
+
+      <view class="modal-actions">
+        <button class="cancel-btn" bindtap="onCloseModal">取消</button>
+        <button class="confirm-btn" bindtap="onConfirm">确定</button>
+      </view>
+    </view>
+  </view>
+</view>

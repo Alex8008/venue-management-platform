@@ -1,0 +1,59 @@
+<view class="container">
+  <view class="search-bar">
+    <input class="search-input"
+           placeholder="搜索课程名称"
+           value="{{courseSearchValue}}"
+           bindinput="onCourseSearchInput"
+           bindconfirm="onCourseSearch" />
+    <button class="search-btn" bindtap="onCourseSearch">搜索</button>
+  </view>
+
+  <view class="section-header">
+    <view class="section-title">课程管理</view>
+    <view class="header-buttons">
+      <button class="sort-btn" bindtap="onManageCourseFilters">分类管理</button>
+      <button class="create-btn" bindtap="onCreateCourse">创建课程</button>
+    </view>
+  </view>
+
+  <view wx:if="{{courses.length > 0}}" class="activities-list">
+    <view wx:for="{{courses}}" wx:key="id" class="activity-card">
+      <image src="{{item.cover_image || 'https://picsum.photos/160/160?random=c' + item.id}}"
+             class="activity-image"
+             mode="aspectFill" />
+      <view class="activity-info">
+        <view class="activity-title">{{item.title}}</view>
+        <view class="activity-meta">
+          <text class="category">{{item.course_type === 'group' ? '团课' : '私教'}}</text>
+          <text class="participants">教练：{{item.teacher_name || '未指定'}}</text>
+          <text class="status {{item.status}}">{{item.status === 'active' ? '开课中' : '已停课'}}</text>
+        </view>
+        <view class="activity-date">{{item.difficulty || ''}} {{item.duration ? item.duration + '分钟' : ''}}</view>
+        <view class="activity-fee">￥{{item.price}}</view>
+      </view>
+      <view class="activity-actions">
+        <button class="action-btn edit"
+                data-id="{{item.id}}"
+                bindtap="onEditCourse">
+          编辑
+        </button>
+        <button class="action-btn edit"
+                data-id="{{item.id}}"
+                bindtap="onViewCourseParticipants">
+          人员详情
+        </button>
+        <button class="action-btn delete"
+                data-id="{{item.id}}"
+                data-name="{{item.title}}"
+                bindtap="onDeleteCourse">
+          删除
+        </button>
+      </view>
+    </view>
+  </view>
+
+  <view wx:else class="empty-state">
+    <text>暂无课程</text>
+    <button class="create-btn" bindtap="onCreateCourse">创建第一个课程</button>
+  </view>
+</view>

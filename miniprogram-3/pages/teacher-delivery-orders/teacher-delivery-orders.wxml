@@ -1,0 +1,88 @@
+<view class="container">
+
+  <!-- 状态筛选 -->
+  <scroll-view class="tabs" scroll-x="true">
+    <view class="tab-item {{currentStatus === 'pending' ? 'active' : ''}}"
+          bindtap="onTabClick"
+          data-status="pending">
+      待配送
+    </view>
+    <view class="tab-item {{currentStatus === 'delivered' ? 'active' : ''}}"
+          bindtap="onTabClick"
+          data-status="delivered">
+      已配送
+    </view>
+    <view class="tab-item {{currentStatus === '' ? 'active' : ''}}"
+          bindtap="onTabClick"
+          data-status="">
+      全部
+    </view>
+  </scroll-view>
+
+  <scroll-view class="content" scroll-y="true">
+    <!-- 配送单列表 -->
+    <view class="order-item"
+          wx:for="{{orders}}"
+          wx:key="id">
+      <view class="order-header">
+        <view class="user-info">
+          <image class="user-avatar" src="{{item.user_avatar || '/images/default-avatar.png'}}" mode="aspectFill" />
+          <view class="user-details">
+            <text class="user-name">{{item.user_name}}</text>
+            <text class="user-phone">{{item.user_phone}}</text>
+          </view>
+        </view>
+        <view class="order-status {{item.status}}">
+          <text wx:if="{{item.status === 'pending'}}">待配送</text>
+          <text wx:elif="{{item.status === 'delivered'}}">已配送</text>
+        </view>
+      </view>
+
+      <view class="order-info">
+        <view class="product-row">
+          <image class="product-image"
+                 src="{{item.product_image || '/images/default-product.png'}}"
+                 mode="aspectFill" />
+          <view class="product-info">
+            <text class="product-name">{{item.product_name}}</text>
+            <text class="product-quantity">数量：{{item.quantity}}</text>
+          </view>
+        </view>
+
+        <view class="info-row">
+          <text class="info-label">下单时间：</text>
+          <text class="info-value">{{item.created_at}}</text>
+        </view>
+
+        <view wx:if="{{item.delivery_time}}" class="info-row">
+          <text class="info-label">配送时间：</text>
+          <text class="info-value">{{item.delivery_time}}</text>
+        </view>
+
+        <view wx:if="{{item.notes}}" class="notes">
+          <text class="notes-label">备注：</text>
+          <text class="notes-text">{{item.notes}}</text>
+        </view>
+      </view>
+
+      <view wx:if="{{item.status === 'pending'}}" class="order-actions">
+        <button class="deliver-btn"
+                bindtap="onMarkDelivered"
+                data-id="{{item.id}}">
+          标记已配送
+        </button>
+      </view>
+    </view>
+
+    <!-- 空状态 -->
+    <view wx:if="{{orders.length === 0 && !loading}}" class="empty">
+      <text class="empty-icon">🍽️</text>
+      <text class="empty-text">暂无配送单</text>
+    </view>
+
+    <!-- 加载状态 -->
+    <view wx:if="{{loading}}" class="loading">
+      <text>加载中...</text>
+    </view>
+  </scroll-view>
+</view>

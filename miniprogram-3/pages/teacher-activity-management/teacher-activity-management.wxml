@@ -1,0 +1,56 @@
+<view class="container">
+  <view class="search-bar">
+    <input class="search-input"
+           placeholder="搜索活动名称"
+           value="{{searchValue}}"
+           bindinput="onSearchInput"
+           bindconfirm="onSearch" />
+    <button class="search-btn" bindtap="onSearch">搜索</button>
+  </view>
+
+  <view class="section-header">
+    <view class="section-title">活动管理</view>
+    <button class="create-btn" bindtap="onCreateActivity">创建活动</button>
+  </view>
+
+  <view wx:if="{{activities.length > 0}}" class="activities-list">
+    <view wx:for="{{activities}}" wx:key="id" class="activity-card">
+      <image src="{{item.cover_image_url || 'https://picsum.photos/160/160?random=' + item.id}}"
+             class="activity-image"
+             mode="aspectFill" />
+      <view class="activity-info">
+        <view class="activity-title">{{item.title}}</view>
+        <view class="activity-meta">
+          <text class="category">{{item.category}}</text>
+          <text class="participants">{{item.current_participants}}/{{item.max_participants}}人</text>
+          <text class="status {{item.status}}">{{item.status === 'published' ? '已发布' : item.status}}</text>
+        </view>
+        <view class="activity-date">{{item.activity_start_cn}}</view>
+        <view class="activity-fee">￥{{item.base_fee}}</view>
+      </view>
+      <view class="activity-actions">
+        <button class="action-btn edit"
+                data-id="{{item.id}}"
+                bindtap="onEditActivity">
+          编辑
+        </button>
+        <button class="action-btn participants"
+                data-id="{{item.id}}"
+                data-title="{{item.title}}"
+                bindtap="onViewParticipants">
+          人员详情
+        </button>
+        <button class="action-btn delete"
+                data-id="{{item.id}}"
+                bindtap="onDeleteActivity">
+          删除
+        </button>
+      </view>
+    </view>
+  </view>
+
+  <view wx:else class="empty-state">
+    <text>暂无活动</text>
+    <button class="create-btn" bindtap="onCreateActivity">创建第一个活动</button>
+  </view>
+</view>

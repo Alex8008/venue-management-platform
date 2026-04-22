@@ -1,0 +1,34 @@
+<view class="container">
+  <scroll-view scroll-y="true" class="content">
+    
+    <view wx:if="{{notifications.length > 0}}" class="notification-list">
+      <view wx:for="{{notifications}}" wx:key="id" 
+            class="notification-card {{item.is_read ? 'read' : 'unread'}}"
+            data-id="{{item.id}}"
+            bindtap="onNotificationClick">
+        <view wx:if="{{!item.is_read}}" class="unread-dot"></view>
+        
+        <view class="notification-header">
+          <text class="notification-title">{{item.title}}</text>
+          <text class="notification-time">{{item.created_at_cn}}</text>
+        </view>
+        
+        <view class="notification-content">
+          <text>{{item.content}}</text>
+        </view>
+        
+        <view class="notification-footer">
+          <view class="notification-type">{{typeMap[item.notification_type] || item.notification_type}}</view>
+          <view class="notification-status {{item.is_read ? 'read' : 'unread'}}">
+            {{item.is_read ? '已读' : '未读'}}
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view wx:else class="empty-notifications">
+      <text>暂无通知消息</text>
+    </view>
+
+  </scroll-view>
+</view>

@@ -1,0 +1,140 @@
+<!--pages/home/home.wxml-->
+<view class="container">
+  <!-- 顶部选项卡（精品团课/私教预约）-->
+  <view class="tab-bar">
+    <view class="tab-item {{currentTab === 'group' ? 'active' : ''}}" bindtap="switchTab" data-tab="group">
+      精品团课
+    </view>
+    <view class="tab-item {{currentTab === 'private' ? 'active' : ''}}" bindtap="switchTab" data-tab="private">
+      私教预约
+    </view>
+  </view>
+
+  <!-- 横向日期选择条 -->
+  <scroll-view class="date-scroll" scroll-x="{{true}}" scroll-with-animation="{{true}}" scroll-into-view="date-{{selectedDateIndex}}">
+    <view class="date-list">
+      <block wx:for="{{dateList}}" wx:key="index">
+        <view id="date-{{index}}" class="date-item {{selectedDate === item.date ? 'active' : ''}}" bindtap="selectDate" data-date="{{item.date}}" data-index="{{index}}">
+          <view class="date-num">{{item.day}}</view>
+          <view class="date-week">{{item.week}}</view>
+        </view>
+      </block>
+    </view>
+  </scroll-view>
+
+  <!-- ==================== 团课内容 ==================== -->
+  <block wx:if="{{currentTab === 'group'}}">
+    <!-- 搜索栏 -->
+    <view class="search-section">
+      <view class="search-bar">
+        <input class="search-input"
+               placeholder="搜索课程名称"
+               value="{{searchValue}}"
+               bindinput="onSearchInput"
+               bindconfirm="onSearch" />
+        <button class="search-btn" bindtap="onSearch">搜索</button>
+      </view>
+    </view>
+
+    <!-- 筛选分类 -->
+    <scroll-view scroll-x="true" class="nav-scroll">
+      <view class="nav-item {{currentCategory === '' ? 'active' : ''}}"
+            data-category=""
+            bindtap="onNavClick">全部</view>
+      <view class="nav-item {{currentCategory === item.id ? 'active' : ''}}"
+            wx:for="{{categories}}"
+            wx:key="id"
+            data-category="{{item.id}}"
+            bindtap="onNavClick">{{item.category_name}}</view>
+    </scroll-view>
+
+    <!-- 团课列表 -->
+    <scroll-view class="content" scroll-y="true" bindscrolltolower="loadMore">
+      <view class="course-item"
+            wx:for="{{courseList}}" wx:key="id"
+            data-id="{{item.id}}"
+            bindtap="onCourseClick">
+        <image src="{{item.cover_image || '/images/default-course.png'}}"
+               class="course-image"
+               mode="aspectFill" />
+        <view class="course-info">
+          <view class="course-tag">{{item.category_name || '团课'}}</view>
+          <view class="course-title">{{item.title}}</view>
+          <view class="course-time">{{item.course_start}} - {{item.course_end}}</view>
+          <view class="course-meta">
+            <view class="course-participants">
+              <text>已报名：{{item.current_participants}}/{{item.max_participants}}</text>
+            </view>
+            <view class="course-price">¥{{item.price}}</view>
+          </view>
+          <!-- 教练信息 -->
+          <view class="teacher-info" catchtap="viewTeacher" data-id="{{item.teacher_id}}">
+            <image class="teacher-avatar-small" src="{{item.teacher_avatar || '/images/default-avatar.png'}}" mode="aspectFill"></image>
+            <text class="teacher-name-small">{{item.teacher_name}}</text>
+          </view>
+        </view>
+        <view class="course-status {{item.current_participants >= item.max_participants ? 'full' : 'available'}}">
+          {{item.current_participants >= item.max_participants ? '已满' : '可报名'}}
+        </view>
+      </view>
+
+      <!-- 加载状态 -->
+      <view wx:if="{{loading}}" class="loading">
+        <text>加载中...</text>
+      </view>
+
+      <view wx:if="{{!hasMore && courseList.length > 0}}" class="no-more">
+        <text>没有更多课程了</text>
+      </view>
+
+      <view wx:if="{{courseList.length === 0 && !loading}}" class="empty">
+        <text>{{searchValue ? '未找到相关课程' : '暂无课程'}}</text>
+      </view>
+    </scroll-view>
+  </block>
+
+  <!-- ==================== 私教预约内容 ==================== -->
+  <block wx:if="{{currentTab === 'private'}}">
+    <!-- 教练搜索栏 -->
+    <view class="search-section">
+      <view class="search-bar">
+        <input class="search-input"
+               placeholder="搜索教练名称"
+               value="{{teacherSearchValue}}"
+               bindinput="onTeacherSearchInput"
+               bindconfirm="onTeacherSearch" />
+        <button class="search-btn" bindtap="onTeacherSearch">搜索</button>
+      </view>
+    </view>
+
+    <!-- 教练列表 -->
+    <scroll-view class="content" scroll-y="true">
+      <view class="teacher-card"
+            wx:for="{{teacherList}}" wx:key="id">
+        <view class="teacher-card-main" bindtap="viewTeacherDetail" data-id="{{item.id}}">
+          <image class="teacher-card-avatar"
+                 src="{{item.avatar_url || '/images/default-avatar.png'}}"
+                 mode="aspectFill" />
+          <view class="teacher-card-info">
+            <view class="teacher-card-name">{{item.real_name || item.nickname || '教练'}}</view>
+            <view class="teacher-card-intro">{{item.teacher_intro || '暂无简介'}}</view>
+            <view class="teacher-card-stats">
+              <text class="teacher-stat">课程：{{item.course_count || 0}}门</text>
+            </view>
+          </view>
+        </view>
+        <button class="view-courses-btn" bindtap="viewTeacherCourses" data-id="{{item.id}}">
+          查看课程
+        </button>
+      </view>
+
+      <view wx:if="{{teacherLoading}}" class="loading">
+        <text>加载中...</text>
+      </view>
+
+      <view wx:if="{{teacherList.length === 0 && !teacherLoading}}" class="empty">
+        <text>{{teacherSearchValue ? '未找到相关教练' : '暂无教练'}}</text>
+      </view>
+    </scroll-view>
+  </block>
+</view>

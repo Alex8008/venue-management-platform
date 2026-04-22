@@ -1,0 +1,75 @@
+<view class="container">
+  <scroll-view scroll-y="true" class="content">
+    
+    <view class="section">
+      <view class="section-title">上传保险凭证</view>
+      
+      <view class="upload-area" bindtap="onChooseImage">
+        <image wx:if="{{certificate_image_url}}" 
+               src="{{certificate_image_url}}" 
+               class="certificate-preview" 
+               mode="aspectFill" />
+        <view wx:else class="upload-placeholder">
+          <text class="upload-icon">📷</text>
+          <text class="upload-text">点击上传保险凭证图片</text>
+          <text class="upload-tip">支持保单截图或电子保单</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="section-title">保障时间</view>
+      
+      <view class="form-item">
+        <text class="label">保障开始时间</text>
+        <picker mode="date" 
+                value="{{start_date}}"
+                bindchange="onStartDateChange">
+          <view class="picker">
+            {{start_date || '选择日期'}}
+            <text wx:if="{{start_date}}" class="time-display"> {{start_time}}</text>
+          </view>
+        </picker>
+        <picker mode="time" 
+                value="{{start_time}}"
+                bindchange="onStartTimeChange"
+                class="time-picker">
+          <view class="picker-small">选择时间: {{start_time}}</view>
+        </picker>
+      </view>
+
+      <view class="form-item">
+        <text class="label">保障结束时间</text>
+        <picker mode="date" 
+                value="{{end_date}}"
+                bindchange="onEndDateChange">
+          <view class="picker">
+            {{end_date || '选择日期'}}
+            <text wx:if="{{end_date}}" class="time-display"> {{end_time}}</text>
+          </view>
+        </picker>
+        <picker mode="time" 
+                value="{{end_time}}"
+                bindchange="onEndTimeChange"
+                class="time-picker">
+          <view class="picker-small">选择时间: {{end_time}}</view>
+        </picker>
+      </view>
+    </view>
+
+    <view class="notice">
+      <text class="notice-title">温馨提示：</text>
+      <text>1. 请上传清晰的保险凭证图片</text>
+      <text>2. 请准确填写保障的起止时间（具体到小时）</text>
+      <text>3. 审核通过后，您在保障期间报名活动将自动跳过保险费用</text>
+      <text>4. 保单信息仅用于活动安全保障，不会泄露</text>
+    </view>
+
+  </scroll-view>
+
+  <view class="bottom-bar">
+    <button class="submit-btn" bindtap="onSubmit">
+      提交审核
+    </button>
+  </view>
+</view>

@@ -1,0 +1,858 @@
+.container {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.content {
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ========== 登录区域样式 - 美化版 ========== */
+.login-section {
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  padding: 60rpx 30rpx;
+  background: linear-gradient(180deg, #f8f9fa 0%, #fff 50%);
+  box-sizing: border-box;
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 80rpx;
+}
+
+.avatar-large {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 80rpx;
+  background-color: #e3f2fd;
+  margin: 0 auto 30rpx;
+  box-shadow: 0 8rpx 24rpx rgba(18, 150, 219, 0.2);
+}
+
+.welcome-text {
+  text-align: center;
+}
+
+.welcome-title {
+  font-size: 44rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 15rpx;
+}
+
+.welcome-subtitle {
+  font-size: 28rpx;
+  color: #999;
+}
+
+.login-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 25rpx;
+  margin-bottom: 40rpx;
+  padding: 0;
+}
+
+.login-btn {
+  width: 100%;
+  background-color: #fff;
+  border-radius: 16rpx;
+  border: none;
+  padding: 0;
+  box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+
+.login-btn.wechat-phone {
+  background: linear-gradient(135deg, #e3f2fd 0%, #fff 100%);
+  border: 2rpx solid #1296db;
+}
+
+.login-btn.wechat-quick {
+  background: linear-gradient(135deg, #e8f5e9 0%, #fff 100%);
+  border: 2rpx solid #07c160;
+}
+
+.btn-content {
+  display: flex;
+  align-items: center;
+  padding: 30rpx;
+  box-sizing: border-box;
+}
+
+.btn-icon {
+  font-size: 60rpx;
+  margin-right: 25rpx;
+}
+
+.btn-info {
+  flex: 1;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+}
+
+.btn-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 8rpx;
+}
+
+.btn-desc {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.other-login {
+  text-align: center;
+  margin-top: 20rpx;
+}
+
+.toggle-login-btn {
+  background-color: transparent;
+  color: #666;
+  font-size: 26rpx;
+  border: none;
+  text-decoration: underline;
+  padding: 10rpx 20rpx;
+}
+
+/* 登录表单样式 */
+.login-form {
+  background-color: #fff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.08);
+  margin-top: 20rpx;
+  box-sizing: border-box;
+}
+
+.form-item {
+  margin-bottom: 30rpx;
+}
+
+.form-label {
+  display: block;
+  font-size: 28rpx;
+  color: #333;
+  margin-bottom: 15rpx;
+  font-weight: 500;
+}
+
+.form-input {
+  width: 100%;
+  height: 80rpx;
+  padding: 0 20rpx;
+  border: 2rpx solid #e0e0e0;
+  border-radius: 12rpx;
+  font-size: 28rpx;
+  background-color: #f8f9fa;
+  box-sizing: border-box;
+}
+
+.password-login-btn {
+  width: 100%;
+  height: 80rpx;
+  background: linear-gradient(135deg, #1296db 0%, #0d7ab8 100%);
+  color: white;
+  font-size: 32rpx;
+  border-radius: 12rpx;
+  border: none;
+  margin-bottom: 30rpx;
+  box-shadow: 0 4rpx 12rpx rgba(18, 150, 219, 0.3);
+}
+
+.quick-login {
+  text-align: center;
+  border-top: 1rpx solid #eee;
+  padding-top: 25rpx;
+  margin-top: 20rpx;
+}
+
+.quick-title {
+  font-size: 24rpx;
+  color: #999;
+  display: block;
+  margin-bottom: 15rpx;
+}
+
+.quick-btn {
+  font-size: 24rpx;
+  padding: 12rpx 25rpx;
+  border-radius: 20rpx;
+  border: none;
+  margin: 0 8rpx;
+}
+
+.quick-btn.admin {
+  background-color: #ff9800;
+  color: white;
+}
+
+.quick-btn.user {
+  background-color: #4caf50;
+  color: white;
+}
+
+/* ========== 已登录状态 - 橙色头部 ========== */
+.profile-header {
+  background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+  padding: 40rpx 30rpx 50rpx;
+  border-radius: 0 0 30rpx 30rpx;
+  margin-bottom: 20rpx;
+}
+
+.header-stats-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 25rpx;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.stat-number {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #fff;
+}
+
+.stat-label {
+  font-size: 22rpx;
+  color: rgba(255, 255, 255, 0.85);
+  margin-top: 6rpx;
+}
+
+.avatar-wrapper {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-large-new {
+  width: 140rpx;
+  height: 140rpx;
+  border-radius: 70rpx;
+  border: 4rpx solid rgba(255, 255, 255, 0.8);
+  background-color: #f0f0f0;
+}
+
+.header-user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header-username {
+  font-size: 34rpx;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 8rpx;
+}
+
+.header-phone-row {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+}
+
+.header-phone {
+  font-size: 26rpx;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.link-icon {
+  font-size: 28rpx;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: bold;
+}
+
+/* ========== 本月训练卡片 ========== */
+.monthly-card {
+  background-color: #fff;
+  border-radius: 12rpx;
+  padding: 30rpx;
+  margin: 0 20rpx 20rpx;
+  box-sizing: border-box;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.06);
+}
+
+.monthly-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 25rpx;
+  border-left: 6rpx solid #ff9800;
+  padding-left: 15rpx;
+}
+
+.monthly-stats {
+  display: flex;
+  justify-content: space-around;
+}
+
+.monthly-stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.monthly-stat-number {
+  font-size: 44rpx;
+  font-weight: bold;
+  color: #ff9800;
+}
+
+.monthly-stat-label {
+  font-size: 22rpx;
+  color: #999;
+  margin-top: 8rpx;
+}
+
+/* ========== 通用 section（保险等） ========== */
+.section {
+  background-color: #fff;
+  border-radius: 12rpx;
+  padding: 30rpx;
+  margin: 0 20rpx 20rpx;
+  box-sizing: border-box;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 25rpx;
+  border-left: 4rpx solid #1296db;
+  padding-left: 15rpx;
+}
+
+/* ========== 保险状态样式（保留） ========== */
+.insurance-valid {
+  background-color: #e8f5e8;
+  color: #4caf50;
+  padding: 20rpx;
+  border-radius: 8rpx;
+  box-sizing: border-box;
+}
+
+.insurance-invalid {
+  background-color: #fff3cd;
+  color: #856404;
+  padding: 20rpx;
+  border-radius: 8rpx;
+  box-sizing: border-box;
+}
+
+.insurance-temporary {
+  background-color: #e1f5fe;
+  color: #0288d1;
+  padding: 20rpx;
+  border-radius: 8rpx;
+  box-sizing: border-box;
+}
+
+.insurance-tip {
+  display: block;
+  font-size: 22rpx;
+  margin-top: 8rpx;
+  color: #01579b;
+}
+
+.insurance-date {
+  display: block;
+  font-size: 24rpx;
+  margin-top: 10rpx;
+}
+
+.insurance-pending {
+  background-color: #fff3cd;
+  color: #856404;
+  padding: 20rpx;
+  border-radius: 8rpx;
+  box-sizing: border-box;
+}
+
+.upload-insurance-btn {
+  width: 100%;
+  background-color: #1296db;
+  color: white;
+  font-size: 28rpx;
+  padding: 20rpx;
+  border-radius: 8rpx;
+  border: none;
+  margin-top: 15rpx;
+}
+
+/* ========== 积分显示区域（保留） ========== */
+.points-section {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12rpx;
+  padding: 30rpx;
+  margin: 0 20rpx 20rpx;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 4rpx 12rpx rgba(102, 126, 234, 0.3);
+  box-sizing: border-box;
+}
+
+.points-icon {
+  font-size: 60rpx;
+  margin-right: 25rpx;
+}
+
+.points-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.points-label {
+  font-size: 26rpx;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 8rpx;
+}
+
+.points-value {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #fff;
+}
+
+.points-tip {
+  font-size: 22rpx;
+  color: rgba(255, 255, 255, 0.7);
+  margin-left: auto;
+}
+
+/* ========== 个人中心网格 ========== */
+.personal-center-card {
+  background-color: #fff;
+  border-radius: 12rpx;
+  padding: 30rpx;
+  margin: 0 20rpx 20rpx;
+  box-sizing: border-box;
+}
+
+.pc-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 25rpx;
+  border-left: 6rpx solid #ff9800;
+  padding-left: 15rpx;
+}
+
+.pc-grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.pc-grid-item {
+  width: 33.33%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 25rpx 0;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.pc-icon {
+  font-size: 50rpx;
+  margin-bottom: 12rpx;
+}
+
+.pc-label {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.pc-count {
+  font-size: 20rpx;
+  color: #ff9800;
+  margin-top: 4rpx;
+}
+
+.badge {
+  position: absolute;
+  top: 15rpx;
+  right: 30rpx;
+  background-color: #ff5722;
+  color: white;
+  font-size: 20rpx;
+  min-width: 32rpx;
+  height: 32rpx;
+  line-height: 32rpx;
+  text-align: center;
+  border-radius: 16rpx;
+  padding: 0 8rpx;
+}
+
+/* ========== 咨询信息卡片 ========== */
+.consult-info-card {
+  background-color: #fff;
+  border-radius: 12rpx;
+  padding: 30rpx;
+  margin: 0 20rpx 20rpx;
+  box-sizing: border-box;
+}
+
+.consult-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20rpx;
+}
+
+.consult-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333;
+  border-left: 6rpx solid #ff9800;
+  padding-left: 15rpx;
+  flex: 1;
+}
+
+
+.consult-edit-btn {
+  background-color: #ff9800;
+  color: #fff;
+  font-size: 24rpx;
+  padding: 8rpx 24rpx;
+  border-radius: 20rpx;
+  border: none;
+  line-height: 1.5;
+}
+
+.consult-content {
+  font-size: 28rpx;
+  color: #666;
+  line-height: 1.8;
+  white-space: pre-wrap;
+}
+
+/* 编辑咨询信息弹窗 */
+.edit-modal-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.edit-modal {
+  width: 90%;
+  background: #fff;
+  border-radius: 16rpx;
+  overflow: hidden;
+}
+
+.edit-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx;
+  border-bottom: 1rpx solid #eee;
+}
+
+.edit-modal-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.edit-modal-close {
+  font-size: 36rpx;
+  color: #999;
+  padding: 10rpx;
+}
+
+.edit-modal-body {
+  padding: 30rpx;
+}
+
+.edit-textarea {
+  width: 100%;
+  min-height: 300rpx;
+  padding: 20rpx;
+  border: 1rpx solid #e0e0e0;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  box-sizing: border-box;
+  background-color: #fafafa;
+  line-height: 1.6;
+}
+
+.edit-modal-footer {
+  display: flex;
+  padding: 20rpx 30rpx 30rpx;
+  gap: 20rpx;
+}
+
+.edit-cancel-btn {
+  flex: 1;
+  background-color: #f5f5f5;
+  color: #666;
+  font-size: 30rpx;
+  padding: 20rpx;
+  border-radius: 8rpx;
+  border: none;
+}
+
+.edit-save-btn {
+  flex: 1;
+  background-color: #ff9800;
+  color: #fff;
+  font-size: 30rpx;
+  padding: 20rpx;
+  border-radius: 8rpx;
+  border: none;
+}
+
+/* ========== 角色按钮区域 ========== */
+.role-btn-section {
+  text-align: center;
+  margin: 0 20rpx 20rpx;
+}
+
+.teacher-btn {
+  width: 100%;
+  background: linear-gradient(45deg, #4caf50, #8bc34a);
+  color: white;
+  font-size: 32rpx;
+  padding: 25rpx 60rpx;
+  border-radius: 50rpx;
+  border: none;
+  box-shadow: 0 4rpx 12rpx rgba(76, 175, 80, 0.3);
+}
+
+.admin-btn {
+  width: 100%;
+  background: linear-gradient(45deg, #ff9800, #ff5722);
+  color: white;
+  font-size: 32rpx;
+  padding: 25rpx 60rpx;
+  border-radius: 50rpx;
+  border: none;
+  box-shadow: 0 4rpx 12rpx rgba(255, 152, 0, 0.3);
+}
+
+/* ========== 退出登录 ========== */
+.logout-section {
+  margin: 0 20rpx 15rpx;
+}
+
+.logout-btn {
+  width: 100%;
+  background-color: #f44336;
+  color: white;
+  font-size: 32rpx;
+  padding: 25rpx;
+  border-radius: 12rpx;
+  border: none;
+}
+
+/* ========== 备案号 ========== */
+.icp-footer {
+  text-align: center;
+  padding: 15rpx 20rpx 25rpx;
+}
+
+
+.icp-text {
+  font-size: 20rpx;
+  color: #d0d0d0;
+  letter-spacing: 1rpx;
+}
+
+/* ========== 底部备案号和协议链接 ========== */
+.footer-beian {
+  text-align: center;
+  padding: 40rpx 0 80rpx;
+}
+
+
+.beian-number {
+  font-size: 22rpx;
+  color: #bbb;
+  margin-bottom: 12rpx;
+}
+
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.footer-link {
+  font-size: 22rpx;
+  color: #1296db;
+}
+
+
+.footer-divider {
+  font-size: 22rpx;
+  color: #ddd;
+  margin: 0 16rpx;
+}
+
+
+/* ========== 登录协议弹窗 ========== */
+.agreement-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.agreement-popup {
+  width: 85%;
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 50rpx 40rpx 40rpx;
+}
+
+
+.agreement-popup-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  text-align: center;
+  color: #333;
+  margin-bottom: 24rpx;
+}
+
+
+.agreement-popup-desc {
+  font-size: 28rpx;
+  color: #666;
+  line-height: 1.7;
+  margin-bottom: 20rpx;
+}
+
+
+.agreement-popup-links {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+  margin-bottom: 30rpx;
+}
+
+
+.agreement-popup-link {
+  font-size: 28rpx;
+  color: #1296db;
+  text-decoration: underline;
+}
+
+
+.agreement-check-row {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 36rpx;
+  padding: 0 10rpx;
+}
+
+
+.agreement-checkbox {
+  width: 36rpx;
+  height: 36rpx;
+  border: 2rpx solid #ccc;
+  border-radius: 6rpx;
+  margin-right: 16rpx;
+  margin-top: 4rpx;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.agreement-checkbox.checked {
+  background: #1296db;
+  border-color: #1296db;
+}
+
+
+.check-icon {
+  color: #fff;
+  font-size: 24rpx;
+  font-weight: bold;
+}
+
+
+.agreement-check-text {
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.6;
+}
+
+
+.inline-link {
+  color: #1296db;
+}
+
+
+.agreement-popup-btns {
+  display: flex;
+  gap: 20rpx;
+}
+
+
+.agreement-btn-cancel {
+  flex: 1;
+  height: 84rpx;
+  line-height: 84rpx;
+  text-align: center;
+  border-radius: 42rpx;
+  font-size: 30rpx;
+  background: #f5f5f5;
+  color: #999;
+  border: none;
+  padding: 0;
+}
+
+
+.agreement-btn-confirm {
+  flex: 1;
+  height: 84rpx;
+  line-height: 84rpx;
+  text-align: center;
+  border-radius: 42rpx;
+  font-size: 30rpx;
+  background: #1296db;
+  color: #fff;
+  border: none;
+  padding: 0;
+}
+
+
+.agreement-btn-confirm::after,
+.agreement-btn-cancel::after {
+  border: none;
+}
+

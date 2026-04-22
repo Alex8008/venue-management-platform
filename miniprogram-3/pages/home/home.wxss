@@ -1,0 +1,311 @@
+/* pages/home/home.wxss */
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #f8f8f8;
+}
+
+/* 顶部选项卡 */
+.tab-bar {
+  display: flex;
+  background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+  padding: 20rpx 40rpx;
+  justify-content: center;
+}
+
+.tab-item {
+  padding: 15rpx 50rpx;
+  font-size: 32rpx;
+  color: rgba(255, 255, 255, 0.7);
+  border-radius: 50rpx;
+  transition: all 0.3s;
+}
+
+.tab-item.active {
+  background-color: #fff;
+  color: #ff9800;
+  font-weight: bold;
+}
+
+/* 日期选择条 */
+.date-scroll {
+  background: linear-gradient(135deg, #f57c00 0%, #ef6c00 100%);
+  white-space: nowrap;
+  padding: 20rpx 0;
+  flex-shrink: 0;
+}
+
+.date-list {
+  display: inline-flex;
+  padding: 0 20rpx;
+}
+
+.date-item {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15rpx 25rpx;
+  margin: 0 10rpx;
+  border-radius: 12rpx;
+  color: rgba(255, 255, 255, 0.8);
+  transition: all 0.3s;
+}
+
+.date-item.active {
+  background-color: #fff;
+  color: #FF7F50;
+}
+
+.date-num {
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-bottom: 5rpx;
+}
+
+.date-week {
+  font-size: 24rpx;
+}
+
+/* 搜索栏 */
+.search-section {
+  padding: 20rpx 30rpx;
+  background-color: #fff;
+  flex-shrink: 0;
+  box-sizing: border-box;  /* 添加这行 */
+  width: 100%;              /* 添加这行 */
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  background-color: #f8f8f8;
+  border-radius: 50rpx;
+  padding: 10rpx 20rpx;
+}
+
+.search-input {
+  flex: 1;
+  font-size: 28rpx;
+  padding: 10rpx;
+}
+
+.search-btn {
+  background-color: transparent;
+  border: none;
+  padding: 0 15rpx;
+  font-size: 32rpx;
+}
+
+/* 分类导航 */
+.nav-scroll {
+  white-space: nowrap;
+  padding: 20rpx 0;
+  padding-left: 20rpx;     /* 添加这行 */
+  background-color: #fff;
+  border-bottom: 1rpx solid #f0f0f0;
+  flex-shrink: 0;
+  box-sizing: border-box;  /* 添加这行 */
+}
+
+.nav-item {
+  display: inline-block;
+  padding: 15rpx 30rpx;
+  margin: 0 10rpx;
+  font-size: 28rpx;
+  color: #666;
+  border-radius: 50rpx;
+  background-color: #f8f8f8;
+  transition: all 0.3s;
+}
+
+.nav-item.active {
+  background-color: #FF7F50;
+  color: #fff;
+}
+
+/* 内容区域 */
+.content {
+  flex: 1;
+  padding: 20rpx 30rpx;
+  box-sizing: border-box;  /* 添加这行 */
+}
+
+/* 课程列表 */
+.course-item {
+  position: relative;
+  background-color: #fff;
+  border-radius: 12rpx;
+  overflow: hidden;
+  margin-bottom: 20rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
+  box-sizing: border-box;  /* 添加这行 */
+}
+
+.course-image {
+  width: 100%;
+  height: 350rpx;
+}
+
+.course-info {
+  padding: 25rpx;
+}
+
+.course-tag {
+  display: inline-block;
+  background-color: #FFF5EE;
+  color: #FF7F50;
+  padding: 8rpx 20rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+  margin-bottom: 15rpx;
+}
+
+.course-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 15rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.course-time {
+  font-size: 26rpx;
+  color: #999;
+  margin-bottom: 15rpx;
+}
+
+.course-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15rpx;
+}
+
+.course-participants {
+  font-size: 26rpx;
+  color: #666;
+}
+
+.course-price {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #FF7F50;
+}
+
+.teacher-info {
+  display: flex;
+  align-items: center;
+  padding-top: 15rpx;
+  border-top: 1rpx solid #f0f0f0;
+}
+
+.teacher-avatar-small {
+  width: 50rpx;
+  height: 50rpx;
+  border-radius: 50%;
+  margin-right: 15rpx;
+}
+
+.teacher-name-small {
+  font-size: 26rpx;
+  color: #666;
+}
+
+.course-status {
+  position: absolute;
+  top: 20rpx;
+  right: 20rpx;
+  padding: 10rpx 25rpx;
+  border-radius: 30rpx;
+  font-size: 24rpx;
+  font-weight: bold;
+}
+
+.course-status.available {
+  background-color: rgba(34, 197, 94, 0.9);
+  color: #fff;
+}
+
+.course-status.full {
+  background-color: rgba(239, 68, 68, 0.9);
+  color: #fff;
+}
+
+/* 加载状态 */
+.loading, .no-more, .empty {
+  padding: 40rpx 0;
+  text-align: center;
+  color: #999;
+  font-size: 28rpx;
+}
+
+/* 私教预约 - 教练列表 */
+.teacher-card {
+  background-color: #fff;
+  border-radius: 12rpx;
+  margin-bottom: 20rpx;
+  padding: 25rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;  /* 添加这行 */
+}
+
+.teacher-card-main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.teacher-card-avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  margin-right: 25rpx;
+  flex-shrink: 0;
+}
+
+.teacher-card-info {
+  flex: 1;
+}
+
+.teacher-card-name {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10rpx;
+}
+
+.teacher-card-intro {
+  font-size: 26rpx;
+  color: #999;
+  margin-bottom: 10rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.teacher-card-stats {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.teacher-stat {
+  margin-right: 20rpx;
+}
+
+.view-courses-btn {
+  background-color: #FF7F50;
+  color: #fff;
+  font-size: 26rpx;
+  padding: 15rpx 30rpx;
+  border-radius: 30rpx;
+  border: none;
+  flex-shrink: 0;
+  line-height: 1.4;
+}
+
+

@@ -1,0 +1,84 @@
+<view class="container">
+  <view wx:if="{{loading}}" class="loading">
+    <text>加载中...</text>
+  </view>
+
+  <view wx:else class="content">
+    <view class="section">
+      <view class="section-title">课程信息</view>
+      <view class="info-card">
+        <image wx:if="{{course.cover_image}}" src="{{course.cover_image}}" class="course-image" mode="aspectFill" />
+        <view class="course-info">
+          <text class="course-name">{{course.course_name}}</text>
+          <text class="course-teacher">教练：{{course.teacher_name}}</text>
+          <text class="course-type">类型：{{course.course_type === 'group' ? '团课' : '私教课'}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="section-title">预约时间</view>
+      <view class="time-info">
+        <view class="time-row">
+          <text class="time-label">日期</text>
+          <text class="time-value">{{slot.date || selectedDate}}</text>
+        </view>
+        <view class="time-row">
+          <text class="time-label">时间</text>
+          <text class="time-value">{{slot.start_time}} - {{slot.end_time}}</text>
+        </view>
+        <view wx:if="{{course.course_type === 'group'}}" class="time-row">
+          <text class="time-label">已报名</text>
+          <text class="time-value">{{slot.current_count || 0}} / {{slot.max_count || course.max_students}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="section-title">支付方式</view>
+      <view class="pay-options">
+        <view class="pay-option {{payMethod === 'membership' ? 'active' : ''}} {{!hasMembershipCard ? 'disabled' : ''}}"
+              data-method="membership"
+              bindtap="onSelectPayMethod">
+          <text class="pay-name">会员卡抵扣</text>
+          <text class="pay-desc" wx:if="{{hasMembershipCard}}">剩余{{membershipCard.remaining_times}}次</text>
+          <text class="pay-desc" wx:else>暂无可用会员卡</text>
+        </view>
+        <view class="pay-option {{payMethod === 'direct' ? 'active' : ''}}"
+              data-method="direct"
+              bindtap="onSelectPayMethod">
+          <text class="pay-name">直接支付</text>
+          <text class="pay-desc">￥{{course.price}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="section-title">费用明细</view>
+      <view class="fee-detail">
+        <view class="fee-row">
+          <text class="fee-label">课程费用</text>
+          <text class="fee-value">￥{{course.price}}</text>
+        </view>
+        <view wx:if="{{payMethod === 'membership'}}" class="fee-row discount">
+          <text class="fee-label">会员卡抵扣</text>
+          <text class="fee-value">-￥{{course.price}}</text>
+        </view>
+        <view class="fee-row total">
+          <text class="fee-label">实付金额</text>
+          <text class="fee-value total-price">￥{{payMethod === 'membership' ? '0.00' : course.price}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="bottom-bar">
+    <view class="price-display">
+      <text class="pay-label">实付：</text>
+      <text class="pay-amount">￥{{payMethod === 'membership' ? '0.00' : course.price}}</text>
+    </view>
+    <button class="confirm-btn" bindtap="onConfirmBooking" loading="{{submitting}}">
+      确认预约
+    </button>
+  </view>
+</view>

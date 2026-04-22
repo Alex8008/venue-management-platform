@@ -1,0 +1,394 @@
+.container {
+  min-height: 100vh;
+  background-color: #f8f8f8;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 150rpx;
+}
+
+.header {
+  background-color: #ff9800;
+  padding: 30rpx;
+  text-align: center;
+}
+
+.title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #fff;
+}
+
+.content {
+  flex: 1;
+  padding: 20rpx 30rpx;
+  box-sizing: border-box;  /* 添加这行 */
+}
+
+.content-item {
+  background-color: #fff;
+  border-radius: 12rpx;
+  margin-bottom: 15rpx;
+  overflow: hidden;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
+  display: flex;
+  padding: 20rpx;
+  box-sizing: border-box;  /* 添加这行 */
+}
+
+.content-image {
+  width: 150rpx;
+  height: 150rpx;
+  border-radius: 8rpx;
+  margin-right: 20rpx;
+  flex-shrink: 0;
+}
+
+.content-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.content-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10rpx;
+}
+
+.content-type,
+.content-order {
+  font-size: 24rpx;
+  color: #999;
+  margin-bottom: 8rpx;
+}
+
+.content-link {
+  font-size: 24rpx;
+  color: #2196f3;
+  margin-bottom: 8rpx;
+}
+
+.content-status {
+  display: inline-block;
+  padding: 6rpx 16rpx;
+  border-radius: 20rpx;
+  font-size: 22rpx;
+}
+
+.content-status.active {
+  background-color: #e8f5e9;
+  color: #4caf50;
+}
+
+.content-status.inactive {
+  background-color: #e0e0e0;
+  color: #666;
+}
+
+.content-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10rpx;
+  justify-content: center;
+  margin-left: 15rpx;
+  flex-shrink: 0;
+}
+
+.edit-btn,
+.toggle-btn,
+.delete-btn {
+  padding: 10rpx 20rpx;
+  border-radius: 8rpx;
+  font-size: 22rpx;
+  border: none;
+  white-space: nowrap;
+}
+
+.edit-btn {
+  background-color: #2196f3;
+  color: #fff;
+}
+
+.toggle-btn {
+  background-color: #ff9800;
+  color: #fff;
+}
+
+.delete-btn {
+  background-color: #ff5722;
+  color: #fff;
+}
+
+.empty {
+  text-align: center;
+  padding: 100rpx 0;
+}
+
+.empty-icon {
+  font-size: 100rpx;
+  display: block;
+  margin-bottom: 20rpx;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #999;
+}
+
+.loading {
+  text-align: center;
+  padding: 60rpx 0;
+  color: #999;
+  font-size: 28rpx;
+}
+
+.bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  padding: 20rpx;
+  padding-bottom: calc(20rpx + env(safe-area-inset-bottom));
+  box-shadow: 0 -2rpx 10rpx rgba(0, 0, 0, 0.1);
+  z-index: 100;
+}
+
+.create-btn {
+  width: 100%;
+  background-color: #ff9800;
+  color: #fff;
+  font-size: 32rpx;
+  padding: 25rpx;
+  border-radius: 12rpx;
+  border: none;
+}
+
+/* 弹窗 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  width: 650rpx;
+  max-height: 80vh;
+  background-color: #fff;
+  border-radius: 20rpx;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-sizing: border-box;  /* 添加这行 */
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.modal-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.modal-close {
+  font-size: 60rpx;
+  color: #999;
+  line-height: 1;
+}
+
+.modal-body {
+  flex: 1;
+  padding: 30rpx;
+  overflow-y: auto;
+  box-sizing: border-box;  /* 添加这行 */
+}
+
+.form-item {
+  margin-bottom: 30rpx;
+}
+
+.form-label {
+  font-size: 28rpx;
+  color: #666;
+  display: block;
+  margin-bottom: 15rpx;
+}
+
+.form-input {
+  width: 100%;
+  height: 80rpx;
+  padding: 0 20rpx;
+  border: 2rpx solid #e0e0e0;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  background-color: #f8f8f8;
+  box-sizing: border-box;
+}
+
+.picker-display {
+  height: 80rpx;
+  line-height: 80rpx;
+  padding: 0 20rpx;
+  border: 2rpx solid #e0e0e0;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  background-color: #f8f8f8;
+}
+
+.image-preview {
+  width: 100%;
+  height: 300rpx;
+  border-radius: 8rpx;
+  margin-bottom: 15rpx;
+  border: 2rpx solid #e0e0e0;
+}
+
+.upload-btn {
+  background-color: #ff9800;
+  color: #fff;
+  font-size: 26rpx;
+  padding: 15rpx 30rpx;
+  border-radius: 8rpx;
+  border: none;
+}
+
+.status-switch {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.status-text {
+  font-size: 28rpx;
+  color: #666;
+}
+
+.modal-actions {
+  display: flex;
+  border-top: 1rpx solid #f0f0f0;
+}
+
+.cancel-btn,
+.confirm-btn {
+  flex: 1;
+  padding: 30rpx;
+  font-size: 32rpx;
+  border: none;
+  background-color: transparent;
+}
+
+.cancel-btn {
+  color: #999;
+  border-right: 1rpx solid #f0f0f0;
+}
+
+.confirm-btn {
+  color: #ff9800;
+  font-weight: bold;
+}
+
+.form-textarea {
+  width: 100%;
+  min-height: 120rpx;
+  padding: 20rpx;
+  border: 2rpx solid #e0e0e0;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  background-color: #f8f8f8;
+  box-sizing: border-box;
+}
+
+/* 发布类型下拉列表 */
+.link-search-input {
+  width: 100%;
+  height: 70rpx;
+  padding: 0 20rpx;
+  border: 2rpx solid #e0e0e0;
+  border-radius: 8rpx;
+  font-size: 26rpx;
+  background-color: #f8f8f8;
+  box-sizing: border-box;
+  margin-bottom: 10rpx;
+}
+
+.link-items-list {
+  max-height: 400rpx;
+  border: 2rpx solid #e0e0e0;
+  border-radius: 8rpx;
+  overflow-y: auto;
+}
+
+.link-item {
+  padding: 16rpx 20rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.link-item:last-child {
+  border-bottom: none;
+}
+
+.link-item.selected {
+  background-color: #fff3e0;
+  border-left: 4rpx solid #ff9800;
+}
+
+.link-item-title {
+  font-size: 26rpx;
+  color: #333;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-right: 15rpx;
+}
+
+.link-item-time {
+  font-size: 22rpx;
+  color: #999;
+  flex-shrink: 0;
+}
+
+.link-empty {
+  padding: 30rpx;
+  text-align: center;
+  color: #999;
+  font-size: 26rpx;
+}
+
+.selected-link-info {
+  padding: 15rpx 20rpx;
+  background-color: #fff3e0;
+  border-radius: 8rpx;
+  margin-bottom: 10rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.selected-link-text {
+  font-size: 26rpx;
+  color: #ff9800;
+  flex: 1;
+}
+
+.selected-link-clear {
+  font-size: 24rpx;
+  color: #999;
+  padding: 5rpx 15rpx;
+}

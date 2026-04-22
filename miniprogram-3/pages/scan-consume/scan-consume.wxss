@@ -1,0 +1,236 @@
+.container {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  padding: 20rpx;
+  box-sizing: border-box;
+}
+
+
+.loading-state, .error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 200rpx 40rpx;
+  color: #999;
+  font-size: 28rpx;
+}
+
+
+.error-icon { font-size: 80rpx; margin-bottom: 20rpx; }
+.error-text { margin-bottom: 30rpx; color: #f44336; }
+
+
+.retry-btn {
+  background-color: #4caf50;
+  color: #fff;
+  font-size: 28rpx;
+  padding: 18rpx 60rpx;
+  border-radius: 40rpx;
+  border: none;
+}
+
+
+.user-card {
+  background-color: #fff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.08);
+  margin-bottom: 15rpx;
+}
+
+
+.user-avatar {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  margin-right: 20rpx;
+  flex-shrink: 0;
+  border: 3rpx solid #4caf50;
+}
+
+
+.user-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.user-name {
+  font-size: 34rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 8rpx;
+}
+
+
+.user-phone {
+  font-size: 26rpx;
+  color: #999;
+}
+
+
+.user-stats {
+  display: flex;
+  gap: 25rpx;
+}
+
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.stat-num {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #4caf50;
+}
+
+
+.stat-label {
+  font-size: 20rpx;
+  color: #999;
+}
+
+
+.detail-link {
+  text-align: right;
+  font-size: 26rpx;
+  color: #1296db;
+  padding: 10rpx 0 20rpx;
+}
+
+
+.section-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 15rpx;
+  border-left: 6rpx solid #4caf50;
+  padding-left: 15rpx;
+}
+
+
+.card-item {
+  background-color: #fff;
+  border-radius: 12rpx;
+  padding: 25rpx;
+  margin-bottom: 15rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.06);
+}
+
+
+.card-info { flex: 1; }
+
+
+.card-name {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10rpx;
+}
+
+
+.card-times {
+  font-size: 26rpx;
+  color: #666;
+}
+
+
+.times-num {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #ff9800;
+}
+
+
+.consume-btn {
+  background-color: #4caf50;
+  color: #fff;
+  font-size: 26rpx;
+  padding: 18rpx 36rpx;
+  border-radius: 30rpx;
+  border: none;
+  flex-shrink: 0;
+}
+
+
+.consume-btn[disabled] {
+  background-color: #ccc;
+  color: #999;
+}
+
+
+.active-card-item {
+  background-color: #fff;
+  border-radius: 12rpx;
+  padding: 25rpx;
+  margin-bottom: 15rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.06);
+}
+
+
+.active-card-left { flex: 1; }
+
+
+.card-sub {
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 8rpx;
+}
+
+
+.active-card-right {
+  flex-shrink: 0;
+  padding-left: 20rpx;
+}
+
+
+.detail-link-text {
+  font-size: 26rpx;
+  color: #1296db;
+}
+
+
+.empty-cards {
+  text-align: center;
+  padding: 60rpx 0;
+  color: #999;
+  font-size: 26rpx;
+}
+
+
+.logs-list {
+  background-color: #fff;
+  border-radius: 12rpx;
+  padding: 15rpx;
+}
+
+
+.log-item {
+  display: flex;
+  align-items: center;
+  padding: 15rpx 10rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+  font-size: 22rpx;
+  color: #666;
+}
+
+
+.log-item:last-child { border-bottom: none; }
+.log-time { flex: 3; }
+.log-card { flex: 2; color: #333; }
+.log-op { flex: 2; text-align: center; }
+.log-change { flex: 1; text-align: right; color: #ff5722; font-weight: bold; }

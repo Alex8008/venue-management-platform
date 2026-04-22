@@ -1,0 +1,195 @@
+.container {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  padding: 20rpx 30rpx;
+  box-sizing: border-box;
+  padding-bottom: 40rpx;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  padding: 20rpx;
+  background-color: #fff;
+  border-radius: 12rpx;
+  margin-bottom: 20rpx;
+  box-sizing: border-box;
+}
+
+.search-input {
+  flex: 1;
+  height: 60rpx;
+  padding: 0 20rpx;
+  border: 1rpx solid #e0e0e0;
+  border-radius: 30rpx;
+  font-size: 28rpx;
+  background-color: #f8f9fa;
+}
+
+.search-btn {
+  margin-left: 15rpx;
+  padding: 12rpx 30rpx;
+  background-color: #1296db;
+  color: white;
+  border-radius: 30rpx;
+  font-size: 26rpx;
+  border: none;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  border-left: 4rpx solid #1296db;
+  padding-left: 15rpx;
+}
+
+.create-btn {
+  background-color: #4caf50;
+  color: white;
+  font-size: 26rpx;
+  padding: 15rpx 30rpx;
+  border-radius: 25rpx;
+  border: none;
+}
+
+.activities-list {
+  margin-bottom: 20rpx;
+}
+
+.activity-card {
+  background-color: #fff;
+  border-radius: 12rpx;
+  padding: 20rpx;
+  margin-bottom: 15rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.1);
+  display: flex;
+  min-height: 200rpx;
+  box-sizing: border-box;
+}
+
+.activity-image {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 8rpx;
+  margin-right: 20rpx;
+  flex-shrink: 0;
+}
+
+.activity-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 0;
+}
+
+.activity-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.activity-meta {
+  display: flex;
+  gap: 15rpx;
+  font-size: 24rpx;
+  margin-bottom: 10rpx;
+  flex-wrap: wrap;
+}
+
+.category {
+  background-color: #e3f2fd;
+  color: #1976d2;
+  padding: 4rpx 12rpx;
+  border-radius: 8rpx;
+}
+
+.participants {
+  color: #666;
+}
+
+.status {
+  padding: 4rpx 12rpx;
+  border-radius: 8rpx;
+  color: white;
+}
+
+.status.published {
+  background-color: #4caf50;
+}
+
+.status.draft {
+  background-color: #ff9800;
+}
+
+.status.closed {
+  background-color: #9e9e9e;
+}
+
+.activity-date {
+  font-size: 24rpx;
+  color: #666;
+  margin-bottom: 10rpx;
+}
+
+.activity-fee {
+  font-size: 28rpx;
+  color: #ff5722;
+  font-weight: bold;
+}
+
+.activity-actions {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10rpx;
+  margin-left: 15rpx;
+  flex-shrink: 0;
+}
+
+.activity-actions .action-btn {
+  width: 120rpx;
+  height: 60rpx;
+  font-size: 24rpx;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+  line-height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.activity-actions .edit {
+  background-color: #2196f3;
+  color: white;
+}
+
+.activity-actions .participants {
+  background-color: #9c27b0;
+  color: white;
+}
+
+.activity-actions .delete {
+  background-color: #f44336;
+  color: white;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 100rpx 0;
+  color: #999;
+  font-size: 28rpx;
+}

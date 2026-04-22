@@ -1,0 +1,166 @@
+.container {
+  min-height: 100vh;
+  background-color: #f8f8f8;
+  padding-bottom: 150rpx;
+}
+
+.card-image {
+  width: 100%;
+  display: block;
+}
+
+/* 价格区域 */
+.card-info-section {
+  background-color: #fff;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+}
+
+.card-name {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+
+.card-price-row {
+  display: flex;
+  align-items: baseline;
+}
+
+.price-unit {
+  font-size: 32rpx;
+  color: #FF7F50;
+  margin-right: 4rpx;
+}
+
+.price-value {
+  font-size: 64rpx;
+  font-weight: bold;
+  color: #FF7F50;
+}
+
+/* 通用 section */
+.section {
+  background-color: #fff;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+  border-left: 4rpx solid #FF7F50;
+  padding-left: 15rpx;
+}
+
+.section-content {
+  font-size: 28rpx;
+  color: #666;
+  line-height: 1.6;
+}
+
+/* 信息列表 */
+.info-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.info-item {
+  display: flex;
+  align-items: flex-start;
+  font-size: 28rpx;
+}
+
+.info-label {
+  color: #999;
+  width: 160rpx;
+  flex-shrink: 0;
+}
+
+.info-value {
+  color: #333;
+  flex: 1;
+}
+
+/* 购买须知 */
+.notes-content {
+  padding: 20rpx;
+  background-color: #f8f8f8;
+  border-radius: 8rpx;
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.8;
+}
+
+/* 教练选择 */
+.teacher-select-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20rpx;
+  padding: 10rpx 0;
+}
+
+.teacher-select-item {
+  padding: 20rpx 40rpx;
+  border-radius: 12rpx;
+  font-size: 28rpx;
+  background-color: #f5f5f5;
+  border: 2rpx solid #e0e0e0;
+  color: #333;
+}
+
+/* 底部操作栏 */
+.bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  padding: 15rpx 20rpx;
+  padding-bottom: calc(15rpx + env(safe-area-inset-bottom));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 -2rpx 10rpx rgba(0,0,0,0.1);
+  z-index: 100;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 10rpx;
+}
+
+.action-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  padding: 0 10rpx;
+  line-height: 1.2;
+}
+
+.action-icon {
+  font-size: 36rpx;
+  margin-bottom: 5rpx;
+}
+
+.action-text {
+  font-size: 22rpx;
+  color: #666;
+}
+
+.purchase-btn {
+  background-color: #FF7F50;
+  color: #fff;
+  border-radius: 50rpx;
+  border: none;
+  font-size: 30rpx;
+  font-weight: bold;
+  padding: 20rpx 50rpx;
+  flex-shrink: 0;
+}

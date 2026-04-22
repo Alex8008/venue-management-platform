@@ -1,0 +1,102 @@
+<view class="container">
+  <view wx:if="{{loading}}" class="loading-state">
+    <text>验证中...</text>
+  </view>
+
+
+  <view wx:elif="{{errorMsg}}" class="error-state">
+    <text class="error-icon">⚠️</text>
+    <text class="error-text">{{errorMsg}}</text>
+    <button class="retry-btn" bindtap="onRescan">重新扫码</button>
+  </view>
+
+
+  <view wx:elif="{{userInfo}}" class="content">
+    <!-- 用户信息卡片 -->
+    <view class="user-card">
+      <image class="user-avatar" src="{{userInfo.avatar_url || '/images/default-avatar.png'}}" mode="aspectFill" />
+      <view class="user-info">
+        <text class="user-name">{{userInfo.real_name}}</text>
+        <text class="user-phone">{{userInfo.phone}}</text>
+      </view>
+      <view class="user-stats">
+        <view class="stat-item">
+          <text class="stat-num">{{userInfo.cumulative_days}}</text>
+          <text class="stat-label">天</text>
+        </view>
+        <view class="stat-item">
+          <text class="stat-num">{{userInfo.cumulative_training_count}}</text>
+          <text class="stat-label">训练次</text>
+        </view>
+      </view>
+    </view>
+
+
+    <view class="detail-link" bindtap="onViewUserDetail">
+      查看用户完整详情 >
+    </view>
+
+
+    <!-- 可核销的次卡 -->
+    <view class="section-title">可核销的次卡</view>
+    <view wx:if="{{timesCards.length > 0}}">
+      <view wx:for="{{timesCards}}" wx:key="id" class="card-item">
+        <view class="card-info">
+          <text class="card-name">{{item.card_name}}</text>
+          <view class="card-times">
+            剩余 <text class="times-num">{{item.remaining_times}}</text> / {{item.total_times}} 次
+          </view>
+        </view>
+        <button class="consume-btn"
+                disabled="{{item.remaining_times <= 0}}"
+                data-id="{{item.id}}"
+                data-name="{{item.card_name}}"
+                data-remaining="{{item.remaining_times}}"
+                bindtap="onConsume">
+          核销一次
+        </button>
+      </view>
+    </view>
+    <view wx:else class="empty-cards">
+      <text>该用户暂无可核销的次卡</text>
+    </view>
+
+
+    <!-- 生效中的会员卡 -->
+    <view class="section-title" style="margin-top: 30rpx;">生效中的会员卡</view>
+    <view wx:if="{{activeCards.length > 0}}">
+      <view wx:for="{{activeCards}}" wx:key="id" class="active-card-item">
+        <view class="active-card-left">
+          <text class="card-name">{{item.card_name}}</text>
+          <view wx:if="{{item.card_type === 'times'}}" class="card-sub">
+            次卡 · 剩余 {{item.remaining_times}} / {{item.total_times}} 次
+          </view>
+          <view wx:else class="card-sub">
+            期限卡 · 剩余 {{item.remaining_days}} / {{item.total_days}} 天
+          </view>
+        </view>
+        <view class="active-card-right" data-card-id="{{item.card_id}}" bindtap="onViewCardDetail">
+          <text class="detail-link-text">详情 ></text>
+        </view>
+      </view>
+    </view>
+    <view wx:else class="empty-cards">
+      <text>该用户暂无生效中的会员卡</text>
+    </view>
+
+
+    <!-- 最近核销记录 -->
+    <view class="section-title" style="margin-top: 30rpx;">最近核销记录</view>
+    <view wx:if="{{allLogs.length > 0}}" class="logs-list">
+      <view wx:for="{{allLogs}}" wx:key="id" class="log-item">
+        <text class="log-time">{{item.created_at}}</text>
+        <text class="log-card">{{item.card_name}}</text>
+        <text class="log-op">{{item.operator_name}}</text>
+        <text class="log-change">{{item.remaining_before}}→{{item.remaining_after}}</text>
+      </view>
+    </view>
+    <view wx:else class="empty-cards">
+      <text>暂无核销记录</text>
+    </view>
+  </view>
+</view>

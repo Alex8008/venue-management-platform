@@ -1,0 +1,137 @@
+<view class="container">
+  <scroll-view scroll-y="true" class="content">
+
+
+    <view class="avatar-section">
+      <image src="{{userProfile.avatar_url || '/images/default-avatar.png'}}"
+             class="avatar-large" mode="aspectFill" />
+      <view class="avatar-buttons">
+        <!-- ★ 修复：使用 open-type="chooseAvatar" 获取微信头像 -->
+        <button class="avatar-btn wechat" open-type="chooseAvatar" bindchooseavatar="onChooseWechatAvatar">使用微信头像</button>
+        <button class="avatar-btn upload" bindtap="onUploadAvatar">上传照片</button>
+      </view>
+    </view>
+
+
+    <view class="form-section">
+      <view class="info-item">
+        <text class="label">真实姓名 <text class="required">*</text></text>
+        <input class="input"
+               value="{{userProfile.real_name}}"
+               placeholder="请输入真实姓名"
+               data-field="real_name"
+               bindinput="onInputChange" />
+      </view>
+
+
+      <view class="info-item">
+        <text class="label">身份证号</text>
+        <input class="input"
+               value="{{userProfile.id_card}}"
+               placeholder="请输入身份证号"
+               data-field="id_card"
+               bindinput="onInputChange" />
+      </view>
+
+
+      <view class="info-item">
+        <text class="label">手机号 <text class="required">*</text></text>
+        <input class="input"
+               value="{{userProfile.phone}}"
+               placeholder="请输入手机号"
+               data-field="phone"
+               bindinput="onInputChange" />
+      </view>
+
+
+      <view class="info-item">
+        <text class="label">性别 <text class="required">*</text></text>
+        <picker mode="selector"
+                range="{{genderOptions}}"
+                value="{{genderOptions.indexOf(userProfile.gender)}}"
+                bindchange="onGenderChange">
+          <view class="picker">{{userProfile.gender || '请选择'}}</view>
+        </picker>
+      </view>
+
+
+      <view class="info-item">
+        <text class="label">年龄 <text class="required">*</text></text>
+        <input class="input"
+               type="number"
+               value="{{userProfile.age}}"
+               placeholder="请输入年龄"
+               data-field="age"
+               bindinput="onInputChange" />
+      </view>
+
+
+      <view class="info-item">
+        <text class="label">民族</text>
+        <input class="input"
+               value="{{userProfile.nation}}"
+               placeholder="请输入民族"
+               data-field="nation"
+               bindinput="onInputChange" />
+      </view>
+
+
+      <view class="info-item">
+        <text class="label">紧急联系人</text>
+        <input class="input"
+               value="{{userProfile.emergency_contact_name}}"
+               placeholder="请输入紧急联系人"
+               data-field="emergency_contact_name"
+               bindinput="onInputChange" />
+      </view>
+
+
+      <view class="info-item">
+        <text class="label">联系人电话</text>
+        <input class="input"
+               value="{{userProfile.emergency_contact_phone}}"
+               placeholder="请输入联系人电话"
+               data-field="emergency_contact_phone"
+               bindinput="onInputChange" />
+      </view>
+
+
+      <view class="info-item">
+        <text class="label">血型</text>
+        <picker mode="selector"
+                range="{{bloodTypeOptions}}"
+                value="{{bloodTypeOptions.indexOf(userProfile.blood_type)}}"
+                bindchange="onBloodTypeChange">
+          <view class="picker">{{userProfile.blood_type || '请选择'}}</view>
+        </picker>
+      </view>
+
+
+      <view class="info-item">
+        <text class="label">过敏史</text>
+        <input class="input"
+               value="{{userProfile.allergy_history}}"
+               placeholder="请输入过敏史（无则填无）"
+               data-field="allergy_history"
+               bindinput="onInputChange" />
+      </view>
+
+
+      <view class="info-item">
+        <text class="label">禁忌症</text>
+        <input class="input"
+               value="{{userProfile.contraindications}}"
+               placeholder="请输入禁忌症（无则填无）"
+               data-field="contraindications"
+               bindinput="onInputChange" />
+      </view>
+    </view>
+
+
+  </scroll-view>
+
+
+  <view class="bottom-bar">
+    <button class="save-btn" bindtap="onSaveProfile">保存修改</button>
+  </view>
+</view>

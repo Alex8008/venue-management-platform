@@ -1,0 +1,146 @@
+<view class="container">
+  <scroll-view scroll-y="true" class="content">
+
+    <view class="form-section">
+      <view class="section-title">基本信息</view>
+
+      <view class="form-item">
+        <text class="form-label">会员卡名称 *</text>
+        <input class="form-input"
+               placeholder="请输入会员卡名称"
+               value="{{form.card_name}}"
+               data-field="card_name"
+               bindinput="onInput" />
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">卡类型 *</text>
+        <view class="type-selector">
+          <view class="type-option {{form.card_type === 'times' ? 'active' : ''}}"
+                data-type="times"
+                bindtap="onSelectType">次卡</view>
+          <view class="type-option {{form.card_type === 'period' ? 'active' : ''}}"
+                data-type="period"
+                bindtap="onSelectType">期限卡</view>
+        </view>
+      </view>
+
+      <!-- 次卡：总次数 -->
+      <view class="form-item" wx:if="{{form.card_type === 'times'}}">
+        <text class="form-label">总次数 *</text>
+        <input class="form-input"
+               type="number"
+               placeholder="请输入总次数"
+               value="{{form.times_count}}"
+               data-field="times_count"
+               bindinput="onInput" />
+      </view>
+
+      <!-- 期限卡：只保留天数输入 -->
+      <view class="form-item" wx:if="{{form.card_type === 'period'}}">
+        <text class="form-label">生效天数 *</text>
+        <text class="form-hint">激活后生效的天数</text>
+        <input class="form-input"
+               type="number"
+               placeholder="请输入天数，如：30"
+               value="{{form.valid_days}}"
+               data-field="valid_days"
+               bindinput="onInput" />
+      </view>
+
+      <!-- 期限卡：激活有效期（用户必须在此期间内激活） -->
+      <view class="form-item" wx:if="{{form.card_type === 'period'}}">
+        <text class="form-label">激活有效期</text>
+        <text class="form-hint">用户必须在此期间内激活，否则过期失效（不填则永久有效）</text>
+        <picker mode="date" value="{{form.validity_start}}" bindchange="onValidityStartChange">
+          <view class="form-input picker-value">
+            {{form.validity_start || '激活开始日期（可选）'}}
+          </view>
+        </picker>
+        <picker mode="date" value="{{form.validity_end}}" start="{{form.validity_start}}" bindchange="onValidityEndChange" style="margin-top: 15rpx;">
+          <view class="form-input picker-value">
+            {{form.validity_end || '激活截止日期（可选）'}}
+          </view>
+        </picker>
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">价格 *</text>
+        <input class="form-input"
+               type="digit"
+               placeholder="请输入价格"
+               value="{{form.price}}"
+               data-field="price"
+               bindinput="onInput" />
+      </view>
+    </view>
+
+    <view class="form-section">
+      <view class="section-title">详细信息</view>
+
+      <view class="form-item">
+        <text class="form-label">会员卡图片</text>
+        <view class="image-uploader" bindtap="onChooseImage">
+          <image wx:if="{{form.card_image}}" src="{{form.card_image}}" class="preview-image" mode="aspectFill" />
+          <view wx:else class="upload-placeholder">
+            <text class="upload-icon">+</text>
+            <text class="upload-text">上传图片</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">会员卡描述</text>
+        <textarea class="form-textarea"
+                  placeholder="请输入会员卡描述"
+                  value="{{form.description}}"
+                  data-field="description"
+                  bindinput="onInput" />
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">购买须知</text>
+        <textarea class="form-textarea"
+                  placeholder="请输入购买须知"
+                  value="{{form.purchase_notes}}"
+                  data-field="purchase_notes"
+                  bindinput="onInput" />
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">适用门店</text>
+        <input class="form-input"
+               placeholder="请输入适用门店"
+               value="{{form.applicable_stores}}"
+               data-field="applicable_stores"
+               bindinput="onInput" />
+      </view>
+    </view>
+
+    <view class="form-section">
+      <view class="section-title">关联教练</view>
+      <text class="form-hint">不选择代表该卡为通用卡（月卡/年卡等），无需绑定教练</text>
+
+      <view wx:if="{{teachers.length > 0}}" class="select-card-list">
+        <view wx:for="{{teachers}}" wx:key="id"
+            class="select-card-item {{item.selected ? 'selected' : ''}}"
+            style="{{item.selected ? 'background:#e6f3ff;border:2rpx solid #1296db;color:#1296db;' : ''}}"
+            data-index="{{index}}"
+            bindtap="onToggleTeacher">
+        <text>{{item.display_name}}</text>
+      </view>
+
+      </view>
+      <view wx:else class="empty-teachers">
+        <text>暂无教练，请先在用户管理中设置教练</text>
+      </view>
+    </view>
+
+  </scroll-view>
+
+  <view class="bottom-bar">
+    <button class="save-btn" bindtap="onSave" loading="{{saving}}">
+      {{isEdit ? '保存修改' : '创建会员卡'}}
+    </button>
+  </view>
+</view>

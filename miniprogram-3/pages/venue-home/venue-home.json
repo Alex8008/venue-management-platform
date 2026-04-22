@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "场馆首页",
+  "navigationBarBackgroundColor": "#ff9800",
+  "navigationBarTextStyle": "white",
+  "enablePullDownRefresh": true
+}

@@ -1,0 +1,79 @@
+<view class="container">
+  <scroll-view scroll-y="true" class="content">
+
+
+    <view wx:if="{{orders.length > 0}}" class="orders-list">
+      <view wx:for="{{orders}}" wx:key="id" class="order-card"
+            data-id="{{item.id}}" bindtap="onOrderClick">
+
+
+        <!-- 订单头部 -->
+        <view class="order-header">
+          <text class="order-no">订单号：{{item.order_no}}</text>
+          <text class="order-status {{item.status}}">
+            {{statusMap[item.status] || item.status}}
+          </text>
+        </view>
+
+
+        <!-- 商品列表 -->
+        <view class="order-items">
+          <view wx:for="{{item.items}}"
+                wx:for-item="product"
+                wx:key="id"
+                class="order-item">
+            <image src="{{product.image_url || '/images/default-product.png'}}"
+                   class="item-image"
+                   mode="aspectFill" />
+            <view class="item-info">
+              <text class="item-name">{{product.name}}</text>
+              <text class="item-price">￥{{product.unit_price}} × {{product.quantity}}</text>
+            </view>
+          </view>
+        </view>
+
+
+        <!-- 订单总价 -->
+        <view class="order-total">
+          <text class="total-label">实付：</text>
+          <text class="total-amount">￥{{item.total_amount}}</text>
+        </view>
+
+
+        <!-- 操作按钮区 -->
+        <view class="order-actions">
+          <!-- 待支付：显示去支付 + 取消 -->
+          <block wx:if="{{item.status === 'pending' && item.payment_status === 'unpaid'}}">
+            <button class="cancel-btn"
+                    data-id="{{item.id}}"
+                    data-order-no="{{item.order_no}}"
+                    catchtap="onCancelOrder">
+              取消订单
+            </button>
+            <button class="pay-btn"
+                    data-id="{{item.id}}"
+                    data-amount="{{item.total_amount}}"
+                    catchtap="onPayOrder">
+              去支付
+            </button>
+          </block>
+
+
+          <!-- 已取消：仅提示 -->
+          <block wx:elif="{{item.status === 'cancelled'}}">
+            <text class="cancelled-tip">订单已取消</text>
+          </block>
+        </view>
+
+
+      </view>
+    </view>
+
+
+    <view wx:else class="empty-orders">
+      <text>暂无订单记录</text>
+    </view>
+
+
+  </scroll-view>
+</view>

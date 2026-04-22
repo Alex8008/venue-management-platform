@@ -1,0 +1,95 @@
+<view class="container">
+  <!-- 会员卡图片 -->
+  <image class="card-image"
+         src="{{card.card_image || '/images/default-card.png'}}"
+         mode="widthFix"></image>
+
+  <!-- 价格和名称 -->
+  <view class="card-info-section">
+    <view class="card-name">{{card.card_name}}</view>
+    <view class="card-price-row">
+      <text class="price-unit">¥</text>
+      <text class="price-value">{{card.price}}</text>
+    </view>
+  </view>
+
+  <!-- 选择教练（仅有关联教练时显示） -->
+  <view wx:if="{{hasTeachers}}" class="section">
+    <view class="section-title">选择教练 *</view>
+    <view class="teacher-select-list">
+      <view wx:for="{{teachers}}" wx:key="id"
+            class="teacher-select-item {{item.selected ? 'selected' : ''}}"
+            style="{{item.selected ? 'background:#e6f3ff;border:2rpx solid #1296db;color:#1296db;' : ''}}"
+            data-id="{{item.id}}"
+            bindtap="onSelectTeacher">
+        {{item.name}}
+      </view>
+    </view>
+  </view>
+
+  <!-- 卡片信息 -->
+  <view class="section">
+    <view class="section-title">卡片信息</view>
+    <view class="info-list">
+      <view class="info-item">
+        <text class="info-label">类型</text>
+        <text class="info-value">{{card.card_type === 'times' ? '次卡' : '期限卡'}}</text>
+      </view>
+      <view wx:if="{{card.card_type === 'times'}}" class="info-item">
+        <text class="info-label">次数</text>
+        <text class="info-value">{{card.times_count}} 次</text>
+      </view>
+      <view wx:if="{{card.card_type === 'period'}}" class="info-item">
+        <text class="info-label">生效天数</text>
+        <text class="info-value">激活后 {{card.valid_days}} 天有效</text>
+      </view>
+      <view wx:if="{{card.card_type === 'period' && card.validity_start && card.validity_end}}" class="info-item">
+        <text class="info-label">激活有效期</text>
+        <text class="info-value">{{card.validity_start}} 至 {{card.validity_end}}</text>
+      </view>
+      <view class="info-item">
+        <text class="info-label">使用说明</text>
+        <text class="info-value">{{card.card_type === 'times' ? '支付后直接生效' : '支付后需手动激活'}}</text>
+      </view>
+      <view wx:if="{{card.applicable_stores}}" class="info-item">
+        <text class="info-label">适用门店</text>
+        <text class="info-value">{{card.applicable_stores}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 商品简介 -->
+  <view wx:if="{{card.description}}" class="section">
+    <view class="section-title">商品简介</view>
+    <view class="section-content">{{card.description}}</view>
+  </view>
+
+  <!-- 购买须知 -->
+  <view wx:if="{{card.purchase_notes}}" class="section">
+    <view class="section-title">购买须知</view>
+    <view class="notes-content">{{card.purchase_notes}}</view>
+  </view>
+
+  <!-- 底部操作栏（参考商品详情页） -->
+  <view class="bottom-bar">
+    <view class="action-buttons">
+      <button class="action-btn" bindtap="onGoHome">
+        <text class="action-icon">🏠</text>
+        <text class="action-text">首页</text>
+      </button>
+      <button class="action-btn" open-type="share">
+        <text class="action-icon">📤</text>
+        <text class="action-text">分享</text>
+      </button>
+      <button class="action-btn" bindtap="onConsult">
+        <text class="action-icon">💬</text>
+        <text class="action-text">咨询</text>
+      </button>
+    </view>
+    <button class="purchase-btn"
+            bindtap="onPurchase"
+            loading="{{purchasing}}">
+      立即购买 ¥{{card.price}}
+    </button>
+  </view>
+</view>

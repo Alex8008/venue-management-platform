@@ -1,0 +1,51 @@
+<view class="container">
+  <scroll-view scroll-y="true" class="content">
+    
+    <view wx:if="{{addresses.length > 0}}" class="address-list">
+      <view wx:for="{{addresses}}" wx:key="id" class="address-card">
+        <view class="address-header">
+          <view class="receiver-info">
+            <text class="receiver-name">{{item.receiver_name}}</text>
+            <text class="receiver-phone">{{item.receiver_phone}}</text>
+          </view>
+          <view wx:if="{{item.is_default}}" class="default-tag">默认</view>
+        </view>
+        
+        <view class="address-detail">
+          <text>{{item.province}} {{item.city}} {{item.district}}</text>
+          <text>{{item.detail_address}}</text>
+        </view>
+        
+        <view class="address-actions">
+          <button class="action-btn" 
+                  wx:if="{{!item.is_default}}"
+                  data-id="{{item.id}}"
+                  bindtap="onSetDefault">
+            设为默认
+          </button>
+          <button class="action-btn" 
+                  data-id="{{item.id}}"
+                  bindtap="onEditAddress">
+            编辑
+          </button>
+          <button class="action-btn delete" 
+                  data-id="{{item.id}}"
+                  bindtap="onDeleteAddress">
+            删除
+          </button>
+        </view>
+      </view>
+    </view>
+
+    <view wx:else class="empty-state">
+      <text>暂无收货地址</text>
+    </view>
+
+  </scroll-view>
+
+  <view class="bottom-bar">
+    <button class="add-btn" bindtap="onAddAddress">
+      ➕ 新增收货地址
+    </button>
+  </view>
+</view>

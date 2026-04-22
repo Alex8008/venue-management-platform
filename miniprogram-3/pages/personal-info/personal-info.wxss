@@ -1,0 +1,147 @@
+.container {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 150rpx;
+}
+
+
+.content {
+  flex: 1;
+  padding: 20rpx;
+}
+
+
+.avatar-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40rpx 0;
+  background-color: #fff;
+  border-radius: 12rpx;
+  margin-bottom: 20rpx;
+}
+
+
+.avatar-large {
+  width: 140rpx;
+  height: 140rpx;
+  border-radius: 70rpx;
+  background-color: #f0f0f0;
+  margin-bottom: 20rpx;
+  border: 4rpx solid #ff9800;
+}
+
+
+.avatar-buttons {
+  display: flex;
+  gap: 20rpx;
+}
+
+
+.avatar-btn {
+  font-size: 24rpx;
+  padding: 14rpx 30rpx;
+  border-radius: 30rpx;
+  border: none;
+  line-height: 1.4;
+}
+
+
+.avatar-btn.wechat {
+  background-color: #07c160;
+  color: #fff;
+}
+
+
+.avatar-btn.upload {
+  background-color: #ff9800;
+  color: #fff;
+}
+
+
+.form-section {
+  background-color: #fff;
+  border-radius: 12rpx;
+  padding: 20rpx 30rpx;
+  margin-bottom: 20rpx;
+}
+
+
+.info-item {
+  display: flex;
+  align-items: center;
+  padding: 25rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+
+.info-item:last-child {
+  border-bottom: none;
+}
+
+
+.label {
+  width: 180rpx;
+  font-size: 28rpx;
+  color: #666;
+  flex-shrink: 0;
+}
+
+
+.required {
+  color: #f44336;
+  font-size: 28rpx;
+}
+
+
+.input {
+  flex: 1;
+  height: 60rpx;
+  padding: 0 15rpx;
+  font-size: 28rpx;
+  color: #333;
+  text-align: right;
+}
+
+
+picker {
+  flex: 1;
+}
+
+
+.picker {
+  width: 100%;
+  height: 60rpx;
+  line-height: 60rpx;
+  padding: 0 15rpx;
+  font-size: 28rpx;
+  color: #333;
+  text-align: right;
+  box-sizing: border-box;
+}
+
+
+.bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  padding: 20rpx;
+  padding-bottom: calc(20rpx + env(safe-area-inset-bottom));
+  box-shadow: 0 -2rpx 10rpx rgba(0, 0, 0, 0.1);
+  z-index: 100;
+}
+
+
+.save-btn {
+  width: 100%;
+  background-color: #ff9800;
+  color: #fff;
+  font-size: 32rpx;
+  padding: 25rpx;
+  border-radius: 12rpx;
+  border: none;
+}

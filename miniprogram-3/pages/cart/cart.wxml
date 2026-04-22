@@ -1,0 +1,83 @@
+<view class="container">
+  <view class="address-section" bindtap="onManageAddress">
+    <view wx:if="{{defaultAddress}}" class="address-info">
+      <text class="address-icon">📍</text>
+      <view class="address-detail">
+        <view class="receiver">{{defaultAddress.receiver_name}} {{defaultAddress.receiver_phone}}</view>
+        <view class="address-text">{{defaultAddress.province}} {{defaultAddress.city}} {{defaultAddress.district}} {{defaultAddress.detail_address}}</view>
+      </view>
+    </view>
+    <view wx:else class="no-address">
+      <text>请添加收货地址</text>
+    </view>
+    <text class="arrow">›</text>
+  </view>
+
+  <scroll-view scroll-y="true" class="content">
+    
+    <view wx:if="{{cartItems.length > 0}}" class="cart-list">
+      <view wx:for="{{cartItems}}" wx:key="id" class="cart-item">
+        <view class="custom-checkbox {{item.selected ? 'checked' : ''}}"
+              data-id="{{item.id}}"
+              bindtap="onSelectItem">
+          <text wx:if="{{item.selected}}" class="check-icon">✓</text>
+        </view>
+        
+        <image src="{{item.image_url}}" class="item-image" mode="aspectFill" />
+        
+        <view class="item-info">
+          <view class="item-name">{{item.name}}</view>
+          <view class="item-price">￥{{item.price}}</view>
+          <view wx:if="{{item.delivery_teacher_name}}" class="delivery-teacher-tag">
+            配送教练：{{item.delivery_teacher_name}}
+          </view>
+          <view class="item-quantity">
+            <button class="qty-btn" 
+                    data-id="{{item.id}}" 
+                    data-type="minus"
+                    bindtap="onQuantityChange">
+              -
+            </button>
+            <text class="qty-text">{{item.quantity}}</text>
+            <button class="qty-btn" 
+                    data-id="{{item.id}}" 
+                    data-type="plus"
+                    bindtap="onQuantityChange">
+              +
+            </button>
+          </view>
+        </view>
+        
+        <button class="delete-btn" 
+                data-id="{{item.id}}"
+                bindtap="onDeleteItem">
+          删除
+        </button>
+      </view>
+    </view>
+
+    <view wx:else class="empty-cart">
+      <text>购物车是空的</text>
+      <button class="go-shop-btn" bindtap="onGoShop">去逛逛</button>
+    </view>
+
+  </scroll-view>
+
+  <view class="bottom-bar">
+    <view class="select-all-wrapper" bindtap="onSelectAll">
+      <view class="custom-checkbox {{allSelected ? 'checked' : ''}}">
+        <text wx:if="{{allSelected}}" class="check-icon">✓</text>
+      </view>
+      <text class="select-all-text">全选</text>
+    </view>
+    
+    <view class="total-info">
+      <text class="total-label">合计：</text>
+      <text class="total-price">￥{{totalAmount}}</text>
+    </view>
+    
+    <button class="checkout-btn" bindtap="onCheckout">
+      结算({{selectedItems.length}})
+    </button>
+  </view>
+</view>

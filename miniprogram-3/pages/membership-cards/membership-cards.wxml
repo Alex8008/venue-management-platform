@@ -1,0 +1,24 @@
+<!--pages/membership-cards/membership-cards.wxml-->
+<view class="container">
+  <view class="page-title">会员卡列表</view>
+
+  <view class="card-list">
+    <block wx:for="{{cardList}}" wx:key="id">
+      <view class="card-item" bindtap="viewCardDetail" data-id="{{item.id}}">
+        <image class="card-image" src="{{item.card_image || '/images/default-card.png'}}" mode="aspectFill"></image>
+        <view class="card-info">
+          <view class="card-name">{{item.card_name}}</view>
+          <view class="card-type">
+            <text wx:if="{{item.card_type === 'times'}}">{{item.times_count}}次卡</text>
+            <text wx:else>{{item.valid_days}}天卡</text>
+          </view>
+          <view class="card-price">¥{{item.price}}</view>
+        </view>
+      </view>
+    </block>
+
+    <view wx:if="{{cardList.length === 0}}" class="empty-state">
+      <text class="empty-text">暂无会员卡</text>
+    </view>
+  </view>
+</view>

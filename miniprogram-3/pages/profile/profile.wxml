@@ -1,0 +1,271 @@
+<view class="container">
+  <scroll-view scroll-y="true" class="content" enhanced="{{true}}" bounces="{{true}}" show-scrollbar="{{false}}">
+
+    <!-- 未登录状态 -->
+    <view wx:if="{{!isLogin}}" class="login-section">
+      <view class="login-header">
+        <image src="/images/default-avatar.png" class="avatar-large" />
+        <view class="welcome-text">
+          <view class="welcome-title">欢迎来到凌峰探险</view>
+          <view class="welcome-subtitle">开启你的户外之旅</view>
+        </view>
+      </view>
+
+      <view class="login-buttons">
+        <button class="login-btn wechat-quick" bindtap="onWechatLogin">
+          <view class="btn-content">
+            <text class="btn-icon">🟢</text>
+            <view class="btn-info">
+              <text class="btn-title">微信登录</text>
+              <text class="btn-desc">快速安全，一键授权</text>
+            </view>
+          </view>
+        </button>
+      </view>
+
+      <view class="other-login">
+        <button class="toggle-login-btn" bindtap="onToggleLogin">
+          {{showLoginForm ? '收起' : '账号密码登录'}}
+        </button>
+      </view>
+
+      <view wx:if="{{showLoginForm}}" class="login-form">
+        <view class="form-item">
+          <text class="form-label">用户名</text>
+          <input class="form-input"
+                 placeholder="请输入用户名"
+                 value="{{loginData.username}}"
+                 data-field="username"
+                 bindinput="onLoginInput" />
+        </view>
+
+        <view class="form-item">
+          <text class="form-label">密码</text>
+          <input class="form-input"
+                 type="password"
+                 placeholder="请输入密码"
+                 value="{{loginData.password}}"
+                 data-field="password"
+                 bindinput="onLoginInput" />
+        </view>
+
+        <button class="password-login-btn" bindtap="onPasswordLogin">
+          登录
+        </button>
+      </view>
+    </view>
+
+    <!-- 已登录状态 -->
+    <view wx:if="{{isLogin}}">
+
+      <!-- 橙色头部 -->
+      <view class="profile-header">
+        <view class="header-stats-row">
+          <view class="stat-item">
+            <text class="stat-number">{{trainingStats.cumulative_days}}</text>
+            <text class="stat-label">累计天数</text>
+          </view>
+          <view class="avatar-wrapper" bindtap="onAvatarChange">
+            <image src="{{userProfile.avatar_url || '/images/default-avatar.png'}}"
+                   class="avatar-large-new" mode="aspectFill" />
+          </view>
+          <view class="stat-item">
+            <text class="stat-number">{{trainingStats.cumulative_training_count}}</text>
+            <text class="stat-label">累计训练/次</text>
+          </view>
+        </view>
+        <view class="header-user-info">
+          <text class="header-username">{{userProfile.real_name || '未设置姓名'}}</text>
+          <view class="header-phone-row" bindtap="onGoPersonalInfo">
+            <text class="header-phone">{{maskedPhone}}</text>
+            <text class="link-icon">></text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 本月训练卡片 -->
+      <view class="monthly-card">
+        <view class="monthly-title">本月</view>
+        <view class="monthly-stats">
+          <view class="monthly-stat-item">
+            <text class="monthly-stat-number">{{trainingStats.monthly_training_count}}</text>
+            <text class="monthly-stat-label">训练次数</text>
+          </view>
+          <view class="monthly-stat-item">
+            <text class="monthly-stat-number">{{trainingStats.monthly_training_days}}</text>
+            <text class="monthly-stat-label">训练天数</text>
+          </view>
+          <view class="monthly-stat-item">
+            <text class="monthly-stat-number">{{trainingStats.monthly_training_minutes}}</text>
+            <text class="monthly-stat-label">训练时长/分钟</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 积分显示 -->
+      <view class="points-section">
+        <view class="points-icon">💎</view>
+        <view class="points-info">
+          <text class="points-label">我的积分</text>
+          <text class="points-value">{{userProfile.total_points || 0}}</text>
+        </view>
+        <text class="points-tip">消费100元=1积分</text>
+      </view>
+
+      <!-- 保险状态 -->
+      <view class="section">
+        <view class="section-title">保险状态</view>
+
+        <view wx:if="{{userProfile.has_annual_insurance && userProfile.insurance_valid}}" class="insurance-valid">
+          <text>✅ 已参保</text>
+          <text class="insurance-date">保障期间：{{userProfile.annual_insurance_start_cn}} ~ {{userProfile.annual_insurance_end_cn}}</text>
+        </view>
+        <view wx:elif="{{userProfile.has_temporary_insurance && userProfile.has_ongoing_activity}}" class="insurance-temporary">
+          <text>✅ 活动期间保险</text>
+          <text class="insurance-date">活动：{{userProfile.ongoing_activity_title}}</text>
+          <text class="insurance-date">保障期间：{{userProfile.ongoing_activity_start}} ~ {{userProfile.ongoing_activity_end}}</text>
+          <text class="insurance-tip">活动期间享受保险保障</text>
+        </view>
+        <view wx:elif="{{insuranceSubmissionStatus === 'pending'}}" class="insurance-pending">
+          <text>⏳ 保险凭证审核中</text>
+          <text class="insurance-date">请等待管理员审核</text>
+        </view>
+        <view wx:else class="insurance-invalid">
+          <text>⚠️ 未购买年险或已过期</text>
+          <button class="upload-insurance-btn" bindtap="onUploadInsurance">
+            上传保险凭证
+          </button>
+        </view>
+      </view>
+
+      <!-- 个人中心网格 -->
+      <view class="personal-center-card">
+        <view class="pc-title">个人中心</view>
+        <view class="pc-grid">
+          <view class="pc-grid-item" bindtap="onViewMyCards">
+            <text class="pc-icon">💳</text>
+            <text class="pc-label">我的会员卡</text>
+          </view>
+          <view class="pc-grid-item" bindtap="onViewMyBookings">
+            <text class="pc-icon">📅</text>
+            <text class="pc-label">我的课程预约</text>
+          </view>
+          <view class="pc-grid-item" bindtap="onManageAddress">
+            <text class="pc-icon">📍</text>
+            <text class="pc-label">收货地址</text>
+          </view>
+          <view class="pc-grid-item" bindtap="onViewNotifications">
+            <text class="pc-icon">🔔</text>
+            <text class="pc-label">消息通知</text>
+            <text wx:if="{{unreadNotificationCount > 0}}" class="badge">{{unreadNotificationCount}}</text>
+          </view>
+          <view class="pc-grid-item" bindtap="onViewActivities">
+            <text class="pc-icon">🏔️</text>
+            <text class="pc-label">活动历史</text>
+          </view>
+          <view class="pc-grid-item" bindtap="onViewOrders">
+            <text class="pc-icon">📦</text>
+            <text class="pc-label">订单历史</text>
+          </view>
+          <view class="pc-grid-item" bindtap="onShowMyQrcode">
+            <text class="pc-icon">📱</text>
+            <text class="pc-label">我的二维码</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 咨询信息 -->
+      <view class="consult-info-card">
+        <view class="consult-header">
+          <view class="consult-title">联系咨询</view>
+          <button wx:if="{{isAdmin}}" class="consult-edit-btn" bindtap="onEditConsultInfo">修改</button>
+        </view>
+        <view class="consult-content">{{consultInfo || '暂无咨询信息'}}</view>
+      </view>
+
+      <!-- 教练后台 -->
+      <view wx:if="{{isTeacher}}" class="role-btn-section">
+        <button class="teacher-btn" bindtap="onTeacherBackend">
+          👨‍🏫 教练后台
+        </button>
+      </view>
+
+      <!-- 管理员后台 -->
+      <view wx:if="{{isAdmin}}" class="role-btn-section">
+        <button class="admin-btn" bindtap="onAdminClick">
+          🛠️ 管理员后台
+        </button>
+      </view>
+
+      <!-- 退出登录 -->
+      <view class="logout-section">
+        <button class="logout-btn" bindtap="onLogout">
+          退出登录
+        </button>
+      </view>
+    </view>
+     
+<!-- ========== 底部备案号和协议链接 ========== -->
+<view class="footer-beian">
+  <view class="beian-number">蒙ICP备2026002382号-1X</view>
+  <view class="footer-links">
+    <text class="footer-link" bindtap="goToAgreement">《用户服务协议》</text>
+    <text class="footer-divider">|</text>
+    <text class="footer-link" bindtap="goToPrivacy">《隐私政策》</text>
+  </view>
+</view>
+<!-- ========== 底部备案号和协议链接 结束 ========== -->
+
+
+
+<!-- ========== 登录协议弹窗 ========== -->
+<view class="agreement-mask" wx:if="{{showAgreementPopup}}">
+  <view class="agreement-popup">
+    <view class="agreement-popup-title">服务协议与隐私保护</view>
+    <view class="agreement-popup-desc">
+      为了更好地保障您的合法权益，请您阅读并同意以下协议：
+    </view>
+    <view class="agreement-popup-links">
+      <text class="agreement-popup-link" bindtap="goToAgreement">《用户服务协议》</text>
+      <text class="agreement-popup-link" bindtap="goToPrivacy">《隐私政策》</text>
+    </view>
+    <view class="agreement-check-row" bindtap="toggleAgreement">
+      <view class="agreement-checkbox {{isAgreed ? 'checked' : ''}}">
+        <text wx:if="{{isAgreed}}" class="check-icon">✓</text>
+      </view>
+      <text class="agreement-check-text">
+        我已阅读并同意<text class="inline-link" catchtap="goToAgreement">《用户服务协议》</text>和<text class="inline-link" catchtap="goToPrivacy">《隐私政策》</text>
+      </text>
+    </view>
+    <view class="agreement-popup-btns">
+      <button class="agreement-btn-cancel" bindtap="cancelAgreement">暂不登录</button>
+      <button class="agreement-btn-confirm" bindtap="confirmAgreement">同意并登录</button>
+    </view>
+  </view>
+</view>
+<!-- ========== 登录协议弹窗 结束 ========== -->
+
+  </scroll-view>
+
+  <!-- 编辑咨询信息弹窗 -->
+  <view class="edit-modal-mask" wx:if="{{showEditConsultModal}}" bindtap="onCloseEditConsultModal">
+    <view class="edit-modal" catchtap="noop">
+      <view class="edit-modal-header">
+        <text class="edit-modal-title">修改咨询信息</text>
+        <text class="edit-modal-close" bindtap="onCloseEditConsultModal">✕</text>
+      </view>
+      <view class="edit-modal-body">
+        <textarea class="edit-textarea"
+                  placeholder="请输入咨询信息"
+                  value="{{editConsultText}}"
+                  bindinput="onConsultInput"
+                  maxlength="500"
+                  auto-height />
+      </view>
+      <view class="edit-modal-footer">
+        <button class="edit-cancel-btn" bindtap="onCloseEditConsultModal">取消</button>
+        <button class="edit-save-btn" bindtap="onSaveConsultInfo">保存</button>
+      </view>
+    </view>
+  </view>
+</view>

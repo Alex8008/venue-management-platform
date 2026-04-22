@@ -1,0 +1,131 @@
+<view class="container">
+  <!-- 搜索栏 -->
+  <view class="search-bar">
+    <input class="search-input"
+           placeholder="搜索商品"
+           value="{{searchValue}}"
+           bindinput="onSearchInput"
+           bindconfirm="onSearch" />
+    <button class="search-btn" bindtap="onSearch">搜索</button>
+  </view>
+
+  <!-- 收货地址栏 -->
+  <view class="address-bar" bindtap="onManageAddress">
+    <view wx:if="{{defaultAddress}}" class="address-info">
+      <text class="address-icon">📍</text>
+      <view class="address-text">
+        <text class="receiver">{{defaultAddress.receiver_name}} {{defaultAddress.receiver_phone}}</text>
+        <text class="address">{{defaultAddress.province}} {{defaultAddress.city}} {{defaultAddress.detail_address}}</text>
+      </view>
+    </view>
+    <view wx:else class="no-address">
+      <text class="add-icon">➕</text>
+      <text>新增地址</text>
+    </view>
+    <text class="arrow">›</text>
+  </view>
+
+  <!-- 主内容区（左侧分类栏 + 右侧商品列表）-->
+  <view class="main-content">
+    <!-- 左侧分类栏 -->
+    <scroll-view class="category-sidebar" scroll-y="true">
+      <view class="category-item {{currentCategory === '' ? 'active' : ''}}"
+            bindtap="onCategoryClick"
+            data-category="">
+        全部
+      </view>
+      <view class="category-item {{currentCategory === item.category_name ? 'active' : ''}}"
+            wx:for="{{categories}}"
+            wx:key="id"
+            bindtap="onCategoryClick"
+            data-category="{{item.category_name}}">
+        {{item.category_name}}
+      </view>
+    </scroll-view>
+
+    <!-- 右侧商品列表 -->
+    <scroll-view class="content" scroll-y="true">
+      <view class="products-grid">
+        <view class="product-item"
+              wx:for="{{products}}" wx:key="id">
+          <image src="{{item.image_url || 'https://picsum.photos/300/300?random=' + item.id}}"
+                 class="product-image"
+                 mode="aspectFill"
+                 data-id="{{item.id}}"
+                 bindtap="onProductClick" />
+          <view class="product-info">
+            <view class="product-name">{{item.name}}</view>
+            <view class="product-price">￥{{item.price}}</view>
+            <view class="product-stock">库存: {{item.stock}}</view>
+            <button class="add-cart-btn"
+                    data-id="{{item.id}}"
+                    data-category="{{item.category}}"
+                    bindtap="onAddToCart">
+              加入购物车
+            </button>
+          </view>
+        </view>
+      </view>
+
+      <!-- 加载状态 -->
+      <view wx:if="{{loading}}" class="loading">
+        <text>加载中...</text>
+      </view>
+
+      <view wx:if="{{!hasMore && products.length > 0}}" class="no-more">
+        <text>没有更多商品了</text>
+      </view>
+
+      <view wx:if="{{products.length === 0 && !loading}}" class="empty">
+        <text>暂无商品</text>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 底部购物车栏 -->
+  <view class="bottom-bar">
+    <view class="cart-info" bindtap="onCartClick">
+      <view class="cart-icon">
+        🛒
+        <view wx:if="{{cartCount > 0}}" class="cart-badge">{{cartCount}}</view>
+      </view>
+      <text class="cart-text">购物车</text>
+    </view>
+
+    <button class="order-btn" bindtap="onCreateOrder">
+      立即下单
+    </button>
+  </view>
+
+  <!-- 配送单教练选择弹窗 -->
+  <view class="modal-overlay" wx:if="{{showTeacherModal}}" bindtap="onCloseModal">
+    <view class="modal-content" catchtap="stopPropagation">
+      <view class="modal-header">
+        <text class="modal-title">选择配送教练</text>
+        <text class="modal-close" bindtap="onCloseModal">×</text>
+      </view>
+
+      <scroll-view class="teacher-list" scroll-y="true">
+        <view class="teacher-item"
+              wx:for="{{teachers}}"
+              wx:key="id"
+              bindtap="onSelectTeacher"
+              data-teacher-id="{{item.id}}">
+          <image class="teacher-avatar"
+                 src="{{item.avatar_url || '/images/default-avatar.png'}}"
+                 mode="aspectFill" />
+          <view class="teacher-info">
+            <text class="teacher-name">{{item.name}}</text>
+            <text class="teacher-intro">{{item.teacher_intro || '暂无简介'}}</text>
+          </view>
+          <view class="select-icon">›</view>
+        </view>
+      </scroll-view>
+
+
+      <view class="modal-empty" wx:if="{{teachers.length === 0}}">
+        <text>暂无可选教练</text>
+      </view>
+    </view>
+  </view>
+</view>

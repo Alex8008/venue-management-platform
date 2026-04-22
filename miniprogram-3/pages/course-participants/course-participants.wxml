@@ -1,0 +1,64 @@
+<view class="container">
+  <!-- 课程信息头部 -->
+  <view class="course-header">
+    <text class="course-title">{{course.title || '课程详情'}}</text>
+    <view class="course-meta-row">
+      <text class="course-type-tag">{{course.course_type === 'group' ? '团课' : '私教'}}</text>
+      <text class="participant-count">已报名 {{total}} 人</text>
+      <text wx:if="{{course.max_participants}}" class="max-count"> / 上限 {{course.max_participants}} 人</text>
+    </view>
+  </view>
+
+  <!-- 加载状态 -->
+  <view wx:if="{{loading}}" class="loading-state">
+    <text>加载中...</text>
+  </view>
+
+  <!-- 参与者列表 -->
+  <view wx:elif="{{participants.length > 0}}" class="participant-list">
+    <view wx:for="{{participants}}" wx:key="booking_id"
+          class="participant-item"
+          data-user-id="{{item.user_id}}"
+          data-user-name="{{item.real_name}}"
+          bindtap="onParticipantClick">
+
+      <!-- 头像 -->
+      <image class="participant-avatar"
+             src="{{item.avatar_url || '/images/default-avatar.png'}}"
+             mode="aspectFill" />
+
+      <!-- 信息 -->
+      <view class="participant-info">
+        <view class="participant-name">{{item.real_name || '未设置昵称'}}</view>
+        <view class="participant-detail">
+          <text wx:if="{{item.phone}}">{{item.phone}}</text>
+          <text wx:if="{{item.gender}}"> · {{item.gender}}</text>
+        </view>
+        <view class="participant-time">
+          <text wx:if="{{item.schedule_date}}">上课：{{item.schedule_date}} {{item.start_time}}</text>
+          <text wx:elif="{{item.booking_date}}">预约：{{item.booking_date}}</text>
+        </view>
+        <view class="participant-fee">
+          <text wx:if="{{item.payment_amount > 0}}">¥{{item.payment_amount}}</text>
+          <text class="payment-status {{item.payment_status === 'paid' ? 'paid' : 'unpaid'}}">
+            {{item.payment_status === 'paid' ? '已支付' : item.payment_status === 'refunded' ? '已退款' : '待支付'}}
+          </text>
+        </view>
+      </view>
+
+      <!-- 状态 + 箭头 -->
+      <view class="participant-status">
+        <text class="status-tag status-{{item.status}}">
+          {{item.status === 'approved' ? '已通过' : item.status === 'pending' ? '待审核' : item.status === 'completed' ? '已完成' : item.status}}
+        </text>
+        <view class="arrow">›</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view wx:else class="empty-state">
+    <text class="empty-icon">📋</text>
+    <text class="empty-text">暂无报名人员</text>
+  </view>
+</view>

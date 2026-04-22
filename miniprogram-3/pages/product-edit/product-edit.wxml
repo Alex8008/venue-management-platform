@@ -1,0 +1,79 @@
+<view class="container">
+  <scroll-view scroll-y="true" class="content">
+    
+    <view class="section">
+      <view class="section-title">商品信息</view>
+      
+      <view class="form-item">
+        <text class="label">商品名称 *</text>
+        <input class="input" 
+               placeholder="请输入商品名称"
+               value="{{product.name}}"
+               data-field="name"
+               bindinput="onInputChange" />
+      </view>
+
+      <view class="form-item">
+        <text class="label">商品图片</text>
+        <view class="image-upload" bindtap="onChooseImage">
+          <image wx:if="{{product.image_url}}" 
+                 src="{{product.image_url}}" 
+                 class="image-preview" 
+                 mode="aspectFill" />
+          <view wx:else class="upload-placeholder">
+            <text>📷 点击上传商品图片</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="form-item">
+        <text class="label">商品描述</text>
+        <textarea class="textarea" 
+                  placeholder="请输入商品描述"
+                  value="{{product.description}}"
+                  data-field="description"
+                  bindinput="onInputChange"
+                  maxlength="500" />
+      </view>
+
+      <view class="form-item">
+        <text class="label">商品价格(元) *</text>
+        <input class="input" 
+               type="digit"
+               placeholder="请输入价格"
+               value="{{product.price}}"
+               data-field="price"
+               bindinput="onInputChange" />
+      </view>
+
+      <view class="form-item">
+        <text class="label">库存数量</text>
+        <input class="input" 
+               type="number"
+               placeholder="请输入库存数量"
+               value="{{product.stock}}"
+               data-field="stock"
+               bindinput="onInputChange" />
+      </view>
+
+      <view class="form-item">
+        <text class="label">商品分类</text>
+        <picker mode="selector"
+                range="{{categoryOptions}}"
+                value="{{selectedCategoryIndex}}"
+                bindchange="onCategoryChange">
+          <view class="input picker-display">
+            {{product.category || '请选择分类'}}
+          </view>
+        </picker>
+      </view>
+    </view>
+
+  </scroll-view>
+
+  <view class="bottom-bar">
+    <button class="save-btn" bindtap="onSave">
+      保存商品
+    </button>
+  </view>
+</view>

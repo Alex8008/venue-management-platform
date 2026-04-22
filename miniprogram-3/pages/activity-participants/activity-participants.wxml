@@ -1,0 +1,39 @@
+<view class="container">
+  <scroll-view scroll-y="true" class="content">
+    
+    <view class="header">
+      <view class="activity-title">{{activityTitle}}</view>
+      <view class="participant-count">共 {{participants.length}} 人报名</view>
+    </view>
+
+    <view wx:if="{{participants.length > 0}}" class="participants-list">
+      <view wx:for="{{participants}}" wx:key="id" class="participant-card"
+            data-user-id="{{item.user_id}}"
+            data-user-name="{{item.real_name}}"
+            bindtap="onParticipantClick">
+        <view class="participant-info">
+          <view class="participant-name">{{item.real_name}}</view>
+          <view class="participant-phone">{{item.phone}}</view>
+        </view>
+        <view class="participant-status">
+          <text class="status-tag">{{item.status === 'approved' ? '已通过' : '待审核'}}</text>
+          <view class="arrow">›</view>
+        </view>
+      </view>
+    </view>
+
+    <view wx:else class="empty-state">
+      <text>暂无报名人员</text>
+    </view>
+
+  </scroll-view>
+
+  <view class="bottom-bar">
+    <button class="export-btn all" bindtap="onExportInsurance">
+      📊 导出全部保险信息
+    </button>
+    <button class="export-btn no-insurance" bindtap="onExportNoInsurance">
+      📋 导出未购保险人员
+    </button>
+  </view>
+</view>

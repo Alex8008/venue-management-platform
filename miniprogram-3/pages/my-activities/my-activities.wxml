@@ -1,0 +1,169 @@
+<view class="container">
+  <scroll-view scroll-y="true" class="content">
+
+
+    <!-- 待审核 -->
+    <view wx:if="{{userActivities.pending && userActivities.pending.length > 0}}" class="activity-group">
+      <view class="group-title">待审核 ({{userActivities.pending.length}})</view>
+      <view wx:for="{{userActivities.pending}}" wx:key="id" class="activity-card pending">
+        <image src="{{item.cover_image_url || (item.cover_images && item.cover_images[0]) || '/images/default-activity.jpg'}}"
+               class="activity-image"
+               mode="aspectFill" />
+        <view class="activity-info">
+          <view class="activity-title">{{item.title}}</view>
+          <view class="activity-date">{{item.activity_start_cn}}</view>
+          <view class="activity-status">待审核</view>
+          <view class="activity-amount">￥{{item.total_amount}}</view>
+        </view>
+        <view class="activity-actions">
+          <button class="cancel-btn"
+                  data-id="{{item.id}}"
+                  data-title="{{item.title}}"
+                  bindtap="onCancelActivity">
+            取消报名
+          </button>
+        </view>
+      </view>
+    </view>
+
+
+    <!-- 已通过 -->
+    <view wx:if="{{userActivities.approved && userActivities.approved.length > 0}}" class="activity-group">
+      <view class="group-title">已通过 ({{userActivities.approved.length}})</view>
+      <view wx:for="{{userActivities.approved}}" wx:key="id" class="activity-card approved">
+        <image src="{{item.cover_image_url || (item.cover_images && item.cover_images[0]) || '/images/default-activity.jpg'}}"
+               class="activity-image"
+               mode="aspectFill" />
+        <view class="activity-info">
+          <view class="activity-title">{{item.title}}</view>
+          <view class="activity-date">{{item.activity_start_cn}}</view>
+          <view class="activity-status">已通过</view>
+          <view class="activity-amount">￥{{item.total_amount}}</view>
+          <view wx:if="{{item.refund_status === 'pending'}}" class="refund-status-display">
+            <text class="refund-tag pending">退款审核中</text>
+          </view>
+          <view wx:elif="{{item.refund_status === 'rejected'}}" class="refund-status-display">
+            <text class="refund-tag rejected-tag">退款被拒绝</text>
+          </view>
+          <view wx:if="{{item.cancel_deadline}}" class="cancel-deadline-info">
+            <text class="deadline-label">退款截止：</text>
+            <text class="deadline-value">{{item.cancel_deadline_cn}}</text>
+          </view>
+        </view>
+        <view class="activity-actions">
+          <button class="detail-btn"
+                  data-id="{{item.activity_id}}"
+                  bindtap="onActivityClick">
+            查看详情
+          </button>
+
+
+          <!-- ★ 未支付：显示支付和取消按钮 -->
+          <block wx:if="{{item.payment_status === 'unpaid'}}">
+            <button class="pay-activity-btn"
+                    data-id="{{item.id}}"
+                    data-amount="{{item.total_amount}}"
+                    bindtap="onPayActivity">
+              去支付
+            </button>
+            <button class="cancel-btn"
+                    data-id="{{item.id}}"
+                    data-title="{{item.title}}"
+                    bindtap="onCancelActivity">
+              取消报名
+            </button>
+          </block>
+
+
+          <!-- ★ 已支付：退款中 -->
+          <block wx:elif="{{item.refund_status === 'pending'}}">
+            <button class="refund-btn disabled">退款中</button>
+          </block>
+
+
+          <!-- ★ 已支付：可退款 -->
+          <button wx:elif="{{item.can_refund && (item.refund_status === 'none' || !item.refund_status)}}"
+                  class="refund-btn"
+                  data-id="{{item.id}}"
+                  data-title="{{item.title}}"
+                  data-can-refund="{{item.can_refund}}"
+                  bindtap="onRequestRefund">
+            申请退款
+          </button>
+
+
+          <!-- ★ 已支付：已过退款期 -->
+          <button wx:elif="{{!item.can_refund && (item.refund_status === 'none' || !item.refund_status) && item.payment_status === 'paid'}}"
+                  class="refund-btn disabled">
+            已过期
+          </button>
+        </view>
+      </view>
+    </view>
+
+
+    <!-- 已完成 -->
+    <view wx:if="{{userActivities.completed && userActivities.completed.length > 0}}" class="activity-group">
+      <view class="group-title">已完成 ({{userActivities.completed.length}})</view>
+      <view wx:for="{{userActivities.completed}}" wx:key="id" class="activity-card completed">
+        <image src="{{item.cover_image_url || (item.cover_images && item.cover_images[0]) || '/images/default-activity.jpg'}}"
+               class="activity-image"
+               mode="aspectFill" />
+        <view class="activity-info">
+          <view class="activity-title">{{item.title}}</view>
+          <view class="activity-date">{{item.activity_start_cn}}</view>
+          <view class="activity-status">已完成</view>
+          <view class="activity-amount">￥{{item.total_amount}}</view>
+        </view>
+        <view class="activity-actions">
+          <button class="detail-btn"
+                  data-id="{{item.activity_id}}"
+                  bindtap="onActivityClick">
+            查看详情
+          </button>
+        </view>
+      </view>
+    </view>
+
+
+    <!-- 已取消 -->
+    <view wx:if="{{userActivities.cancelled && userActivities.cancelled.length > 0}}" class="activity-group">
+      <view class="group-title">已取消 ({{userActivities.cancelled.length}})</view>
+      <view wx:for="{{userActivities.cancelled}}" wx:key="id" class="activity-card cancelled">
+        <image src="{{item.cover_image_url || (item.cover_images && item.cover_images[0]) || '/images/default-activity.jpg'}}"
+               class="activity-image"
+               mode="aspectFill" />
+        <view class="activity-info">
+          <view class="activity-title">{{item.title}}</view>
+          <view class="activity-date">{{item.activity_start_cn}}</view>
+          <view class="activity-status">已取消</view>
+          <view class="cancel-reason">取消原因：{{item.cancel_reason}}</view>
+        </view>
+      </view>
+    </view>
+
+
+    <!-- 未通过 -->
+    <view wx:if="{{userActivities.rejected && userActivities.rejected.length > 0}}" class="activity-group">
+      <view class="group-title">未通过 ({{userActivities.rejected.length}})</view>
+      <view wx:for="{{userActivities.rejected}}" wx:key="id" class="activity-card rejected">
+        <image src="{{item.cover_image_url || (item.cover_images && item.cover_images[0]) || '/images/default-activity.jpg'}}"
+               class="activity-image"
+               mode="aspectFill" />
+        <view class="activity-info">
+          <view class="activity-title">{{item.title}}</view>
+          <view class="activity-date">{{item.activity_start_cn}}</view>
+          <view class="activity-status">未通过</view>
+          <view class="reject-reason">拒绝原因：{{item.admin_notes}}</view>
+        </view>
+      </view>
+    </view>
+
+
+    <view wx:if="{{hasNoActivities}}" class="empty-activities">
+      <text>暂无活动记录</text>
+    </view>
+
+
+  </scroll-view>
+</view>

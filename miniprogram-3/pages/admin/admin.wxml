@@ -1,0 +1,932 @@
+<view class="container">
+  <view class="tab-bar">
+    <scroll-view scroll-x="true" class="tab-scroll">
+      <view class="tab-item {{currentTab === index ? 'active' : ''}}"
+            wx:for="{{tabs}}" wx:key="index"
+            data-index="{{index}}"
+            bindtap="onTabClick">
+        {{item}}
+      </view>
+    </scroll-view>
+  </view>
+
+  <scroll-view class="content"
+               scroll-y="true"
+               enhanced="{{true}}"
+               show-scrollbar="{{true}}"
+               refresher-enabled="{{true}}"
+               refresher-triggered="{{refreshing}}"
+               bindrefresherrefresh="onRefresh"
+               bindrefresherrestore="onRestore">
+
+
+    <!-- Tab 0: 统计概览 -->
+    <view wx:if="{{currentTab === 0}}" class="tab-content">
+      <view class="stats-grid">
+        <view class="stat-card">
+          <view class="stat-number">{{statistics.total_users || 0}}</view>
+          <view class="stat-label">总用户数</view>
+        </view>
+        <view class="stat-card">
+          <view class="stat-number">{{statistics.total_activities || 0}}</view>
+          <view class="stat-label">总活动数</view>
+        </view>
+        <view class="stat-card">
+          <view class="stat-number">{{statistics.pending_registrations || 0}}</view>
+          <view class="stat-label">待审核报名</view>
+        </view>
+        <view class="stat-card">
+          <view class="stat-number">{{statistics.pending_refunds || 0}}</view>
+          <view class="stat-label">待处理退款</view>
+        </view>
+      </view>
+      <button class="backup-btn" bindtap="onScanConsume" style="margin-top: 30rpx;">
+        📷 扫码核销会员卡
+      </button>
+
+    </view>
+
+
+    <!-- Tab 1: 首页管理 -->
+    <view wx:if="{{currentTab === 1}}" class="tab-content">
+      <view class="section-title">首页内容管理</view>
+
+      <view class="backup-info">
+        <text class="info-text">管理场馆首页的轮播图、横幅、文字内容和活动推荐</text>
+      </view>
+
+      <button class="backup-btn" bindtap="onManageVenueContent">
+        进入首页内容编辑
+      </button>
+
+      <view class="backup-tips">
+        <text class="tip-title">内容类型说明：</text>
+        <text>1. 轮播图：首页顶部滚动展示，需要上传图片</text>
+        <text>2. 横幅图片：全宽图片横幅展示</text>
+        <text>3. 文字内容：纯文字标题+内容展示</text>
+        <text>4. 活动推荐：带图片和描述的活动推荐卡片</text>
+      </view>
+
+      <!-- 当前轮播活动列表 -->
+      <view class="section-title" style="margin-top: 30rpx;">当前轮播活动 ({{carouselActivities.length}})</view>
+      <view wx:if="{{carouselActivities.length > 0}}" class="activities-list">
+        <view wx:for="{{carouselActivities}}" wx:key="id" class="activity-card">
+          <image src="{{item.cover_image_url || 'https://picsum.photos/160/160?random=' + item.id}}"
+                 class="activity-image"
+                 mode="aspectFill" />
+          <view class="activity-info">
+            <view class="activity-title">{{item.title}}</view>
+            <view class="activity-meta">
+              <text class="category">{{item.category}}</text>
+              <text class="participants">{{item.current_participants}}/{{item.max_participants}}人</text>
+            </view>
+            <view class="activity-date">{{item.activity_start_cn}}</view>
+          </view>
+        </view>
+      </view>
+      <view wx:else class="empty-state">
+        <text>暂无轮播活动，请在活动编辑中勾选"设为轮播"</text>
+      </view>
+    </view>
+
+    <!-- Tab 2: 活动管理 -->
+    <view wx:if="{{currentTab === 2}}" class="tab-content">
+      <view class="search-bar">
+        <input class="search-input"
+               placeholder="搜索活动名称"
+               value="{{activitySearchValue}}"
+               bindinput="onActivitySearchInput"
+               bindconfirm="onActivitySearch" />
+        <button class="search-btn" bindtap="onActivitySearch">搜索</button>
+      </view>
+
+      <view class="section-header">
+        <view class="section-title">活动管理</view>
+        <view class="header-buttons">
+          <button class="create-btn" bindtap="onCreateActivity">创建活动</button>
+        </view>
+      </view>
+
+      <view wx:if="{{activities.length > 0}}" class="activities-list">
+        <view wx:for="{{activities}}" wx:key="id" class="activity-card">
+          <image src="{{item.cover_image_url || 'https://picsum.photos/160/160?random=' + item.id}}"
+                 class="activity-image"
+                 mode="aspectFill" />
+          <view class="activity-info">
+            <view class="activity-title">{{item.title}}</view>
+            <view class="activity-meta">
+              <text class="category">{{item.category}}</text>
+              <text class="participants">{{item.current_participants}}/{{item.max_participants}}人</text>
+              <text class="status {{item.status}}">{{item.status === 'published' ? '已发布' : item.status}}</text>
+            </view>
+            <view class="activity-date">{{item.activity_start_cn}}</view>
+            <view class="activity-fee">￥{{item.base_fee}}</view>
+          </view>
+          <view class="activity-actions">
+            <button class="action-btn edit"
+                    data-id="{{item.id}}"
+                    bindtap="onEditActivity">
+              编辑
+            </button>
+            <button class="action-btn participants"
+                    data-id="{{item.id}}"
+                    data-title="{{item.title}}"
+                    bindtap="onViewParticipants">
+              人员详情
+            </button>
+            <button class="action-btn delete"
+                    data-id="{{item.id}}"
+                    bindtap="onDeleteActivity">
+              删除
+            </button>
+          </view>
+        </view>
+      </view>
+
+      <view wx:else class="empty-state">
+        <text>暂无活动</text>
+        <button class="create-btn" bindtap="onCreateActivity">创建第一个活动</button>
+      </view>
+    </view>
+
+    <!-- Tab 3: 课程管理 -->
+    <view wx:if="{{currentTab === 3}}" class="tab-content">
+      <view class="search-bar">
+        <input class="search-input"
+               placeholder="搜索课程名称"
+               value="{{courseSearchValue}}"
+               bindinput="onCourseSearchInput"
+               bindconfirm="onCourseSearch" />
+        <button class="search-btn" bindtap="onCourseSearch">搜索</button>
+      </view>
+
+      <view class="section-header">
+        <view class="section-title">课程管理</view>
+        <view class="header-buttons">
+          <button class="sort-btn" bindtap="onManageCourseFilters">分类管理</button>
+          <button class="create-btn" bindtap="onCreateCourse">创建课程</button>
+        </view>
+      </view>
+
+      <view wx:if="{{courses.length > 0}}" class="activities-list">
+        <view wx:for="{{courses}}" wx:key="id" class="activity-card">
+          <image src="{{item.cover_image || 'https://picsum.photos/160/160?random=c' + item.id}}"
+                 class="activity-image"
+                 mode="aspectFill" />
+          <view class="activity-info">
+            <view class="activity-title">{{item.title}}</view>
+            <view class="activity-meta">
+              <text class="category">{{item.course_type === 'group' ? '团课' : '私教'}}</text>
+              <text class="participants">教练：{{item.teacher_name || '未指定'}}</text>
+              <text class="status {{item.status}}">{{item.status === 'active' ? '开课中' : '已停课'}}</text>
+            </view>
+            <view class="activity-date">{{item.difficulty || ''}} {{item.duration ? item.duration + '分钟' : ''}}</view>
+            <view class="activity-fee">￥{{item.price}}</view>
+          </view>
+          <view class="activity-actions">
+            <button class="action-btn edit"
+                    data-id="{{item.id}}"
+                    bindtap="onEditCourse">
+              编辑
+            </button>
+            <button class="action-btn edit"
+                    data-id="{{item.id}}"
+                    bindtap="onViewCourseParticipants">
+              人员详情
+            </button>
+            <button class="action-btn delete"
+                    data-id="{{item.id}}"
+                    data-name="{{item.title}}"
+                    bindtap="onDeleteCourse">
+              删除
+            </button>
+          </view>
+        </view>
+      </view>
+
+      <view wx:else class="empty-state">
+        <text>暂无课程</text>
+        <button class="create-btn" bindtap="onCreateCourse">创建第一个课程</button>
+      </view>
+    </view>
+
+    <!-- Tab 4: 报名审核 -->
+    <view wx:if="{{currentTab === 4}}" class="tab-content">
+      <!-- 切换：活动报名 / 课程预约 -->
+      <view class="view-toggle">
+        <view class="toggle-item {{registrationViewType === 'activity' ? 'active' : ''}}"
+              bindtap="onToggleRegistrationType" data-type="activity">
+          活动报名 ({{pendingRegistrations.length}})
+        </view>
+        <view class="toggle-item {{registrationViewType === 'course' ? 'active' : ''}}"
+              bindtap="onToggleRegistrationType" data-type="course">
+          课程预约 ({{pendingCourseBookings.length}})
+        </view>
+      </view>
+
+      <!-- 活动报名视图 -->
+      <view wx:if="{{registrationViewType === 'activity'}}">
+        <view wx:if="{{pendingRegistrations.length > 0}}">
+          <!-- 全选栏（仅选择模式显示） -->
+          <view class="batch-select-bar" wx:if="{{isRegistrationSelectionMode}}">
+            <view class="select-all-text-btn" bindtap="onSelectAllRegistrations">
+              {{allRegistrationsSelected ? '取消全选' : '全选'}}
+            </view>
+          </view>
+
+          <view class="registrations-list">
+            <view wx:for="{{pendingRegistrations}}" wx:key="id"
+                  class="registration-card"
+                  style="{{item.selected ? 'background-color:#e3f2fd;border-left-color:#1296db' : ''}}"
+                  data-id="{{item.id}}"
+                  data-user-id="{{item.user_id}}"
+                  data-name="{{item.real_name}}"
+                  bindtap="onRegistrationCardTap">
+              <view class="card-content">
+                <view class="registration-header">
+                  <view class="user-info">
+                    <text class="user-name">{{item.real_name}}</text>
+                    <text class="user-phone">{{item.phone}}</text>
+                  </view>
+                  <view class="registration-date">{{item.registration_date}}</view>
+                </view>
+
+                <view class="activity-info">
+                  <text class="activity-title">{{item.activity_title}}</text>
+                  <text class="activity-fee">￥{{item.total_amount}}</text>
+                </view>
+              </view>
+            </view>
+          </view>
+
+          <!-- 底部操作栏 -->
+          <view class="batch-actions">
+            <view wx:if="{{!isRegistrationSelectionMode}}">
+              <button class="select-mode-btn" bindtap="onToggleRegistrationSelectionMode">选择</button>
+            </view>
+            <view wx:else class="batch-actions-inner">
+              <button class="cancel-btn" bindtap="onToggleRegistrationSelectionMode">取消</button>
+              <button class="batch-approve-btn" bindtap="onBatchApprove">
+                批量通过 ({{selectedRegistrations.length}})
+              </button>
+              <button class="batch-reject-btn" bindtap="onBatchReject">
+                批量拒绝 ({{selectedRegistrations.length}})
+              </button>
+            </view>
+          </view>
+        </view>
+
+        <view wx:else class="empty-state">
+          <text>暂无待审核活动报名</text>
+        </view>
+      </view>
+
+      <!-- 课程预约视图 -->
+      <view wx:if="{{registrationViewType === 'course'}}">
+        <view wx:if="{{pendingCourseBookings.length > 0}}">
+          <!-- 全选栏（仅选择模式显示） -->
+          <view class="batch-select-bar" wx:if="{{isCourseBookingSelectionMode}}">
+            <view class="select-all-text-btn" bindtap="onSelectAllCourseBookings">
+              {{allCourseBookingsSelected ? '取消全选' : '全选'}}
+            </view>
+          </view>
+
+          <view class="registrations-list">
+            <view wx:for="{{pendingCourseBookings}}" wx:key="id"
+                  class="registration-card"
+                  style="{{item.selected ? 'background-color:#e3f2fd;border-left-color:#1296db' : ''}}"
+                  data-id="{{item.id}}"
+                  bindtap="onCourseBookingCardTap">
+              <view class="card-content">
+                <view class="registration-header">
+                  <view class="user-info">
+                    <text class="user-name">{{item.user_name}}</text>
+                    <text class="user-phone">{{item.user_phone}}</text>
+                  </view>
+                  <view class="registration-date">{{item.booking_date}}</view>
+                </view>
+
+                <view class="activity-info">
+                  <text class="activity-title">{{item.course_title}}</text>
+                  <text class="activity-fee">￥{{item.price}}</text>
+                </view>
+
+                <view class="course-booking-meta">
+                  <text>{{item.booking_time}} | {{item.payment_method === 'card' ? '会员卡' : '在线支付'}}</text>
+                </view>
+              </view>
+            </view>
+          </view>
+
+          <!-- 底部操作栏 -->
+          <view class="batch-actions">
+            <view wx:if="{{!isCourseBookingSelectionMode}}">
+              <button class="select-mode-btn" bindtap="onToggleCourseBookingSelectionMode">选择</button>
+            </view>
+            <view wx:else class="batch-actions-inner">
+              <button class="cancel-btn" bindtap="onToggleCourseBookingSelectionMode">取消</button>
+              <button class="batch-approve-btn" bindtap="onBatchApproveCourseBooking">
+                批量通过 ({{selectedCourseBookings.length}})
+              </button>
+              <button class="batch-reject-btn" bindtap="onBatchRejectCourseBooking">
+                批量拒绝 ({{selectedCourseBookings.length}})
+              </button>
+            </view>
+          </view>
+        </view>
+
+        <view wx:else class="empty-state">
+          <text>暂无待审核课程预约</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- Tab 5: 用户管理 -->
+    <view wx:if="{{currentTab === 5}}" class="tab-content">
+      <view class="search-bar">
+        <input class="search-input"
+               placeholder="搜索用户名或手机号"
+               value="{{userSearchValue}}"
+               bindinput="onUserSearchInput"
+               bindconfirm="onUserSearch" />
+        <button class="search-btn" bindtap="onUserSearch">搜索</button>
+      </view>
+
+      <!-- 管理员 -->
+      <view class="section-title">管理员 ({{adminUsers.length}})</view>
+      <view wx:if="{{adminUsers.length > 0}}" class="users-list">
+        <view wx:for="{{adminUsers}}" wx:key="id" class="user-card"
+              data-id="{{item.id}}"
+              data-name="{{item.real_name}}"
+              bindtap="onUserClick">
+          <view class="user-header">
+            <view class="user-basic">
+              <text class="user-name">{{item.real_name}}</text>
+              <text class="user-phone">{{item.phone}}</text>
+            </view>
+            <view class="user-badge admin">管理员</view>
+          </view>
+          <view class="user-details">
+            <text class="join-date">注册时间：{{item.created_at_cn}}</text>
+          </view>
+        </view>
+      </view>
+      <view wx:else class="empty-hint"><text>暂无管理员</text></view>
+
+      <!-- 教练 -->
+      <view class="section-title">教练 ({{teacherUsers.length}})</view>
+      <view wx:if="{{teacherUsers.length > 0}}" class="users-list">
+        <view wx:for="{{teacherUsers}}" wx:key="id" class="user-card"
+              data-id="{{item.id}}"
+              data-name="{{item.real_name}}"
+              bindtap="onUserClick">
+          <view class="user-header">
+            <view class="user-basic">
+              <text class="user-name">{{item.real_name}}</text>
+              <text class="user-phone">{{item.phone}}</text>
+            </view>
+            <view class="user-badge teacher">教练</view>
+          </view>
+          <view class="user-details">
+            <text class="join-date">注册时间：{{item.created_at_cn}}</text>
+            <text wx:if="{{item.has_annual_insurance}}" class="insurance-status valid">
+              年险：{{item.annual_insurance_start_cn}} ~ {{item.annual_insurance_end_cn}}
+            </text>
+          </view>
+        </view>
+      </view>
+      <view wx:else class="empty-hint"><text>暂无教练</text></view>
+
+      <!-- 普通用户 -->
+      <view class="section-title">普通用户 ({{normalUsers.length}})</view>
+      <view wx:if="{{normalUsers.length > 0}}" class="users-list">
+        <view wx:for="{{normalUsers}}" wx:key="id" class="user-card"
+              data-id="{{item.id}}"
+              data-name="{{item.real_name}}"
+              bindtap="onUserClick">
+          <view class="user-header">
+            <view class="user-basic">
+              <text class="user-name">{{item.real_name}}</text>
+              <text class="user-phone">{{item.phone}}</text>
+            </view>
+            <view class="user-badge user">普通用户</view>
+          </view>
+          <view class="user-details">
+            <text class="join-date">注册时间：{{item.created_at_cn}}</text>
+            <text wx:if="{{item.has_annual_insurance}}" class="insurance-status valid">
+              年险：{{item.annual_insurance_start_cn}} ~ {{item.annual_insurance_end_cn}}
+            </text>
+            <text wx:else class="insurance-status invalid">未购买年险</text>
+          </view>
+        </view>
+      </view>
+      <view wx:else class="empty-hint"><text>暂无普通用户</text></view>
+    </view>
+
+    <!-- Tab 6: 商品管理 -->
+    <view wx:if="{{currentTab === 6}}" class="tab-content">
+      <view class="search-bar">
+        <input class="search-input"
+               placeholder="搜索商品名称"
+               value="{{productSearchValue}}"
+               bindinput="onProductSearchInput"
+               bindconfirm="onProductSearch" />
+        <button class="search-btn" bindtap="onProductSearch">搜索</button>
+      </view>
+
+      <view class="section-header">
+        <view class="section-title">商品管理</view>
+        <view class="header-buttons">
+          <button class="sort-btn" bindtap="onManageProductCategories">分类管理</button>
+          <button class="create-btn" bindtap="onCreateProduct">添加商品</button>
+        </view>
+      </view>
+
+      <view wx:if="{{products.length > 0}}" class="products-list">
+        <view wx:for="{{products}}" wx:key="id" class="product-card">
+          <image src="{{item.image_url || 'https://picsum.photos/120/120?random=' + item.id}}"
+                 class="product-image"
+                 mode="aspectFill" />
+          <view class="product-info">
+            <view class="product-name">{{item.name}}</view>
+            <view class="product-desc">{{item.description}}</view>
+            <view class="product-meta">
+              <text class="product-price">￥{{item.price}}</text>
+              <text class="product-stock">库存: {{item.stock}}</text>
+              <text class="product-status {{item.status}}">{{item.status === 'active' ? '在售' : '已下架'}}</text>
+            </view>
+          </view>
+          <view class="product-actions">
+            <button class="action-btn edit"
+                    data-id="{{item.id}}"
+                    bindtap="onEditProduct">
+              编辑
+            </button>
+            <button class="action-btn delete"
+                    data-id="{{item.id}}"
+                    bindtap="onDeleteProduct">
+              下架
+            </button>
+          </view>
+        </view>
+      </view>
+
+      <view wx:else class="empty-state">
+        <text>暂无商品</text>
+        <button class="create-btn" bindtap="onCreateProduct">添加第一个商品</button>
+      </view>
+    </view>
+
+    <!-- Tab 7: 会员卡管理 -->
+    <view wx:if="{{currentTab === 7}}" class="tab-content">
+      <view class="section-header">
+        <view class="section-title">会员卡管理</view>
+        <button class="create-btn" bindtap="onCreateMembershipCard">新建会员卡</button>
+      </view>
+
+      <view wx:if="{{membershipCards.length > 0}}" class="activities-list">
+        <view wx:for="{{membershipCards}}" wx:key="id" class="activity-card">
+          <image src="{{item.card_image || 'https://picsum.photos/160/160?random=m' + item.id}}"
+                 class="activity-image"
+                 mode="aspectFill" />
+          <view class="activity-info">
+            <view class="activity-title">{{item.card_name}}</view>
+            <view class="activity-meta">
+              <text class="category">{{item.card_type === 'times' ? '次卡' : '期限卡'}}</text>
+              <text class="participants" wx:if="{{item.card_type === 'times'}}">{{item.times_count}}次</text>
+              <text class="participants" wx:else>{{item.valid_days}}天</text>
+              <text class="status {{item.status}}">{{item.status === 'active' ? '在售' : '已下架'}}</text>
+            </view>
+            <view class="activity-fee">￥{{item.price}}</view>
+          </view>
+          <view class="activity-actions">
+            <button class="action-btn edit"
+                    data-id="{{item.id}}"
+                    bindtap="onEditMembershipCard">
+              编辑
+            </button>
+            <button class="action-btn edit"
+                    data-id="{{item.id}}"
+                    bindtap="onGiftMembershipCard">
+              赠送
+            </button>
+            <button class="action-btn delete"
+                    data-id="{{item.id}}"
+                    data-name="{{item.card_name}}"
+                    bindtap="onDeleteMembershipCard">
+              删除
+            </button>
+          </view>
+        </view>
+      </view>
+
+      <view wx:else class="empty-state">
+        <text>暂无会员卡</text>
+        <button class="create-btn" bindtap="onCreateMembershipCard">创建第一张会员卡</button>
+      </view>
+      <!-- 赠送会员卡弹窗 -->
+      <view class="gift-modal-mask" wx:if="{{showGiftModal}}" bindtap="onCloseGiftModal">
+        <view class="gift-modal" catchtap="noop">
+          <view class="gift-modal-header">
+            <text class="gift-modal-title">赠送会员卡</text>
+            <text class="gift-modal-close" bindtap="onCloseGiftModal">✕</text>
+          </view>
+          <view class="gift-search-bar">
+            <input class="gift-search-input" placeholder="搜索用户" bindinput="onGiftUserSearch" />
+          </view>
+          <view class="gift-select-all" bindtap="onSelectAllGiftUsers">
+            <text>{{allGiftUsersSelected ? '取消全选' : '全选'}}</text>
+          </view>
+          <scroll-view scroll-y class="gift-user-list">
+            <view wx:for="{{giftUserList}}" wx:key="id"
+                  class="gift-user-item {{item.selected ? 'selected' : ''}}"
+                  data-index="{{index}}"
+                  bindtap="onGiftUserTap">
+              <image class="gift-user-avatar" src="{{item.avatar_url || '/images/default-avatar.png'}}" mode="aspectFill" />
+              <view class="gift-user-info">
+                <text class="gift-user-name">{{item.real_name || '未设置昵称'}}</text>
+                <text class="gift-user-type">{{item.user_type === 'teacher' ? '教练' : '普通用户'}}</text>
+              </view>
+            </view>
+          </scroll-view>
+          <button class="gift-confirm-btn" bindtap="onConfirmGift">确认赠送</button>
+        </view>
+      </view>
+    </view>
+
+    <!-- Tab 8: 保险审核 -->
+    <view wx:if="{{currentTab === 8}}" class="tab-content">
+      <view class="section-title">待审核保险凭证 ({{insuranceSubmissions.length}})</view>
+
+      <view wx:if="{{insuranceSubmissions.length > 0}}">
+        <!-- 全选栏（仅选择模式显示） -->
+        <view class="batch-select-bar" wx:if="{{isInsuranceSelectionMode}}">
+          <view class="select-all-text-btn" bindtap="onSelectAllInsurance">
+            {{allInsuranceSelected ? '取消全选' : '全选'}}
+          </view>
+        </view>
+
+        <view class="insurance-list">
+          <view wx:for="{{insuranceSubmissions}}" wx:key="id"
+                class="insurance-card"
+                style="{{item.selected ? 'background-color:#e3f2fd;border-left-color:#1296db' : ''}}"
+                data-id="{{item.id}}"
+                data-url="{{item.certificate_image_url}}"
+                bindtap="onInsuranceCardTap">
+            <view class="card-content">
+              <view class="insurance-header">
+                <view class="user-info">
+                  <text class="user-name">{{item.real_name}}</text>
+                  <text class="user-phone">{{item.phone}}</text>
+                </view>
+                <view class="submit-date">{{item.created_at_cn}}</view>
+              </view>
+
+              <view class="insurance-image">
+                <image src="{{item.certificate_image_url}}" mode="aspectFill" />
+              </view>
+
+              <view class="insurance-period">
+                <text>保障期间：{{item.start_date_cn}} ~ {{item.end_date_cn}}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+
+        <!-- 底部操作栏 -->
+        <view class="batch-actions">
+          <view wx:if="{{!isInsuranceSelectionMode}}">
+            <button class="select-mode-btn" bindtap="onToggleInsuranceSelectionMode">选择</button>
+          </view>
+          <view wx:else class="batch-actions-inner">
+            <button class="cancel-btn" bindtap="onToggleInsuranceSelectionMode">取消</button>
+            <button class="batch-approve-btn" bindtap="onBatchApproveInsurance">
+              批量通过 ({{selectedInsurance.length}})
+            </button>
+            <button class="batch-reject-btn" bindtap="onBatchRejectInsurance">
+              批量拒绝 ({{selectedInsurance.length}})
+            </button>
+          </view>
+        </view>
+      </view>
+
+      <view wx:else class="empty-state">
+        <text>暂无待审核保险凭证</text>
+      </view>
+    </view>
+
+    <!-- Tab 9: 退款审核 -->
+    <view wx:if="{{currentTab === 9}}" class="tab-content">
+      <!-- 切换：活动退款 / 课程退款 / 商品退款 -->
+      <view class="view-toggle">
+        <view class="toggle-item {{refundViewType === 'activity' ? 'active' : ''}}"
+              bindtap="onToggleRefundType" data-type="activity">
+          活动退款 ({{refundRequests.length}})
+        </view>
+        <view class="toggle-item {{refundViewType === 'course' ? 'active' : ''}}"
+              bindtap="onToggleRefundType" data-type="course">
+          课程退款 ({{courseRefundBookings.length}})
+        </view>
+        <view class="toggle-item {{refundViewType === 'product' ? 'active' : ''}}"
+              bindtap="onToggleRefundType" data-type="product">
+          商品退款 ({{productRefundOrders.length}})
+        </view>
+      </view>
+
+      <!-- 活动退款视图 -->
+      <view wx:if="{{refundViewType === 'activity'}}">
+        <view wx:if="{{refundRequests.length > 0}}">
+          <!-- 全选栏（仅选择模式显示） -->
+          <view class="batch-select-bar" wx:if="{{isRefundSelectionMode}}">
+            <view class="select-all-text-btn" bindtap="onSelectAllRefunds">
+              {{allRefundsSelected ? '取消全选' : '全选'}}
+            </view>
+          </view>
+
+          <view class="refunds-list">
+            <view wx:for="{{refundRequests}}" wx:key="id"
+                  class="refund-card"
+                  style="{{item.selected ? 'background-color:#e3f2fd;border-left-color:#1296db' : ''}}"
+                  data-id="{{item.id}}"
+                  data-user-id="{{item.user_id}}"
+                  data-name="{{item.real_name}}"
+                  bindtap="onRefundCardTap">
+              <view class="card-content">
+                <view class="refund-header">
+                  <view class="user-info">
+                    <text class="user-name">{{item.real_name}}</text>
+                    <text class="user-phone">{{item.phone}}</text>
+                  </view>
+                  <view class="refund-date">{{item.refund_request_time_cn}}</view>
+                </view>
+
+                <view class="activity-info">
+                  <text class="activity-title">{{item.activity_title}}</text>
+                  <text class="activity-fee">￥{{item.total_amount}}</text>
+                </view>
+
+                <view class="refund-reason-box">
+                  <text class="reason-label">退款原因：</text>
+                  <text class="reason-text">{{item.refund_reason}}</text>
+                </view>
+              </view>
+            </view>
+          </view>
+
+          <!-- 底部操作栏 -->
+          <view class="batch-actions">
+            <view wx:if="{{!isRefundSelectionMode}}">
+              <button class="select-mode-btn" bindtap="onToggleRefundSelectionMode">选择</button>
+            </view>
+            <view wx:else class="batch-actions-inner">
+              <button class="cancel-btn" bindtap="onToggleRefundSelectionMode">取消</button>
+              <button class="batch-approve-btn" bindtap="onBatchApproveRefund">
+                批量同意 ({{selectedRefunds.length}})
+              </button>
+              <button class="batch-reject-btn" bindtap="onBatchRejectRefund">
+                批量拒绝 ({{selectedRefunds.length}})
+              </button>
+            </view>
+          </view>
+        </view>
+
+        <view wx:else class="empty-state">
+          <text>暂无待审核活动退款</text>
+        </view>
+      </view>
+
+      <!-- 课程退款视图 -->
+      <view wx:if="{{refundViewType === 'course'}}">
+        <view wx:if="{{courseRefundBookings.length > 0}}">
+          <!-- 全选栏（仅选择模式显示） -->
+          <view class="batch-select-bar" wx:if="{{isCourseRefundSelectionMode}}">
+            <view class="select-all-text-btn" bindtap="onSelectAllCourseRefunds">
+              {{allCourseRefundsSelected ? '取消全选' : '全选'}}
+            </view>
+          </view>
+
+          <view class="refunds-list">
+            <view wx:for="{{courseRefundBookings}}" wx:key="id"
+                  class="refund-card"
+                  style="{{item.selected ? 'background-color:#e3f2fd;border-left-color:#1296db' : ''}}"
+                  data-id="{{item.id}}"
+                  bindtap="onCourseRefundCardTap">
+              <view class="card-content">
+                <view class="refund-header">
+                  <view class="user-info">
+                    <text class="user-name">{{item.user_name}}</text>
+                    <text class="user-phone">{{item.user_phone}}</text>
+                  </view>
+                  <view class="refund-date">{{item.booking_date}}</view>
+                </view>
+
+                <view class="activity-info">
+                  <text class="activity-title">{{item.course_title}}</text>
+                  <text class="activity-fee">￥{{item.price}}</text>
+                </view>
+
+                <view class="course-booking-meta">
+                  <text>{{item.booking_time}} | {{item.payment_method === 'card' ? '会员卡' : '在线支付'}}</text>
+                </view>
+              </view>
+            </view>
+          </view>
+
+          <!-- 底部操作栏 -->
+          <view class="batch-actions">
+            <view wx:if="{{!isCourseRefundSelectionMode}}">
+              <button class="select-mode-btn" bindtap="onToggleCourseRefundSelectionMode">选择</button>
+            </view>
+            <view wx:else class="batch-actions-inner">
+              <button class="cancel-btn" bindtap="onToggleCourseRefundSelectionMode">取消</button>
+              <button class="batch-approve-btn" bindtap="onBatchRefundCourseBooking">
+                批量同意 ({{selectedCourseRefunds.length}})
+              </button>
+              <button class="batch-reject-btn" bindtap="onBatchRejectCourseRefund">
+                批量拒绝 ({{selectedCourseRefunds.length}})
+              </button>
+
+            </view>
+          </view>
+        </view>
+
+        <view wx:else class="empty-state">
+          <text>暂无可退款课程预约</text>
+        </view>
+      </view>
+
+      <!-- 商品退款视图 -->
+      <view wx:if="{{refundViewType === 'product'}}">
+        <view wx:if="{{productRefundOrders.length > 0}}">
+          <view class="refunds-list">
+            <view wx:for="{{productRefundOrders}}" wx:key="id"
+                  class="refund-card"
+                  style="{{item.selected ? 'background-color:#e3f2fd;border-left-color:#1296db' : ''}}"
+                  data-id="{{item.id}}"
+                  bindtap="onProductRefundCardTap">
+              <view class="card-content">
+                <view class="refund-header">
+                  <view class="user-info">
+                    <text class="user-name">{{item.real_name}}</text>
+                    <text class="user-phone">{{item.phone}}</text>
+                  </view>
+                  <view class="refund-date">{{item.refund_request_time_cn}}</view>
+                </view>
+
+                <view class="activity-info">
+                  <text class="activity-title">订单号: {{item.order_no}}</text>
+                  <text class="activity-fee">￥{{item.total_amount}}</text>
+                </view>
+
+                <view class="refund-reason-box">
+                  <text class="reason-label">退款原因：</text>
+                  <text class="reason-text">{{item.refund_reason}}</text>
+                </view>
+              </view>
+            </view>
+          </view>
+
+          <!-- 底部操作栏 -->
+          <view class="batch-actions">
+            <view wx:if="{{!isProductRefundSelectionMode}}">
+              <button class="select-mode-btn" bindtap="onToggleProductRefundSelectionMode">选择</button>
+            </view>
+            <view wx:else class="batch-actions-inner">
+              <button class="cancel-btn" bindtap="onToggleProductRefundSelectionMode">取消</button>
+              <button class="batch-approve-btn" bindtap="onBatchApproveProductRefund">
+                批量同意 ({{selectedProductRefunds.length}})
+              </button>
+              <button class="batch-reject-btn" bindtap="onBatchRejectProductRefund">
+                批量拒绝 ({{selectedProductRefunds.length}})
+              </button>
+            </view>
+          </view>
+        </view>
+
+        <view wx:else class="empty-state">
+          <text>暂无待审核商品退款</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- Tab 10: 操作日志 -->
+    <view wx:if="{{currentTab === 10}}" class="tab-content">
+      <view class="section-title">操作日志</view>
+
+      <view wx:if="{{operationLogs.length > 0}}" class="logs-list">
+        <view wx:for="{{operationLogs}}" wx:key="id" class="log-card">
+          <view class="log-header">
+            <text class="log-user">{{item.user_name}}</text>
+            <text class="log-time">{{item.created_at_cn}}</text>
+          </view>
+          <view class="log-body">
+            <text class="log-type">{{item.operation_type}}</text>
+            <text class="log-desc">{{item.operation_desc}}</text>
+          </view>
+          <view class="log-footer">
+            <text class="log-module">{{item.operation_module}}</text>
+            <text class="log-ip">{{item.ip_address}}</text>
+          </view>
+        </view>
+      </view>
+
+      <view wx:else class="empty-state">
+        <text>暂无操作日志</text>
+      </view>
+    </view>
+
+    <!-- Tab 11: 错误日志 -->
+    <view wx:if="{{currentTab === 11}}" class="tab-content">
+      <view class="section-title">错误日志</view>
+
+      <view wx:if="{{errorLogs.length > 0}}" class="logs-list">
+        <view wx:for="{{errorLogs}}" wx:key="id" class="log-card error">
+          <view class="log-header">
+            <text class="log-type error">{{item.error_type}}</text>
+            <text class="log-time">{{item.created_at_cn}}</text>
+          </view>
+          <view class="log-body">
+            <text class="log-desc">{{item.error_message}}</text>
+          </view>
+          <view wx:if="{{item.error_stack}}" class="log-stack">
+            <text>{{item.error_stack}}</text>
+          </view>
+        </view>
+      </view>
+
+      <view wx:else class="empty-state">
+        <text>暂无错误日志</text>
+      </view>
+    </view>
+
+    <!-- Tab 12: 数据备份 -->
+    <view wx:if="{{currentTab === 12}}" class="tab-content">
+      <view class="section-title">数据库备份</view>
+
+      <view class="backup-info">
+        <text class="info-text">数据库每天凌晨2点自动备份</text>
+        <text class="info-text">备份文件保留30天</text>
+        <text class="info-text">备份文件加密存储</text>
+      </view>
+
+      <button class="backup-btn" bindtap="onManualBackup">
+        立即备份数据库
+      </button>
+
+      <view class="backup-tips">
+        <text class="tip-title">备份说明：</text>
+        <text>1. 手动备份会立即执行完整的数据库备份</text>
+        <text>2. 备份文件保存在服务器 backups 目录</text>
+        <text>3. 建议在数据重要操作前手动备份</text>
+      </view>
+    </view>
+
+  </scroll-view>
+
+  <!-- 排序对话框 -->
+  <view wx:if="{{showSortDialog}}" class="sort-dialog-mask" bindtap="onCloseSortDialog">
+    <view class="sort-dialog" catchtap="doNothing">
+      <view class="dialog-header">
+        <text class="dialog-title">拖拽排序活动</text>
+        <button class="close-btn" bindtap="onCloseSortDialog">×</button>
+      </view>
+
+      <view class="dialog-content">
+        <view class="sort-list">
+          <view wx:for="{{sortableActivities}}"
+                wx:key="id"
+                class="sort-item"
+                data-index="{{index}}">
+            <view class="drag-handle">☰</view>
+            <view class="sort-item-info">
+              <text class="sort-item-title">{{item.title}}</text>
+              <text class="sort-item-order">序号: {{index + 1}}</text>
+            </view>
+            <view class="move-buttons">
+              <button class="move-btn"
+                      data-index="{{index}}"
+                      data-direction="up"
+                      bindtap="onMoveActivity"
+                      disabled="{{index === 0}}">
+                ↑
+              </button>
+              <button class="move-btn"
+                      data-index="{{index}}"
+                      data-direction="down"
+                      bindtap="onMoveActivity"
+                      disabled="{{index === sortableActivities.length - 1}}">
+                ↓
+              </button>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <view class="dialog-footer">
+        <button class="cancel-dialog-btn" bindtap="onCloseSortDialog">取消</button>
+        <button class="confirm-dialog-btn" bindtap="onSaveSortOrder">保存排序</button>
+      </view>
+    </view>
+  </view>
+
+</view>

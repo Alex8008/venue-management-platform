@@ -1,0 +1,111 @@
+<view class="container">
+  <view class="title">隐私政策</view>
+  <view class="update-time">更新日期：2026年4月22日</view>
+  <view class="content">
+    <view class="section">
+      <view class="section-title">引言</view>
+      <view class="section-content">
+        "凌峰探险"微信小程序（以下简称"本平台"）由【内蒙古垂直极限体育有限公司】（以下简称"我们"）运营。我们深知个人信息对您的重要性，将严格遵守法律法规要求，采取合理措施保护您的个人信息安全。请您仔细阅读本隐私政策，了解我们如何收集、使用、存储和保护您的个人信息。
+      </view>
+    </view>
+
+
+    <view class="section">
+      <view class="section-title">一、我们收集的信息</view>
+      <view class="section-content">
+        在您使用本平台时，我们可能收集以下信息：
+
+
+        1. 基本信息：微信昵称、头像、微信OpenID，用于创建和识别您的账号。
+        2. 手机号码：用于账号验证、订单通知、活动提醒。
+        3. 地理位置信息：用于活动地点导航、附近场馆推荐（仅在您授权后获取）。
+        4. 收货地址：用于商品配送服务。
+        5. 相册/相机：用于上传头像、活动照片（仅在您授权后获取）。
+        6. 订单信息：包括您的课程预约记录、商品购买记录、会员卡信息。
+        7. 设备信息：设备型号、操作系统版本，用于优化服务体验。
+      </view>
+    </view>
+
+
+    <view class="section">
+      <view class="section-title">二、我们如何使用信息</view>
+      <view class="section-content">
+        我们收集的信息将用于以下目的：
+        1. 为您提供课程预约、活动报名、商品购买等核心服务；
+        2. 向您发送活动通知、订单状态更新等服务消息；
+        3. 为您提供地图导航、附近场馆推荐等基于位置的服务；
+        4. 改进和优化本平台的功能和服务质量；
+        5. 保障平台运行安全，防范风险。
+
+
+        我们不会将您的个人信息用于上述目的以外的其他用途。
+      </view>
+    </view>
+
+
+    <view class="section">
+      <view class="section-title">三、信息的共享与披露</view>
+      <view class="section-content">
+        我们不会向第三方出售您的个人信息。以下情况除外：
+        1. 经您明确同意后共享；
+        2. 根据法律法规或政府主管部门的要求；
+        3. 为完成配送服务，我们可能将您的收货信息提供给物流合作方；
+        4. 为完成支付服务，我们可能通过微信支付等第三方支付平台处理交易。
+      </view>
+    </view>
+
+
+    <view class="section">
+      <view class="section-title">四、信息的存储与保护</view>
+      <view class="section-content">
+        1. 您的个人信息存储在中国境内的服务器上。
+        2. 我们采取加密传输（HTTPS）、访问控制等安全措施保护您的信息。
+        3. 我们会在实现服务目的所必需的期限内保留您的个人信息。
+        4. 当您注销账号后，我们将在合理期限内删除或匿名化处理您的个人信息。
+      </view>
+    </view>
+
+
+    <view class="section">
+      <view class="section-title">五、您的权利</view>
+      <view class="section-content">
+        您有权：
+        1. 查看和修改您的个人资料；
+        2. 通过系统设置管理授权（位置、相册等）；
+        3. 删除您的账号及相关信息；
+        4. 撤回已授权的权限。
+
+
+        如需行使上述权利，您可通过本平台"个人中心"进行操作，或联系我们协助处理。
+      </view>
+    </view>
+
+
+    <view class="section">
+      <view class="section-title">六、未成年人保护</view>
+      <view class="section-content">
+        我们重视对未成年人个人信息的保护。如果您是14周岁以下的未成年人，请在监护人的陪同和指导下使用本平台。
+      </view>
+    </view>
+
+
+    <view class="section">
+      <view class="section-title">七、隐私政策的更新</view>
+      <view class="section-content">
+        我们可能适时修订本隐私政策，更新后的隐私政策将在本平台上公布。重大变更时，我们将以弹窗或其他显著方式通知您。
+      </view>
+    </view>
+
+
+    <view class="section">
+      <view class="section-title">八、联系我们</view>
+      <view class="section-content">
+        如您对本隐私政策有任何疑问、意见或建议，请通过以下方式联系我们：
+        公司名称：【内蒙古垂直极限体育有限公司】
+        联系电话：【15849393939】
+        电子邮箱：【lxf@nmgpdsq.cn】
+        地址：【内蒙古自治区呼和浩特市玉泉区石羊桥南路玉骏坊商业中心27号楼201】
+      </view>
+    </view>
+  </view>
+</view>

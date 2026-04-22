@@ -1,0 +1,51 @@
+<view class="container">
+  <view class="top-bar">
+    <text class="title">{{activityTitle}}</text>
+    <button class="select-btn" bindtap="onToggleSelectMode">
+      {{selectMode ? '取消' : '选择'}}
+    </button>
+  </view>
+
+  <scroll-view scroll-y="true" class="content">
+    
+    <view class="photos-grid">
+      <view wx:for="{{photos}}" wx:key="id" 
+            wx:for-index="index"
+            class="photo-item {{selectedPhotos.indexOf(item.id) > -1 ? 'selected' : ''}}"
+            data-id="{{item.id}}"
+            data-index="{{index}}"
+            bindtap="onPhotoClick">
+        <image src="{{item.photo_url}}" 
+               class="photo-thumbnail" 
+               mode="aspectFill" />
+        <!-- 选中遮罩层 -->
+        <view wx:if="{{selectMode && selectedPhotos.indexOf(item.id) > -1}}" class="selected-overlay">
+          <text class="selected-check">✓</text>
+        </view>
+      </view>
+    </view>
+
+    <view wx:if="{{photos.length === 0}}" class="empty-photos">
+      <text>暂无照片</text>
+    </view>
+
+  </scroll-view>
+
+  <view wx:if="{{selectMode}}" class="bottom-bar">
+    <text class="selected-count">已选择 {{selectedPhotos.length}} 张</text>
+    <view class="button-group">
+      <button wx:if="{{isAdmin}}" class="delete-btn" bindtap="onBatchDelete">
+        批量删除
+      </button>
+      <button class="download-btn" bindtap="onBatchDownload">
+        批量下载
+      </button>
+    </view>
+  </view>
+
+  <view wx:else class="bottom-bar">
+    <button class="upload-btn" bindtap="onUploadPhoto">
+      返回上传照片
+    </button>
+  </view>
+</view>

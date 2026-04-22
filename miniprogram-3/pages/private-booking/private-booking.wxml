@@ -1,0 +1,55 @@
+<!--pages/private-booking/private-booking.wxml-->
+<view class="container">
+  <!-- 顶部选项卡 -->
+  <view class="tab-bar">
+    <view class="tab-item {{currentTab === 'group' ? 'active' : ''}}" bindtap="switchTab" data-tab="group">
+      精品团课
+    </view>
+    <view class="tab-item {{currentTab === 'private' ? 'active' : ''}}" bindtap="switchTab" data-tab="private">
+      私教预约
+    </view>
+  </view>
+
+  <!-- 日期选择条 -->
+  <scroll-view class="date-scroll" scroll-x="{{true}}" scroll-with-animation="{{true}}">
+    <view class="date-list">
+      <block wx:for="{{dateList}}" wx:key="index">
+        <view class="date-item {{selectedDate === item.date ? 'active' : ''}}" bindtap="selectDate" data-date="{{item.date}}">
+          <view class="date-num">{{item.day}}</view>
+          <view class="date-week">{{item.week}}</view>
+        </view>
+      </block>
+    </view>
+  </scroll-view>
+
+  <!-- 搜索栏 -->
+  <view class="search-bar">
+    <input class="search-input" placeholder="搜索教练名" bindinput="onSearchInput" value="{{searchKeyword}}" />
+  </view>
+
+  <!-- 教练列表 -->
+  <view class="teacher-list">
+    <block wx:for="{{teacherList}}" wx:key="id">
+      <view class="teacher-item" bindtap="viewTeacherDetail" data-id="{{item.id}}">
+        <image class="teacher-avatar" src="{{item.avatar_url || '/images/default-avatar.png'}}" mode="aspectFill"></image>
+        <view class="teacher-info">
+          <view class="teacher-name">{{item.name}}</view>
+          <view class="teacher-stats">累计{{item.total_lessons || 0}}课时</view>
+        </view>
+        <view class="action-btn" catchtap="viewCourses" data-id="{{item.id}}">
+          所授课程
+        </view>
+      </view>
+    </block>
+
+    <!-- 空状态 -->
+    <view wx:if="{{teacherList.length === 0}}" class="empty-state">
+      <text class="empty-text">暂无教练</text>
+    </view>
+  </view>
+
+  <!-- 加载提示 -->
+  <view wx:if="{{loading}}" class="loading">
+    <text>加载中...</text>
+  </view>
+</view>

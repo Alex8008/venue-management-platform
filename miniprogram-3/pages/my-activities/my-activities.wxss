@@ -1,0 +1,222 @@
+.container {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  display: flex;
+  flex-direction: column;
+}
+
+.view-toggle {
+  display: flex;
+  background-color: #fff;
+  border-bottom: 1rpx solid #e0e0e0;
+  flex-shrink: 0;
+}
+
+.toggle-item {
+  flex: 1;
+  text-align: center;
+  padding: 25rpx 0;
+  font-size: 30rpx;
+  color: #666;
+  border-bottom: 4rpx solid transparent;
+}
+
+.toggle-item.active {
+  color: #1296db;
+  border-bottom-color: #1296db;
+  font-weight: bold;
+}
+
+.content {
+  padding: 20rpx;
+  box-sizing: border-box;
+}
+
+.activity-group {
+  margin-bottom: 30rpx;
+}
+
+.group-title {
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 15rpx;
+  font-weight: bold;
+  padding-left: 10rpx;
+  border-left: 4rpx solid #1296db;
+}
+
+.activity-card {
+  display: flex;
+  background-color: #fff;
+  border-radius: 12rpx;
+  padding: 20rpx;
+  margin-bottom: 15rpx;
+  border-left: 4rpx solid #ddd;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.08);
+  box-sizing: border-box;
+}
+
+.activity-card.pending {
+  border-left-color: #ff9800;
+}
+
+.activity-card.approved {
+  border-left-color: #4caf50;
+}
+
+.activity-card.completed {
+  border-left-color: #2196f3;
+}
+
+.activity-card.cancelled {
+  border-left-color: #f44336;
+}
+
+.activity-card.rejected {
+  border-left-color: #9e9e9e;
+}
+
+.activity-image {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 8rpx;
+  margin-right: 20rpx;
+  flex-shrink: 0;
+}
+
+.activity-info {
+  flex: 1;
+  min-width: 0;
+  margin-right: 10rpx;
+}
+
+.activity-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 8rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.activity-date {
+  font-size: 24rpx;
+  color: #666;
+  margin-bottom: 8rpx;
+}
+
+.activity-status {
+  font-size: 24rpx;
+  color: #999;
+  margin-bottom: 8rpx;
+}
+
+.activity-amount {
+  font-size: 28rpx;
+  color: #ff5722;
+  font-weight: bold;
+}
+
+.cancel-reason, .reject-reason {
+  font-size: 24rpx;
+  color: #666;
+  margin-top: 8rpx;
+  line-height: 1.4;
+}
+
+.refund-status-display {
+  margin-top: 8rpx;
+}
+
+.refund-tag {
+  font-size: 22rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 8rpx;
+  color: white;
+  display: inline-block;
+}
+
+.refund-tag.pending {
+  background-color: #ff9800;
+}
+
+.refund-tag.approved {
+  background-color: #4caf50;
+}
+
+.activity-actions {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10rpx;
+  flex-shrink: 0;
+  width: 140rpx;
+}
+
+.cancel-btn, .detail-btn, .refund-btn {
+  width: 100%;
+  font-size: 24rpx;
+  padding: 12rpx 0;
+  border-radius: 20rpx;
+  border: none;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.cancel-btn {
+  background-color: #ff5722;
+  color: white;
+}
+
+.detail-btn {
+  background-color: #1296db;
+  color: white;
+}
+
+.refund-btn {
+  background-color: #ff9800;
+  color: white;
+}
+
+.refund-btn.disabled {
+  background-color: #ccc;
+  color: #999;
+}
+
+.cancel-deadline-info {
+  margin-top: 8rpx;
+  font-size: 22rpx;
+  color: #999;
+}
+
+.deadline-label {
+  color: #999;
+}
+
+.deadline-value {
+  color: #ff9800;
+}
+
+.empty-activities {
+  text-align: center;
+  color: #999;
+  font-size: 28rpx;
+  padding: 100rpx 0;
+}
+
+.pay-activity-btn {
+  width: 100%;
+  font-size: 24rpx;
+  padding: 12rpx 0;
+  border-radius: 20rpx;
+  border: none;
+  white-space: nowrap;
+  text-align: center;
+  background-color: #ff5722;
+  color: white;
+}
+
+.refund-tag.rejected-tag {
+  background-color: #f44336;
+}

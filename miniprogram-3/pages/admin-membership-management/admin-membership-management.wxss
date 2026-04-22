@@ -1,0 +1,135 @@
+.container {
+  min-height: 100vh;
+  background-color: #f8f8f8;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 150rpx;
+}
+
+.header {
+  background-color: #ff9800;
+  padding: 30rpx;
+  text-align: center;
+}
+
+.title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #fff;
+}
+
+.content {
+  flex: 1;
+  padding: 20rpx;
+}
+
+.card-item {
+  background-color: #fff;
+  border-radius: 12rpx;
+  margin-bottom: 15rpx;
+  padding: 20rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
+  display: flex;
+}
+
+.card-image {
+  width: 150rpx;
+  height: 150rpx;
+  border-radius: 8rpx;
+  margin-right: 20rpx;
+  flex-shrink: 0;
+}
+
+.card-info {
+  flex: 1;
+}
+
+.card-name {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10rpx;
+}
+
+.card-teacher,
+.card-details {
+  font-size: 24rpx;
+  color: #999;
+  margin-bottom: 8rpx;
+}
+
+.card-price {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #ff9800;
+}
+
+.card-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10rpx;
+  justify-content: center;
+}
+
+.edit-btn,
+.delete-btn {
+  padding: 10rpx 20rpx;
+  border-radius: 8rpx;
+  font-size: 22rpx;
+  border: none;
+}
+
+.edit-btn {
+  background-color: #2196f3;
+  color: #fff;
+}
+
+.delete-btn {
+  background-color: #ff5722;
+  color: #fff;
+}
+
+.empty {
+  text-align: center;
+  padding: 100rpx 0;
+}
+
+.empty-icon {
+  font-size: 100rpx;
+  display: block;
+  margin-bottom: 20rpx;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #999;
+}
+
+.loading {
+  text-align: center;
+  padding: 60rpx 0;
+  color: #999;
+  font-size: 28rpx;
+}
+
+.bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  padding: 20rpx;
+  padding-bottom: calc(20rpx + env(safe-area-inset-bottom));
+  box-shadow: 0 -2rpx 10rpx rgba(0, 0, 0, 0.1);
+  z-index: 100;
+}
+
+.create-btn {
+  width: 100%;
+  background-color: #ff9800;
+  color: #fff;
+  font-size: 32rpx;
+  padding: 25rpx;
+  border-radius: 12rpx;
+  border: none;
+}

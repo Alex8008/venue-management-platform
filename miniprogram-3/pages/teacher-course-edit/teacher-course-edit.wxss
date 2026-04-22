@@ -1,0 +1,272 @@
+.container {
+  min-height: 100vh;
+  background-color: #f8f8f8;
+}
+
+.content {
+  padding: 0 10rpx 150rpx;
+}
+
+.header {
+  background-color: #4caf50;
+  padding: 30rpx;
+  text-align: center;
+}
+
+.title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #fff;
+}
+
+.section {
+  background-color: #fff;
+  margin-bottom: 20rpx;
+  padding: 30rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 25rpx;
+  border-left: 4rpx solid #4caf50;
+  padding-left: 15rpx;
+}
+
+/* 类型选择 */
+.type-selector {
+  display: flex;
+  gap: 20rpx;
+}
+
+.type-option {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30rpx;
+  border: 2rpx solid #e0e0e0;
+  border-radius: 12rpx;
+  background-color: #f8f8f8;
+  transition: all 0.3s;
+}
+
+.type-option.active {
+  border-color: #4caf50;
+  background-color: #e8f5e9;
+}
+
+.type-icon {
+  font-size: 50rpx;
+  margin-bottom: 10rpx;
+}
+
+.type-text {
+  font-size: 28rpx;
+  color: #666;
+}
+
+.type-option.active .type-text {
+  color: #4caf50;
+  font-weight: bold;
+}
+
+/* 表单 */
+.form-item {
+  margin-bottom: 30rpx;
+}
+
+.form-label {
+  font-size: 28rpx;
+  color: #666;
+  display: block;
+  margin-bottom: 15rpx;
+}
+
+.form-input {
+  width: 100%;
+  height: 80rpx;
+  padding: 0 20rpx;
+  border: 2rpx solid #e0e0e0;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  background-color: #f8f8f8;
+  box-sizing: border-box;
+}
+
+.form-textarea {
+  width: 100%;
+  min-height: 200rpx;
+  padding: 20rpx;
+  border: 2rpx solid #e0e0e0;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  background-color: #f8f8f8;
+  box-sizing: border-box;
+}
+
+.picker-display {
+  height: 80rpx;
+  line-height: 80rpx;
+  padding: 0 20rpx;
+  border: 2rpx solid #e0e0e0;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  background-color: #f8f8f8;
+  color: #333;
+}
+
+.cover-preview {
+  width: 100%;
+  height: 300rpx;
+  border-radius: 8rpx;
+  margin-bottom: 15rpx;
+  border: 2rpx solid #e0e0e0;
+}
+
+.upload-btn {
+  background-color: #4caf50;
+  color: #fff;
+  font-size: 26rpx;
+  padding: 15rpx 30rpx;
+  border-radius: 8rpx;
+  border: none;
+}
+
+
+
+/* 操作按钮 */
+.actions {
+  padding: 0 30rpx 30rpx;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20rpx;
+}
+
+.cancel-btn,
+.save-btn {
+  flex: 1;
+  font-size: 32rpx;
+  padding: 25rpx;
+  border-radius: 12rpx;
+  border: none;
+}
+
+.cancel-btn {
+  background-color: #e0e0e0;
+  color: #666;
+}
+
+.save-btn {
+  background-color: #4caf50;
+  color: #fff;
+}
+
+.no-review-section {
+  width: 100%;
+  margin-bottom: 10rpx;
+}
+
+.no-review-item {
+  display: flex;
+  align-items: center;
+}
+
+.no-review-item .custom-checkbox {
+  width: 44rpx;
+  height: 44rpx;
+  border-radius: 50%;
+  border: 2rpx solid #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 16rpx;
+  font-size: 24rpx;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.no-review-item .custom-checkbox.checked {
+  background-color: #1296db;
+  border-color: #1296db;
+}
+
+.no-review-label {
+  font-size: 28rpx;
+  color: #333;
+}
+
+/* 教练选择卡片样式 */
+.select-card-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.select-card-item {
+  display: inline-block;
+  padding: 16rpx 24rpx;
+  margin: 8rpx;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  background: #f5f5f5;
+  border: 2rpx solid transparent;
+  transition: all 0.2s;
+}
+
+.select-card-item.selected {
+  background: #e6f3ff;
+  border-color: #1296db;
+  color: #1296db;
+}
+
+.placeholder-text {
+  color: #999;
+  font-size: 28rpx;
+}
+
+/* 时间选择器 */
+.picker {
+  height: 70rpx;
+  line-height: 70rpx;
+  padding: 0 20rpx;
+  border: 2rpx solid #e0e0e0;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  background-color: #f8f8f8;
+}
+
+.time-picker {
+  margin-top: 10rpx;
+}
+
+.picker-small {
+  height: 60rpx;
+  line-height: 60rpx;
+  padding: 0 20rpx;
+  border: 2rpx solid #e0e0e0;
+  border-radius: 12rpx;
+  font-size: 26rpx;
+  background-color: #f8f9fa;
+  text-align: center;
+  color: #4caf50;
+}
+
+.field-tip {
+  display: block;
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 10rpx;
+  line-height: 1.5;
+}
+
+.save-as-new-btn {
+  flex: 1;
+  font-size: 32rpx;
+  padding: 25rpx;
+  border-radius: 12rpx;
+  border: none;
+  background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+  color: #fff;
+  box-shadow: 0 4rpx 12rpx rgba(255, 152, 0, 0.3);
+}

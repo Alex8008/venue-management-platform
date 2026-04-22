@@ -1,0 +1,105 @@
+{
+  "pages": [
+    "pages/venue-home/venue-home",
+    "pages/home/home",
+    "pages/shop/shop",
+    "pages/profile/profile",
+    "pages/personal-info/personal-info",
+    "pages/admin/admin",
+    "pages/activity-detail/activity-detail",
+    "pages/register/register",
+    "pages/activity-edit/activity-edit",
+    "pages/activity-participants/activity-participants",
+    "pages/user-detail/user-detail",
+    "pages/address-manage/address-manage",
+    "pages/address-edit/address-edit",
+    "pages/product-edit/product-edit",
+    "pages/insurance-submit/insurance-submit",
+    "pages/cart/cart",
+    "pages/my-activities/my-activities",
+    "pages/my-orders/my-orders",
+    "pages/order-detail/order-detail",
+    "pages/activity-photos/activity-photos",
+    "pages/notifications/notifications",
+    "pages/admin-logs/admin-logs",
+    "pages/private-booking/private-booking",
+    "pages/teacher-detail/teacher-detail",
+    "pages/teacher-course-detail/teacher-course-detail",
+    "pages/membership-cards/membership-cards",
+    "pages/membership-card-detail/membership-card-detail",
+    "pages/group-course-detail/group-course-detail",
+    "pages/my-membership-cards/my-membership-cards",
+    "pages/my-course-bookings/my-course-bookings",
+    "pages/teacher-backend/teacher-backend",
+    "pages/teacher-course-management/teacher-course-management",
+    "pages/teacher-booking-review/teacher-booking-review",
+    "pages/teacher-delivery-orders/teacher-delivery-orders",
+    "pages/teacher-profile-edit/teacher-profile-edit",
+    "pages/teacher-course-edit/teacher-course-edit",
+    "pages/admin-filter-management/admin-filter-management",
+    "pages/admin-venue-content/admin-venue-content",
+    "pages/admin-membership-management/admin-membership-management",
+    "pages/admin-membership-edit/admin-membership-edit",
+    "pages/booking-confirm/booking-confirm",
+    "pages/product-detail/product-detail",
+    "pages/admin-product-categories/admin-product-categories",
+    "pages/course-participants/course-participants",
+    "pages/teacher-activity-management/teacher-activity-management",
+    "pages/my-qrcode/my-qrcode",
+    "pages/scan-consume/scan-consume",
+    "pages/agreement/agreement",
+    "pages/privacy-policy/privacy-policy"
+
+  ],
+  "lazyCodeLoading": "requiredComponents",
+  "window": {
+    "navigationBarTitleText": "凌峰探险",
+    "navigationBarBackgroundColor": "#1296db",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#f8f8f8",
+    "enablePullDownRefresh": true,
+    "backgroundTextStyle": "dark"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#1296db",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/venue-home/venue-home",
+        "text": "场馆首页",
+        "iconPath": "images/home-icon.png",
+        "selectedIconPath": "images/home-icon.png"
+      },
+      {
+        "pagePath": "pages/home/home",
+        "text": "课程预约",
+        "iconPath": "images/home-icon.png",
+        "selectedIconPath": "images/home-icon.png"
+      },
+      {
+        "pagePath": "pages/shop/shop",
+        "text": "岩馆商城",
+        "iconPath": "images/shop-icon.png",
+        "selectedIconPath": "images/shop-icon.png"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "个人中心",
+        "iconPath": "images/profile-icon.png",
+        "selectedIconPath": "images/profile-icon.png"
+      }
+    ]
+  },
+  "requiredPrivateInfos": [
+    "chooseLocation",
+    "getLocation"
+  ],
+
+  "permission": {
+    "scope.userLocation": {
+      "desc": "您的位置信息将用于活动地点导航"
+    }
+  }
+}

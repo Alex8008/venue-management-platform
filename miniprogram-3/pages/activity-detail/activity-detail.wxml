@@ -1,0 +1,166 @@
+<view class="container">
+  <scroll-view scroll-y="true" 
+               class="content"
+               refresher-enabled="{{true}}"
+               refresher-triggered="{{refreshing}}"
+               bindrefresherrefresh="onRefresh"
+               bindrefresherrestore="onRestore">
+    
+    <!-- 封面图片轮播 -->
+    <swiper wx:if="{{activity.cover_images && activity.cover_images.length > 0}}"
+            class="cover-swiper" 
+            indicator-dots="{{activity.cover_images && activity.cover_images.length > 1}}" 
+            autoplay="{{activity.cover_images && activity.cover_images.length > 1}}"
+            interval="3000"
+            circular="true"
+            indicator-color="rgba(255,255,255,0.5)"
+            indicator-active-color="#fff">
+      <swiper-item wx:for="{{activity.cover_images}}" wx:key="index">
+        <image src="{{item}}" class="cover-image" mode="aspectFill" />
+      </swiper-item>
+    </swiper>
+
+    <view class="activity-info">
+      <view class="title">{{activity.title}}</view>
+      <view class="category">{{activity.category}}</view>
+      
+      <view class="info-row">
+        <text class="label">活动时间：</text>
+        <text>{{activity.activity_start}} - {{activity.activity_end}}</text>
+      </view>
+      
+      <view class="info-row">
+        <text class="label">报名时间：</text>
+        <text>{{activity.registration_start}} - {{activity.registration_end}}</text>
+      </view>
+      
+      <view wx:if="{{activity.cancel_deadline}}" class="info-row cancel-deadline">
+        <text class="label">退款截止：</text>
+        <text class="deadline-text">{{activity.cancel_deadline}}</text>
+      </view>
+      
+      <view class="info-row" bindtap="onLocationClick">
+        <text class="label">活动地点：</text>
+        <text class="location">{{activity.location}} 📍</text>
+      </view>
+      
+      <view class="info-row">
+        <text class="label">参与人数：</text>
+        <text>{{activity.current_participants}}/{{activity.max_participants}}人</text>
+      </view>
+    </view>
+
+    <view class="fee-section">
+      <view class="section-title">费用信息</view>
+      
+      <view class="total-fee-top">
+        <text class="total-label">活动总费用：</text>
+        <text class="total-amount">￥{{totalFee}}</text>
+      </view>
+      
+      <view class="fee-details-list">
+        <view class="fee-detail-item">
+          <text class="fee-name">基础费用</text>
+          <text class="fee-value">￥{{activity.base_fee}}</text>
+        </view>
+        
+        <view wx:if="{{activity.insurance_fee > 0}}" class="fee-detail-item">
+          <text class="fee-name">保险费用</text>
+          <text class="fee-value">￥{{activity.insurance_fee}}</text>
+        </view>
+        
+        <view wx:if="{{activity.transport_fee > 0}}" class="fee-detail-item">
+          <text class="fee-name">交通费</text>
+          <text class="fee-value">￥{{activity.transport_fee}}</text>
+        </view>
+        
+        <view wx:if="{{activity.meal_fee > 0}}" class="fee-detail-item">
+          <text class="fee-name">餐食费</text>
+          <text class="fee-value">￥{{activity.meal_fee}}</text>
+        </view>
+      </view>
+      
+      <view wx:if="{{activity.additional_fees && activity.additional_fees.length > 0}}" class="additional-fees">
+        <text class="subtitle">可选费用：</text>
+        <view wx:for="{{activity.additional_fees}}" wx:key="name" class="fee-item">
+          <text>{{item.name}}：￥{{item.price}}</text>
+        </view>
+      </view>
+      
+      <view wx:if="{{activity.fee_details}}" class="fee-notes">
+        <text class="subtitle">费用说明：</text>
+        <text class="fee-notes-text">{{activity.fee_details}}</text>
+      </view>
+    </view>
+
+    <view class="detail-section">
+      <view class="section-title">活动详情</view>
+      <text class="description">{{activity.description}}</text>
+    </view>
+
+    <view wx:if="{{activity.registration_requirements}}" class="requirements-section">
+      <view class="section-title">报名条件</view>
+      <text>{{activity.registration_requirements}}</text>
+    </view>
+
+    <view wx:if="{{activity.notices}}" class="notices-section">
+      <view class="section-title">注意事项</view>
+      <text>{{activity.notices}}</text>
+    </view>
+
+    <view class="photos-section">
+      <view class="section-header-right">
+        <text class="section-title">活动照片</text>
+        <button wx:if="{{canUploadPhoto}}" class="upload-btn-right" bindtap="onUploadPhoto">上传照片</button>
+      </view>
+      
+      <view wx:if="{{photos.length > 0}}" class="photos-preview">
+        <image src="{{photos[0].photo_url}}"
+               class="main-photo"
+               mode="aspectFill"
+               bindtap="onViewAllPhotos" />
+        <view class="photo-count" bindtap="onViewAllPhotos">
+          <text>共 {{photos.length}} 张照片 ›</text>
+        </view>
+      </view>
+      
+      <view wx:else class="no-photos">
+        <text>{{canUploadPhoto ? '暂无照片，快来上传第一张吧～' : '暂无照片'}}</text>
+      </view>
+    </view>
+  </scroll-view>
+
+  <view wx:if="{{uploading}}" class="upload-progress-mask">
+    <view class="upload-progress">
+      <view class="progress-bg">
+        <view class="progress-bar progress-{{uploadProgressClass}}"></view>
+      </view>
+      <text class="progress-text">上传中: {{uploadedCount}}/{{totalUploadCount}}</text>
+    </view>
+  </view>
+
+  <view class="bottom-bar">
+    <view class="action-buttons">
+      <button class="action-btn" bindtap="onGoHome">
+        <text class="icon">🏠</text>
+        <text class="btn-text">首页</text>
+      </button>
+      <button class="action-btn" open-type="share">
+        <text class="icon">📤</text>
+        <text class="btn-text">分享</text>
+      </button>
+      <button class="action-btn" bindtap="onConsult">
+        <text class="icon">💬</text>
+        <text class="btn-text">咨询</text>
+      </button>
+    </view>
+    
+    <view class="register-area">
+      <view class="price">￥{{activity.base_fee}}</view>
+      <button class="register-btn {{buttonDisabled ? 'disabled' : ''}}" 
+              bindtap="onRegisterClick">
+        {{registrationButtonText}}
+      </button>
+    </view>
+  </view>
+</view>

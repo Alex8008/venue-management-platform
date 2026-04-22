@@ -1,0 +1,132 @@
+<view class="container">
+  <scroll-view scroll-y="true" class="content">
+    
+    <!-- 活动信息 -->
+    <view class="section">
+      <view class="section-title">活动信息</view>
+      <view class="activity-card">
+        <image src="{{activity.cover_images && activity.cover_images[0] || '/images/default-activity.jpg'}}" class="activity-image" mode="aspectFill" />
+        <view class="activity-info">
+          <view class="activity-title">{{activity.title}}</view>
+          <view class="activity-time">{{activity.activity_start}}</view>
+          <view class="activity-location">{{activity.location}}</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 个人信息 -->
+    <view class="section">
+      <view class="section-title">个人信息</view>
+      <view class="info-row">
+        <text class="info-label">姓名：</text>
+        <text class="info-value">{{userProfile.real_name}}</text>
+      </view>
+      <view class="info-row">
+        <text class="info-label">手机：</text>
+        <text class="info-value">{{userProfile.phone}}</text>
+      </view>
+      <view class="info-row">
+        <text class="info-label">身份证：</text>
+        <text class="info-value">{{userProfile.id_card}}</text>
+      </view>
+      <view class="info-row">
+        <text class="info-label">紧急联系人：</text>
+        <text class="info-value">{{userProfile.emergency_contact_name}} - {{userProfile.emergency_contact_phone}}</text>
+      </view>
+
+    </view>
+
+    <!-- 费用选择 -->
+    <view class="section">
+      <view class="section-title">费用选择</view>
+      
+      <!-- 基础费用 -->
+      <view class="fee-row required">
+        <text class="fee-label">基础费用</text>
+        <text class="fee-amount">￥{{activity.base_fee}}</text>
+      </view>
+      
+      <!-- 保险费用 -->
+      <view wx:if="{{activity.insurance_fee > 0}}" class="fee-row">
+        <view class="fee-info">
+          <text class="fee-label">保险费用</text>
+          <checkbox-group bindchange="onInsuranceChange">
+            <label class="fee-checkbox">
+              <checkbox value="skip" checked="{{skipInsurance}}" />
+              <text class="checkbox-text">我已有保险</text>
+            </label>
+          </checkbox-group>
+        </view>
+        <text class="fee-amount {{skipInsurance ? 'disabled' : ''}}">
+          {{skipInsurance ? '已跳过' : '￥' + activity.insurance_fee}}
+        </text>
+      </view>
+      
+      <!-- 交通费 -->
+      <view wx:if="{{activity.transport_fee > 0}}" class="fee-row">
+        <view class="fee-info">
+          <text class="fee-label">交通费</text>
+          <checkbox-group bindchange="onTransportChange">
+            <label class="fee-checkbox">
+              <checkbox value="skip" checked="{{skipTransport}}" />
+              <text class="checkbox-text">我不乘坐交通工具</text>
+            </label>
+          </checkbox-group>
+        </view>
+        <text class="fee-amount {{skipTransport ? 'disabled' : ''}}">
+          {{skipTransport ? '已跳过' : '￥' + activity.transport_fee}}
+        </text>
+      </view>
+      
+      <!-- 餐食费 -->
+      <view wx:if="{{activity.meal_fee > 0}}" class="fee-row">
+        <view class="fee-info">
+          <text class="fee-label">餐食费</text>
+          <checkbox-group bindchange="onMealChange">
+            <label class="fee-checkbox">
+              <checkbox value="skip" checked="{{skipMeal}}" />
+              <text class="checkbox-text">我不购买餐食</text>
+            </label>
+          </checkbox-group>
+        </view>
+        <text class="fee-amount {{skipMeal ? 'disabled' : ''}}">
+          {{skipMeal ? '已跳过' : '￥' + activity.meal_fee}}
+        </text>
+      </view>
+      
+      <!-- 总费用 -->
+      <view class="total-fee">
+        <text class="total-label">应付总额：</text>
+        <text class="total-amount">￥{{totalAmount}}</text>
+      </view>
+    </view>
+
+    <!-- 报名条件确认 -->
+    <view class="section">
+      <view class="section-title">确认报名条件</view>
+      <view wx:if="{{activity.registration_requirements}}" class="requirements">
+        <text>{{activity.registration_requirements}}</text>
+      </view>
+      
+      <checkbox-group bindchange="onAgreedChange">
+        <label class="agreement">
+          <checkbox value="agreed" />
+          <text>我已阅读并同意以上报名条件</text>
+        </label>
+      </checkbox-group>
+    </view>
+
+  </scroll-view>
+
+  <!-- 底部提交按钮 -->
+  <view class="bottom-bar">
+    <view class="price-info">
+      <text class="total-label">总费用：</text>
+      <text class="total-price">￥{{totalAmount}}</text>
+    </view>
+    <button class="submit-btn {{agreed ? '' : 'disabled'}}" 
+            bindtap="onSubmit">
+      确认报名并支付
+    </button>
+  </view>
+</view>

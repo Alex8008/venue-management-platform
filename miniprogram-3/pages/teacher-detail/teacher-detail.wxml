@@ -1,0 +1,83 @@
+<!--pages/teacher-detail/teacher-detail.wxml-->
+<view class="container">
+  <!-- 教练封面 -->
+  <view class="teacher-cover">
+    <image class="cover-image" src="{{teacher.teacher_cover_image || '/images/default-cover.png'}}" mode="aspectFill"></image>
+    <view class="cover-overlay">
+      <view class="teacher-header">
+        <image class="teacher-avatar-small" src="{{teacher.avatar_url || '/images/default-avatar.png'}}" mode="aspectFill"></image>
+        <view class="teacher-name-box">
+          <text class="teacher-name">{{teacher.name}}</text>
+          <text class="teacher-lessons">累计{{totalLessons}}课时</text>
+        </view>
+      </view>
+      <view class="collect-btn" bindtap="toggleCollect">
+        <text>{{isCollected ? '已收藏' : '收藏'}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 教练简介 -->
+  <view class="section">
+    <view class="section-title">教练简介</view>
+    <view class="section-content">{{teacher.teacher_intro || '暂无简介'}}</view>
+  </view>
+
+  <!-- 所授私教 -->
+  <view class="section">
+    <view class="section-title">所授私教</view>
+    <view class="course-list">
+      <block wx:for="{{privateCourses}}" wx:key="id">
+        <view class="course-item" bindtap="viewCourseDetail" data-id="{{item.id}}">
+          <image class="course-image" src="{{item.cover_image || '/images/default-course.png'}}" mode="aspectFill"></image>
+          <view class="course-info">
+            <view class="course-title">{{item.title}}</view>
+            <view class="course-meta">
+              <text class="course-duration">课程时长：{{item.duration}}分钟</text>
+            </view>
+            <view class="course-price">¥{{item.price}}</view>
+          </view>
+        </view>
+      </block>
+      <view wx:if="{{privateCourses.length === 0}}" class="empty-tip">暂无私教课程</view>
+    </view>
+  </view>
+
+  <!-- 所授团课 -->
+  <view class="section">
+    <view class="section-title">所授团课</view>
+
+    <!-- 日期选择 -->
+    <scroll-view class="date-scroll" scroll-x="{{true}}">
+      <view class="date-list">
+        <block wx:for="{{dateList}}" wx:key="index">
+          <view class="date-item {{selectedDate === item.date ? 'active' : ''}}" bindtap="selectDate" data-date="{{item.date}}">
+            <view class="date-num">{{item.day}}</view>
+            <view class="date-week">{{item.week}}</view>
+          </view>
+        </block>
+      </view>
+    </scroll-view>
+
+    <!-- 团课列表 -->
+    <view class="group-course-list">
+      <block wx:for="{{groupCourses}}" wx:key="id">
+        <view class="group-course-item" bindtap="viewGroupCourseDetail" data-id="{{item.id}}">
+          <image class="group-course-image" src="{{item.cover_image || '/images/default-course.png'}}" mode="aspectFill"></image>
+          <view class="group-course-info">
+            <view class="group-course-title">{{item.title}}</view>
+            <view class="group-course-time">{{item.course_start}} - {{item.course_end}}</view>
+            <view class="group-course-price">¥{{item.price}}</view>
+          </view>
+        </view>
+      </block>
+      <view wx:if="{{groupCourses.length === 0}}" class="empty-tip">今日暂无课程</view>
+    </view>
+  </view>
+
+  <!-- 教练详情 -->
+  <view class="section">
+    <view class="section-title">教练详情</view>
+    <view class="section-content">{{teacher.teacher_detail || '暂无详情'}}</view>
+  </view>
+</view>

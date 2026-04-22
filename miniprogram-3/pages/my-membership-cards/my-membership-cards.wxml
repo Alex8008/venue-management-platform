@@ -1,0 +1,97 @@
+<view class="container">
+  <scroll-view class="content" scroll-y="true">
+
+    <!-- 会员卡列表 -->
+    <view class="card-item {{item.status === 'expired' ? 'card-expired' : ''}}"
+          wx:for="{{membershipCards}}"
+          wx:key="id"
+          bindtap="onCardClick"
+          data-id="{{item.id}}">
+
+      <image class="card-image"
+             src="{{item.card_image || '/images/default-card.png'}}"
+             mode="aspectFill" />
+
+      <view class="card-info">
+        <!-- 卡名 + 赠送标签 -->
+        <view class="card-name-row">
+          <text class="card-name">{{item.card_name}}</text>
+          <text wx:if="{{item.gift_from_admin == 1}}" class="gift-tag">赠送</text>
+        </view>
+
+        <!-- 教练信息 -->
+        <view wx:if="{{item.teacher_name}}" class="card-teacher">
+          教练：{{item.teacher_name}}
+        </view>
+
+        <!-- 次卡：剩余次数 -->
+        <view wx:if="{{item.card_type === 'times'}}" class="card-times">
+          <text class="times-remaining">{{item.remaining_times}}</text>
+          <text class="times-total"> / {{item.total_times}} 次</text>
+        </view>
+
+        <!-- 期限卡状态 -->
+        <view wx:if="{{item.card_type === 'period'}}">
+          <!-- 未激活 -->
+          <view wx:if="{{item.activated == 0 && item.status === 'active'}}">
+            <view class="card-status-badge status-inactive">未激活</view>
+            <view wx:if="{{item.valid_days}}" class="card-detail-row">
+              激活后有效 {{item.valid_days}} 天
+            </view>
+            <view wx:if="{{item.validity_start && item.validity_end}}" class="card-detail-row">
+              激活有效期至 {{item.validity_end}}
+            </view>
+          </view>
+          <!-- 已生效 -->
+          <view wx:elif="{{item.activated == 1 && item.status === 'active'}}">
+            <view class="card-status-badge status-active">已生效</view>
+            <view class="card-detail-row">
+              {{item.start_date}} 至 {{item.end_date}}
+            </view>
+          </view>
+          <!-- 已过期 -->
+          <view wx:elif="{{item.status === 'expired'}}">
+            <view class="card-status-badge status-expired">已过期</view>
+          </view>
+        </view>
+
+      </view>
+
+      <!-- 操作按钮 -->
+      <view class="card-actions">
+        <button wx:if="{{item.card_type === 'period' && item.activated == 0 && item.status === 'active'}}"
+                class="activate-btn"
+                catchtap="onActivateCard"
+                data-id="{{item.id}}">
+          激活
+        </button>
+        <button class="detail-btn"
+                catchtap="onViewDetail"
+                data-id="{{item.id}}">
+          详情
+        </button>
+      </view>
+
+    </view>
+
+    <!-- 加载状态 -->
+    <view wx:if="{{loading}}" class="loading">
+      <text>加载中...</text>
+    </view>
+
+    <!-- 空状态 -->
+    <view wx:if="{{membershipCards.length === 0 && !loading}}" class="empty">
+      <text class="empty-icon">💳</text>
+      <text class="empty-text">暂无会员卡</text>
+    </view>
+
+  </scroll-view>
+
+  <!-- ★ 底部始终显示购买按钮 -->
+  <view class="bottom-bar">
+    <button class="buy-card-btn" bindtap="onBuyCard">
+      购买会员卡
+    </button>
+  </view>
+
+</view>

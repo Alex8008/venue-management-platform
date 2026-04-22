@@ -1,0 +1,129 @@
+<view class="container">
+  <!-- 切换：活动报名 / 课程预约 -->
+  <view class="view-toggle">
+    <view class="toggle-item {{registrationViewType === 'activity' ? 'active' : ''}}"
+          bindtap="onToggleRegistrationType" data-type="activity">
+      活动报名 ({{pendingRegistrations.length}})
+    </view>
+    <view class="toggle-item {{registrationViewType === 'course' ? 'active' : ''}}"
+          bindtap="onToggleRegistrationType" data-type="course">
+      课程预约 ({{pendingCourseBookings.length}})
+    </view>
+  </view>
+
+  <!-- 活动报名视图 -->
+  <view wx:if="{{registrationViewType === 'activity'}}">
+    <view wx:if="{{pendingRegistrations.length > 0}}">
+      <!-- 全选栏（仅选择模式显示） -->
+      <view class="batch-select-bar" wx:if="{{isRegistrationSelectionMode}}">
+        <view class="select-all-text-btn" bindtap="onSelectAllRegistrations">
+          {{allRegistrationsSelected ? '取消全选' : '全选'}}
+        </view>
+      </view>
+
+      <view class="registrations-list">
+        <view wx:for="{{pendingRegistrations}}" wx:key="id"
+              class="registration-card"
+              style="{{item.selected ? 'background-color:#e3f2fd;border-left-color:#1296db' : ''}}"
+              data-id="{{item.id}}"
+              data-user-id="{{item.user_id}}"
+              data-name="{{item.real_name}}"
+              bindtap="onRegistrationCardTap">
+          <view class="card-content">
+            <view class="registration-header">
+              <view class="user-info">
+                <text class="user-name">{{item.real_name}}</text>
+                <text class="user-phone">{{item.phone}}</text>
+              </view>
+              <view class="registration-date">{{item.registration_date}}</view>
+            </view>
+
+            <view class="activity-info">
+              <text class="activity-title">{{item.activity_title}}</text>
+              <text class="activity-fee">￥{{item.total_amount}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 底部操作栏 -->
+      <view class="batch-actions">
+        <view wx:if="{{!isRegistrationSelectionMode}}">
+          <button class="select-mode-btn" bindtap="onToggleRegistrationSelectionMode">选择</button>
+        </view>
+        <view wx:else class="batch-actions-inner">
+          <button class="cancel-btn" bindtap="onToggleRegistrationSelectionMode">取消</button>
+          <button class="batch-approve-btn" bindtap="onBatchApprove">
+            批量通过 ({{selectedRegistrations.length}})
+          </button>
+          <button class="batch-reject-btn" bindtap="onBatchReject">
+            批量拒绝 ({{selectedRegistrations.length}})
+          </button>
+        </view>
+      </view>
+    </view>
+
+    <view wx:else class="empty-state">
+      <text>暂无待审核活动报名</text>
+    </view>
+  </view>
+
+  <!-- 课程预约视图 -->
+  <view wx:if="{{registrationViewType === 'course'}}">
+    <view wx:if="{{pendingCourseBookings.length > 0}}">
+      <!-- 全选栏（仅选择模式显示） -->
+      <view class="batch-select-bar" wx:if="{{isCourseBookingSelectionMode}}">
+        <view class="select-all-text-btn" bindtap="onSelectAllCourseBookings">
+          {{allCourseBookingsSelected ? '取消全选' : '全选'}}
+        </view>
+      </view>
+
+      <view class="registrations-list">
+        <view wx:for="{{pendingCourseBookings}}" wx:key="id"
+              class="registration-card"
+              style="{{item.selected ? 'background-color:#e3f2fd;border-left-color:#1296db' : ''}}"
+              data-id="{{item.id}}"
+              bindtap="onCourseBookingCardTap">
+          <view class="card-content">
+            <view class="registration-header">
+              <view class="user-info">
+                <text class="user-name">{{item.user_name}}</text>
+                <text class="user-phone">{{item.user_phone}}</text>
+              </view>
+              <view class="registration-date">{{item.booking_date}}</view>
+            </view>
+
+            <view class="activity-info">
+              <text class="activity-title">{{item.course_title}}</text>
+              <text class="activity-fee">￥{{item.price}}</text>
+            </view>
+
+            <view class="course-booking-meta">
+              <text>{{item.booking_time}} | {{item.payment_method === 'card' ? '会员卡' : '在线支付'}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 底部操作栏 -->
+      <view class="batch-actions">
+        <view wx:if="{{!isCourseBookingSelectionMode}}">
+          <button class="select-mode-btn" bindtap="onToggleCourseBookingSelectionMode">选择</button>
+        </view>
+        <view wx:else class="batch-actions-inner">
+          <button class="cancel-btn" bindtap="onToggleCourseBookingSelectionMode">取消</button>
+          <button class="batch-approve-btn" bindtap="onBatchApproveCourseBooking">
+            批量通过 ({{selectedCourseBookings.length}})
+          </button>
+          <button class="batch-reject-btn" bindtap="onBatchRejectCourseBooking">
+            批量拒绝 ({{selectedCourseBookings.length}})
+          </button>
+        </view>
+      </view>
+    </view>
+
+    <view wx:else class="empty-state">
+      <text>暂无待审核课程预约</text>
+    </view>
+  </view>
+</view>

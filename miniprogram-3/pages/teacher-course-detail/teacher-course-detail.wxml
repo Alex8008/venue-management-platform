@@ -1,0 +1,71 @@
+<!--pages/teacher-course-detail/teacher-course-detail.wxml-->
+<view class="container">
+  <!-- 课程头图 -->
+  <image class="course-cover" src="{{course.cover_image || '/images/default-course.png'}}" mode="aspectFill"></image>
+
+  <!-- 课程信息 -->
+  <view class="course-info-box">
+    <view class="course-title">{{course.title}}</view>
+    <view class="course-price">¥{{course.price}}<text class="price-unit">/节</text></view>
+    <view class="course-meta">课程时长：{{course.duration}}分钟</view>
+  </view>
+
+  <!-- 选择时间 -->
+  <view class="time-select-section">
+    <view class="section-title">选择时间</view>
+
+    <!-- 日期选择 -->
+    <scroll-view class="date-scroll" scroll-x="{{true}}">
+      <view class="date-list">
+        <block wx:for="{{dateList}}" wx:key="index">
+          <view class="date-item {{selectedDate === item.date ? 'active' : ''}}" bindtap="selectDate" data-date="{{item.date}}">
+            <view class="date-num">{{item.day}}</view>
+            <view class="date-week">{{item.week}}</view>
+          </view>
+        </block>
+      </view>
+    </scroll-view>
+
+    <!-- 时间段选择 -->
+    <view class="time-slot-box">
+      <text class="hint-text">课程时长{{course.duration}}分钟（请选择起始时间）</text>
+      <view class="time-slots">
+        <block wx:for="{{timeSlots}}" wx:key="id">
+          <view class="time-slot {{item.available ? '' : 'disabled'}} {{selectedSlot && selectedSlot.id === item.id ? 'selected' : ''}}"
+                bindtap="selectTimeSlot"
+                data-slot="{{item}}">
+            {{item.start_time}}
+          </view>
+        </block>
+      </view>
+      <view wx:if="{{timeSlots.length === 0}}" class="empty-tip">该日期暂无可用时间段</view>
+    </view>
+  </view>
+
+  <!-- 底部操作栏 -->
+  <view class="bottom-bar">
+    <view class="action-buttons">
+      <button class="action-btn" bindtap="onGoHome">
+        <text class="icon">🏠</text>
+        <text class="btn-text">首页</text>
+      </button>
+      <button class="action-btn" open-type="share">
+        <text class="icon">📤</text>
+        <text class="btn-text">分享</text>
+      </button>
+      <button class="action-btn" bindtap="onConsult">
+        <text class="icon">💬</text>
+        <text class="btn-text">咨询</text>
+      </button>
+    </view>
+    <view class="purchase-area">
+      <button class="btn-primary" bindtap="directPurchase">¥{{course.price}}购买</button>
+      <button class="btn-secondary" bindtap="purchaseMemberCard">购买会员卡</button>
+    </view>
+  </view>
+
+  <!-- 提示信息 -->
+  <view class="notice-box">
+    约课待教练确认后会以微信消息通知到会员
+  </view>
+</view>

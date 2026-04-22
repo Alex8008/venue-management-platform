@@ -1,0 +1,46 @@
+<view class="container">
+  <view class="header">
+    <text class="title">会员卡管理</text>
+  </view>
+
+  <scroll-view class="content" scroll-y="true">
+    <!-- 会员卡列表 -->
+    <view class="card-item"
+          wx:for="{{cards}}"
+          wx:key="id">
+      <image class="card-image"
+             src="{{item.card_image || '/images/default-card.png'}}"
+             mode="aspectFill" />
+      <view class="card-info">
+        <view class="card-name">{{item.card_name}}</view>
+        <view class="card-teacher">教练：{{item.teacher_name}}</view>
+        <view class="card-details">
+          <text>类型：{{item.card_type === 'times' ? '次卡' : '期限卡'}}</text>
+          <text wx:if="{{item.card_type === 'times'}}"> | 次数：{{item.times_count}}</text>
+          <text wx:else> | 有效期：{{item.valid_days}}天</text>
+        </view>
+        <view class="card-price">¥{{item.price}}</view>
+      </view>
+      <view class="card-actions">
+        <button class="edit-btn" bindtap="onEdit" data-id="{{item.id}}">编辑</button>
+        <button class="delete-btn" bindtap="onDelete" data-id="{{item.id}}">删除</button>
+      </view>
+    </view>
+
+    <!-- 空状态 -->
+    <view wx:if="{{cards.length === 0 && !loading}}" class="empty">
+      <text class="empty-icon">💳</text>
+      <text class="empty-text">暂无会员卡</text>
+    </view>
+
+    <!-- 加载状态 -->
+    <view wx:if="{{loading}}" class="loading">
+      <text>加载中...</text>
+    </view>
+  </scroll-view>
+
+  <!-- 底部新建按钮 -->
+  <view class="bottom-bar">
+    <button class="create-btn" bindtap="onAdd">➕ 新建会员卡</button>
+  </view>
+</view>

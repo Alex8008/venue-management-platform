@@ -1,0 +1,60 @@
+<view class="container">
+  <view wx:if="{{loading}}" class="loading">
+    <text>加载中...</text>
+  </view>
+
+  <view wx:elif="{{product}}" class="content">
+    <view class="product-header">
+      <image src="{{product.image_url || '/images/default-product.png'}}"
+             class="product-image"
+             mode="aspectFill" />
+    </view>
+
+    <view class="product-info">
+      <view class="product-name">{{product.name}}</view>
+      <view class="product-meta">
+        <text class="product-price">￥{{product.price}}</text>
+        <text class="product-stock">库存：{{product.stock}}</text>
+      </view>
+      <view wx:if="{{product.category}}" class="product-category">
+        <text class="category-tag">{{product.category}}</text>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="section-title">商品详情</view>
+      <view class="product-desc">
+        <text>{{product.description || '暂无详情描述'}}</text>
+      </view>
+    </view>
+
+    <view class="bottom-bar">
+      <view class="action-buttons">
+        <button class="action-btn" bindtap="onGoHome">
+          <text class="icon">🏠</text>
+          <text class="btn-text">首页</text>
+        </button>
+        <button class="action-btn" open-type="share">
+          <text class="icon">📤</text>
+          <text class="btn-text">分享</text>
+        </button>
+        <button class="action-btn" bindtap="onConsult">
+          <text class="icon">💬</text>
+          <text class="btn-text">咨询</text>
+        </button>
+      </view>
+      <view class="purchase-area">
+        <view class="cart-icon" bindtap="goToCart">
+          <text class="icon-text">🛒</text>
+          <view wx:if="{{cartCount > 0}}" class="cart-badge">{{cartCount}}</view>
+        </view>
+        <button class="add-cart-btn" bindtap="onAddToCart">加入购物车</button>
+        <button class="buy-btn" bindtap="onBuyNow">立即购买</button>
+      </view>
+    </view>
+  </view>
+
+  <view wx:else class="empty">
+    <text>商品不存在或已下架</text>
+  </view>
+</view>
