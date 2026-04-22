@@ -1,0 +1,35 @@
+# ===== 后端敏感配置 =====
+outdoor_activity_backend/.env
+outdoor_activity_backend/.env.*
+outdoor_activity_backend/certs/
+outdoor_activity_backend/config.py
+outdoor_activity_backend/uploads/
+outdoor_activity_backend/backups/
+outdoor_activity_backend/logs/
+*.pem
+*.key
+*.p12
+
+
+# ===== 前端敏感配置 =====
+miniprogram-3/config/env.js
+miniprogram-3/project.private.config.json
+
+
+# ===== Python =====
+__pycache__/
+*.pyc
+*.pyo
+venv/
+.venv/
+
+
+# ===== 通用 =====
+.DS_Store
+.idea/
+.vscode/
+node_modules/
+*.log
+*.txt
+*.ipynb
+.ipynb_checkpoints
